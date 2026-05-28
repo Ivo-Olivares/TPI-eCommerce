@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Docs/">
+    <File Path="ModeloDominio.md" />
+  </Folder>
   <Project Path="eCommerce.Datos/eCommerce.Datos.csproj" Id="9f48e822-1388-4da2-a6f7-cfd905d61e3c" />
   <Project Path="eCommerce.Dominio/eCommerce.Dominio.csproj" Id="70e010bb-ab87-493f-bb7f-38aac6aba790" />
   <Project Path="eCommerce.Negocio/eCommerce.Negocio.csproj" Id="bfa91a43-bf70-4316-99c2-149a7320cc08" />
