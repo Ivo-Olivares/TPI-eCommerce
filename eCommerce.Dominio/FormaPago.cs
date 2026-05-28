@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Dominio
 {
-    internal class FormaPago
+    public class FormaPago
     {
     }
 }

@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Dominio
 {
-    internal class DetallePedido
+    public class DetallePedido
     {
+        public int Id { get; set; }
+        public int Cantidad { get; set; }
+        public decimal PrecioUnitario { get; set; }
+        public decimal Subtotal { get; set; }
+        public Producto Producto { get; set; }
+        public Pedido Pedido { get; set; }
     }
 }

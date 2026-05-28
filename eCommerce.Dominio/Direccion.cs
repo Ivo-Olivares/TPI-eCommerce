@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Dominio
 {
-    internal class Direccion
+    public class Direccion
     {
     }
 }
