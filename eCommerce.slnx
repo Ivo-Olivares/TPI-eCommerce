@@ -1,7 +1,9 @@
 <Solution>
   <Folder Name="/Docs/">
-    <File Path="../../Users/Lenovo/Downloads/DER eCommerce.png" />
-    <File Path="ModeloDominio.md" />
+    <File Path="Docs/DER eCommerce.drawio" />
+    <File Path="Docs/DER eCommerce.png" />
+    <File Path="Docs/eCommerce_DB.sql" />
+    <File Path="Docs/ModeloDominio.md" />
   </Folder>
   <Project Path="eCommerce.Datos/eCommerce.Datos.csproj" Id="9f48e822-1388-4da2-a6f7-cfd905d61e3c" />
   <Project Path="eCommerce.Dominio/eCommerce.Dominio.csproj" Id="70e010bb-ab87-493f-bb7f-38aac6aba790" />
