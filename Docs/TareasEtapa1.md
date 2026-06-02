@@ -11,15 +11,21 @@ Objetivo del checkpoint: modelo de dominio, pantallas sin funcionalidad y lectur
   - `Registro.aspx`
   - `MiPerfil.aspx`
   - `MisCompras.aspx`
+- Pantallas publicas sin funcionalidad:
+  - `Catalogo.aspx`
+  - `DetalleProducto.aspx`
+  - `Carrito.aspx`
 
 ## Pendiente para Axel
 
-Pantallas publicas sin funcionalidad, con controles y navegacion basica:
+Pantallas publicas restantes sin funcionalidad, con controles y navegacion basica:
 
-- `Catalogo.aspx`: listado visual de productos.
-- `DetalleProducto.aspx`: ficha de producto con imagen, precio, stock, cantidad y boton para agregar.
-- `Carrito.aspx`: tabla de items, cantidades, subtotales y total.
 - `Checkout.aspx`: seleccion de forma de entrega, direccion, forma de pago y resumen.
+
+Opcional si llega con tiempo:
+
+- Revisar estilos y textos de `Catalogo.aspx`, `DetalleProducto.aspx` y `Carrito.aspx`.
+- Agregar link final entre `Checkout.aspx` y `MisCompras.aspx`.
 
 ## Pendiente para administracion
 
