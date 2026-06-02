@@ -1,42 +1,36 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="eCommerce.Web._Default" %>
+<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="eCommerce.Web._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <main>
-        <section class="row" aria-labelledby="aspnetTitle">
-            <h1 id="aspnetTitle">ASP.NET</h1>
-            <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-            <p><a href="http://www.asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+    <main class="py-4">
+        <section class="row align-items-center mb-4" aria-labelledby="tituloInicio">
+            <div class="col-md-8">
+                <h1 id="tituloInicio">Gestion de ventas eCommerce</h1>
+                <p class="lead">Aplicacion Web Forms para administrar catalogo, clientes, pedidos y seguimiento de compras.</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a runat="server" href="~/Categorias" class="btn btn-primary btn-md">Ver categorias</a>
+            </div>
         </section>
 
-        <div class="row">
-            <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-                <h2 id="gettingStartedTitle">Getting started</h2>
-                <p>
-                    ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-                A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-                </p>
+        <div class="row g-3">
+            <section class="col-md-4" aria-labelledby="catalogoTitle">
+                <div class="border rounded p-3 h-100">
+                    <h2 id="catalogoTitle" class="h4">Catalogo</h2>
+                    <p>Productos organizados por categorias, con precio, stock y estado activo o inactivo.</p>
+                </div>
             </section>
-            <section class="col-md-4" aria-labelledby="librariesTitle">
-                <h2 id="librariesTitle">Get more libraries</h2>
-                <p>
-                    NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-                </p>
+            <section class="col-md-4" aria-labelledby="comprasTitle">
+                <div class="border rounded p-3 h-100">
+                    <h2 id="comprasTitle" class="h4">Compras</h2>
+                    <p>Flujo previsto para carrito, checkout, forma de entrega, forma de pago y confirmacion.</p>
+                </div>
             </section>
-            <section class="col-md-4" aria-labelledby="hostingTitle">
-                <h2 id="hostingTitle">Web Hosting</h2>
-                <p>
-                    You can easily find a web hosting company that offers the right mix of features and price for your applications.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-                </p>
+            <section class="col-md-4" aria-labelledby="gestionTitle">
+                <div class="border rounded p-3 h-100">
+                    <h2 id="gestionTitle" class="h4">Administracion</h2>
+                    <p>Panel previsto para gestion de productos, categorias, formas de pago, entregas y pedidos.</p>
+                </div>
             </section>
         </div>
     </main>
