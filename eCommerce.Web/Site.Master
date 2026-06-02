@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Mi aplicación ASP.NET</title>
+    <title><%: Page.Title %> - eCommerce UTN</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -21,7 +21,6 @@
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
-                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Name="jquery" />
@@ -40,7 +39,7 @@
 
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" runat="server" href="~/">Nombre de la aplicación</a>
+                <a class="navbar-brand" runat="server" href="~/">eCommerce UTN</a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -48,8 +47,13 @@
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/About">Acerca de</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Catalogo">Catalogo</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Categorias">Categorias</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Carrito">Carrito</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Login">Ingresar</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Registro">Registrarse</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/MiPerfil">Mi perfil</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/MisCompras">Mis compras</a></li>
                     </ul>
                 </div>
             </div>
@@ -59,7 +63,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Mi aplicación ASP.NET</p>
+                <p>&copy; <%: DateTime.Now.Year %> - TPI Programacion 3 - UTN FRGP</p>
             </footer>
         </div>
     </form>

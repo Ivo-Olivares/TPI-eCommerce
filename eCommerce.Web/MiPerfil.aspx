@@ -1,0 +1,43 @@
+<%@ Page Title="Mi perfil" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MiPerfil.aspx.cs" Inherits="eCommerce.Web.MiPerfil" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <main class="py-4">
+        <h1 class="h3 mb-3">Mi perfil</h1>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <asp:Label runat="server" AssociatedControlID="txtNombre" CssClass="form-label" Text="Nombre" />
+                <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control" />
+            </div>
+            <div class="col-md-6">
+                <asp:Label runat="server" AssociatedControlID="txtApellido" CssClass="form-label" Text="Apellido" />
+                <asp:TextBox runat="server" ID="txtApellido" CssClass="form-control" />
+            </div>
+            <div class="col-md-6">
+                <asp:Label runat="server" AssociatedControlID="txtEmail" CssClass="form-label" Text="Email" />
+                <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" TextMode="Email" />
+            </div>
+            <div class="col-md-6">
+                <asp:Label runat="server" AssociatedControlID="txtTelefono" CssClass="form-label" Text="Telefono" />
+                <asp:TextBox runat="server" ID="txtTelefono" CssClass="form-control" />
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-4 mb-2">
+            <h2 class="h5 mb-0">Direcciones</h2>
+            <asp:Button runat="server" ID="btnNuevaDireccion" CssClass="btn btn-outline-primary btn-sm" Text="Nueva direccion" />
+        </div>
+        <asp:GridView runat="server" ID="dgvDirecciones" AutoGenerateColumns="false" CssClass="table table-bordered table-striped">
+            <Columns>
+                <asp:BoundField HeaderText="Descripcion" />
+                <asp:BoundField HeaderText="Calle" />
+                <asp:BoundField HeaderText="Numero" />
+                <asp:BoundField HeaderText="Localidad" />
+                <asp:BoundField HeaderText="Codigo postal" />
+            </Columns>
+        </asp:GridView>
+
+        <div class="mt-3">
+            <asp:Button runat="server" ID="btnGuardarPerfil" CssClass="btn btn-primary" Text="Guardar cambios" />
+        </div>
+    </main>
+</asp:Content>
