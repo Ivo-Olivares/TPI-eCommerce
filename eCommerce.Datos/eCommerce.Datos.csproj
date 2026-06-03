@@ -45,6 +45,7 @@
     <Compile Include="AccesoDatos.cs" />
     <Compile Include="CategoriaDatos.cs" />
     <Compile Include="FormaEntregaDatos.cs" />
+    <Compile Include="FormaPagoDatos.cs" />
     <Compile Include="MarcaDatos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
