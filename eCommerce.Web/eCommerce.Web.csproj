@@ -125,6 +125,7 @@
     <Content Include="Default.aspx" />
     <Content Include="DetalleProducto.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="FormasEntrega.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
     <Content Include="Marcas.aspx" />
@@ -250,6 +251,13 @@
     </Compile>
     <Compile Include="DetalleProducto.aspx.designer.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormasEntrega.aspx.cs">
+      <DependentUpon>FormasEntrega.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormasEntrega.aspx.designer.cs">
+      <DependentUpon>FormasEntrega.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
