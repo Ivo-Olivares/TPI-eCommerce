@@ -53,10 +53,7 @@
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Registro">Registrarse</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/MiPerfil">Mi perfil</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/MisCompras">Mis compras</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Categorias">Categorias</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Marcas">Marcas</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/FormasEntrega">FormasEntrega</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/FormasPago">FormasPago</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Admin">Panel de Administracion</a></li>
                     </ul>
                 </div>
             </div>
