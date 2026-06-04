@@ -133,6 +133,7 @@
     <Content Include="Marcas.aspx" />
     <Content Include="MiPerfil.aspx" />
     <Content Include="MisCompras.aspx" />
+    <Content Include="Productos.aspx" />
     <Content Include="Registro.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -305,6 +306,13 @@
     </Compile>
     <Compile Include="MisCompras.aspx.designer.cs">
       <DependentUpon>MisCompras.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Productos.aspx.cs">
+      <DependentUpon>Productos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Productos.aspx.designer.cs">
+      <DependentUpon>Productos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registro.aspx.cs">

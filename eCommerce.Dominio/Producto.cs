@@ -8,6 +8,11 @@ namespace eCommerce.Dominio
 {
     public class Producto
     {
+        public Producto()
+        {
+            Marca = new Marca();
+            Categoria = new Categoria();
+        }
         public int Id { get; set; }
         public string Sku { get; set; }
         public string Nombre { get; set; }
@@ -19,4 +24,5 @@ namespace eCommerce.Dominio
         public Marca Marca { get; set; }
         public List<Imagen> ListaImagenes { get; set; }
     }
+
 }
