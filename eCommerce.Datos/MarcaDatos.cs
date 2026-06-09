@@ -39,5 +39,25 @@ namespace eCommerce.Datos
                 datos.cerrarConexion();
             }
         }
+
+
+
+
+        public void AgregarMarca(Marca nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("insert into MARCAS (Nombre) values (@Nombre)");
+                datos.setearParametros("@Nombre", nuevo.Nombre);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+      
+            
     }
 }
