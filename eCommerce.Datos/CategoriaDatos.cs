@@ -16,7 +16,7 @@ namespace eCommerce.Datos
 
             try
             {
-                datos.setearConsulta("SELECT IdCategoria, Nombre FROM CATEGORIAS");
+                datos.setearConsulta("SELECT IdCategoria, Nombre, Activo FROM CATEGORIAS");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -24,6 +24,7 @@ namespace eCommerce.Datos
                     Categoria categoria = new Categoria();
                     categoria.Id = (int)datos.Lector["IdCategoria"];
                     categoria.Nombre = (string)datos.Lector["Nombre"];
+                    categoria.Activo = (bool)datos.Lector["Activo"];
 
                     lista.Add(categoria);
                 }

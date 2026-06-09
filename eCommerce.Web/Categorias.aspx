@@ -6,7 +6,8 @@
             <asp:GridView runat="server" ID="dgvCategorias" AutoGenerateColumns="false" CssClass="table table-bordered">
                 <Columns>
                     <asp:BoundField HeaderText="Id" DataField="Id" />
-                    <asp:BoundField HeaderText="Nombre" DataField="Nombre" />       
+                    <asp:BoundField HeaderText="Nombre" DataField="Nombre" />    
+                    <asp:BoundField HeaderText="Activo" DataField="Activo" /> 
                 </Columns>
             </asp:GridView>
         </div>

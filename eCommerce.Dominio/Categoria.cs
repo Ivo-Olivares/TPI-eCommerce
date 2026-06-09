@@ -15,5 +15,7 @@ namespace eCommerce.Dominio
             return Nombre;
         }
 
+        public bool Activo { get; set; }
+
     }
 }
