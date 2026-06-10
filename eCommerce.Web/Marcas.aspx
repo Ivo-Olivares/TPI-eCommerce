@@ -12,6 +12,8 @@
         </div>
     </div>
     
+    <asp:label runat="server" ID="lblError" ForeColor="Red"></asp:Label>
+   
     <br />
     
     <asp:TextBox runat="server" ID="txtNombreMarca" CssClass="form-control" Placeholder="Nombre de la marca" />

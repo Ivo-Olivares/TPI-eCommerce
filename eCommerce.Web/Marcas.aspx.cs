@@ -24,13 +24,26 @@ namespace eCommerce.Web
 
         protected void btnAgregarMarca_Click(object sender, EventArgs e)
         {
-            Marca marca = new Marca();
-            marca.Nombre = txtNombreMarca.Text;
-            MarcaNegocio negocio = new MarcaNegocio();
-            negocio.AgregarMArca(marca);
+            try
+            {
+                Marca marca = new Marca();
+                marca.Nombre = txtNombreMarca.Text;
+                MarcaNegocio negocio = new MarcaNegocio();
+                negocio.AgregarMArca(marca);
 
-            dgvMarcas.DataSource = negocio.ListarMarcas();
-            Response.Redirect("Marcas.aspx");
+                dgvMarcas.DataSource = negocio.ListarMarcas();
+                dgvMarcas.DataBind();
+
+                txtNombreMarca.Text = "";
+                lblError.Text = "";
+
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = ex.Message; 
+            }
+            
+          
         }
     }
 }

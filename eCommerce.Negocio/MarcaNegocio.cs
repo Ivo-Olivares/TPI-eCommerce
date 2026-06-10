@@ -18,6 +18,9 @@ namespace eCommerce.Negocio
 
         public void AgregarMArca(Marca marca)
         {
+            if(string.IsNullOrWhiteSpace(marca.Nombre))
+                throw new Exception("El nombre de la marca no puede estar vacío.");
+
             MarcaDatos datos = new MarcaDatos();
             datos.AgregarMarca(marca);
         }
@@ -32,6 +35,7 @@ namespace eCommerce.Negocio
             datos.EliminarMarca(id);
         }
 
+       
 
 
 
@@ -43,5 +47,6 @@ namespace eCommerce.Negocio
 
 
 
-        }
+
+    }
 }
