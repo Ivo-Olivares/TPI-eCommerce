@@ -15,5 +15,33 @@ namespace eCommerce.Negocio
             MarcaDatos datos = new MarcaDatos();
             return datos.ListarMarcas();
         }
-    }
+
+        public void AgregarMArca(Marca marca)
+        {
+            MarcaDatos datos = new MarcaDatos();
+            datos.AgregarMarca(marca);
+        }
+        public void ModificarMarca(Marca marca)
+        {
+            MarcaDatos datos = new MarcaDatos();
+            datos.ModificarMarca(marca);
+        }
+        public void EliminarMarca(int id)
+        {
+            MarcaDatos datos = new MarcaDatos();
+            datos.EliminarMarca(id);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        }
 }
