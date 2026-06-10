@@ -15,5 +15,14 @@ namespace eCommerce.Negocio
             CategoriaDatos datos = new CategoriaDatos();
             return datos.ListarCategorias();
         }
+
+        public void AgregarCategoria(Categoria categoria)
+        {
+            if (string.IsNullOrWhiteSpace(categoria.Nombre))
+                throw new Exception("El nombre de la Categoria no puede estar vacío.");
+
+            CategoriaDatos datos = new CategoriaDatos();
+            datos.AgregarCategoria(categoria);
+        }
     }
 }

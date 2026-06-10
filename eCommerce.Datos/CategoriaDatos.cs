@@ -40,5 +40,20 @@ namespace eCommerce.Datos
                 datos.cerrarConexion();
             }
         }
+
+        public void AgregarCategoria(Categoria nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("insert into Categorias (Nombre) values (@Nombre)");
+                datos.setearParametros("@Nombre", nuevo.Nombre);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

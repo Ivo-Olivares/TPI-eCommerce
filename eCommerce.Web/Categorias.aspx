@@ -10,6 +10,7 @@
                     <asp:BoundField HeaderText="Activo" DataField="Activo" /> 
                 </Columns>
             </asp:GridView>
+            <a href="CategoriaForm.aspx">Agregar</a>
         </div>
     </div>
 
