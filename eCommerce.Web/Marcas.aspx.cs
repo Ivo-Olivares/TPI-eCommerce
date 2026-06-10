@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using eCommerce.Datos;
+using eCommerce.Dominio;
 
 namespace eCommerce.Web
 {
@@ -15,9 +17,20 @@ namespace eCommerce.Web
             if (!IsPostBack)
             {
                 MarcaNegocio negocio = new MarcaNegocio();
-                dgvMarcas.DataSource = negocio.Listar();
+                dgvMarcas.DataSource = negocio.ListarMarcas();
                 dgvMarcas.DataBind();
             }
+        }
+
+        protected void btnAgregarMarca_Click(object sender, EventArgs e)
+        {
+            Marca marca = new Marca();
+            marca.Nombre = txtNombreMarca.Text;
+            MarcaNegocio negocio = new MarcaNegocio();
+            negocio.AgregarMArca(marca);
+
+            dgvMarcas.DataSource = negocio.ListarMarcas();
+            Response.Redirect("Marcas.aspx");
         }
     }
 }

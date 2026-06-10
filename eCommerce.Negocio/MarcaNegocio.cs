@@ -10,7 +10,7 @@ namespace eCommerce.Negocio
 {
     public class MarcaNegocio
     {
-        public List<Marca> Listar()
+        public List<Marca> ListarMarcas()
         {
             MarcaDatos datos = new MarcaDatos();
             return datos.ListarMarcas();

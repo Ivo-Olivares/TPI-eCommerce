@@ -11,5 +11,14 @@
             </asp:GridView>
         </div>
     </div>
+    
+    <br />
+    
+    <asp:TextBox runat="server" ID="txtNombreMarca" CssClass="form-control" Placeholder="Nombre de la marca" />
+    
+    <br />
+
+
+    <asp:Button ID="btnAgregarMarca" runat="server" Text="Agregar Marcar" CssClass="btn btn-primary" OnClick="btnAgregarMarca_Click" />
 
 </asp:Content>
