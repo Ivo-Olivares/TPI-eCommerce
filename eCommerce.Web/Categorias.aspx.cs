@@ -25,23 +25,62 @@ namespace eCommerce.Web
         {
             try
             {
-                Categoria categoria = new Categoria();
-                categoria.Nombre = txtNombreCategoria.Text.Trim();
-                CategoriaNegocio negocio = new CategoriaNegocio();
-                negocio.AgregarCategoria(categoria);
+                if (ViewState["IdCategoria"] != null)
+                {
+                    Categoria categoria = new Categoria();
 
-                dgvCategorias.DataSource = negocio.Listar();
-                dgvCategorias.DataBind();
+                    categoria.Id = (int)ViewState["IdCategoria"];
+                    categoria.Nombre = txtNombreCategoria.Text.Trim();
 
-                txtNombreCategoria.Text = "";
-                lblError.Text = "";
+                    CategoriaNegocio negocio = new CategoriaNegocio();
 
+                    negocio.ModificarCategoria(categoria);
+                    dgvCategorias.DataSource = negocio.Listar();
+                    dgvCategorias.DataBind();
+
+                    ViewState["IdCategoria"] = null;
+                    txtNombreCategoria.Text = "";
+                    lblError.Text = "";
+
+                    btnAgregarCategoria.Text = "Agregar Categoría";
+                }
+                else
+                {
+                    Categoria categoria = new Categoria();
+                    categoria.Nombre = txtNombreCategoria.Text.Trim();
+
+                    CategoriaNegocio negocio = new CategoriaNegocio();
+                    negocio.AgregarCategoria(categoria);
+                    dgvCategorias.DataSource = negocio.Listar();
+                    dgvCategorias.DataBind();
+
+                    txtNombreCategoria.Text = "";
+                    lblError.Text = "";
+                }
             }
             catch (Exception ex)
             {
                 lblError.Text = ex.Message;
             }
 
+        }
+
+        protected void dgvCategorias_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow fila = dgvCategorias.SelectedRow;
+            txtNombreCategoria.Text = fila.Cells[1].Text;
+            ViewState["IdCategoria"] = dgvCategorias.SelectedDataKey.Value;
+            btnAgregarCategoria.Text = "Modificar Categoría";
+            btnCancelar.Visible = true;
+        }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            ViewState["IdCategoria"] = null;
+            txtNombreCategoria.Text = "";
+            lblError.Text = "";
+            btnAgregarCategoria.Text = "Agregar Categoría";
+            btnCancelar.Visible = false;
         }
     }
 }

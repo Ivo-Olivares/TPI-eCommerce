@@ -103,7 +103,6 @@
     <Content Include="Admin.aspx" />
     <Content Include="Carrito.aspx" />
     <Content Include="Catalogo.aspx" />
-    <Content Include="CategoriaForm.aspx" />
     <Content Include="Categorias.aspx" />
     <Content Include="Checkout.aspx" />
     <Content Include="Contact.aspx" />
@@ -227,13 +226,6 @@
     </Compile>
     <Compile Include="Catalogo.aspx.designer.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CategoriaForm.aspx.cs">
-      <DependentUpon>CategoriaForm.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CategoriaForm.aspx.designer.cs">
-      <DependentUpon>CategoriaForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Categorias.aspx.cs">
       <DependentUpon>Categorias.aspx</DependentUpon>

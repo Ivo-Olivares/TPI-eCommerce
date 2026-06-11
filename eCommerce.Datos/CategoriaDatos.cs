@@ -55,5 +55,26 @@ namespace eCommerce.Datos
                 throw ex;
             }
         }
+
+        public void ModificarCategoria(Categoria categoria)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("update CATEGORIAS set Nombre = @Nombre where IdCategoria = @Id");
+                datos.setearParametros("Nombre", categoria.Nombre);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+
+        }
     }
 }

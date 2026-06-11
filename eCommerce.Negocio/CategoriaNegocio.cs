@@ -24,5 +24,11 @@ namespace eCommerce.Negocio
             CategoriaDatos datos = new CategoriaDatos();
             datos.AgregarCategoria(categoria);
         }
+        public void ModificarCategoria(Categoria categoria)
+        {
+            CategoriaDatos datos = new CategoriaDatos();
+            datos.ModificarCategoria(categoria);
+        }
+
     }
 }
