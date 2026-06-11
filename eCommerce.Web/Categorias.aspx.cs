@@ -82,5 +82,35 @@ namespace eCommerce.Web
             btnAgregarCategoria.Text = "Agregar Categoría";
             btnCancelar.Visible = false;
         }
+
+        protected void dgvCategorias_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int id = int.Parse(e.CommandArgument.ToString());
+
+            CategoriaNegocio negocio = new CategoriaNegocio();
+
+            if (e.CommandName == "Editar")
+            {
+                Categoria categoria = negocio.Listar().Find(x => x.Id == id);
+
+                txtNombreCategoria.Text = categoria.Nombre;
+
+                ViewState["IdCategoria"] = categoria.Id;
+
+                btnAgregarCategoria.Text = "Modificar Categoria";
+                btnCancelar.Visible = true;
+            }
+
+            if (e.CommandName == "Desactivar")
+            {
+                Categoria categoria = new Categoria();
+                categoria.Id = id;
+
+                negocio.DesactivarCategoria(categoria);
+
+                dgvCategorias.DataSource = negocio.Listar();
+                dgvCategorias.DataBind();
+            }
+        }
     }
 }

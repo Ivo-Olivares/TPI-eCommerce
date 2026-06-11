@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col">
-            <asp:GridView runat="server" ID="dgvCategorias" DataKeyNames="Id" OnSelectedIndexChanged="dgvCategorias_SelectedIndexChanged" AutoGenerateColumns="false" CssClass="table table-bordered">
+            <asp:GridView runat="server" ID="dgvCategorias" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-bordered" OnRowCommand="dgvCategorias_RowCommand" >
                 <Columns>
                     <asp:BoundField HeaderText="Id" DataField="Id" />
                     <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
@@ -13,7 +13,24 @@
                             <%# (bool)Eval("Activo") ? "Sí" : "No" %>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:CommandField ShowSelectButton="true" SelectText="Editar" HeaderText="Accion" />
+                    <asp:TemplateField HeaderText="Acción">
+                        <ItemTemplate>
+
+                            <asp:LinkButton
+                                ID="btnEditar"
+                                runat="server"
+                                CommandName="Editar"
+                                CommandArgument='<%# Eval("Id") %>'
+                                Text="Editar" />
+                            |
+                            <asp:LinkButton
+                                ID="btnDesactivar"
+                                runat="server"
+                                CommandName="Desactivar"
+                                CommandArgument='<%# Eval("Id") %>'
+                                Text="Desactivar" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
         </div>

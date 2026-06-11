@@ -41,13 +41,13 @@ namespace eCommerce.Datos
             }
         }
 
-        public void AgregarCategoria(Categoria nuevo)
+        public void AgregarCategoria(Categoria categoria)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
                 datos.setearConsulta("insert into Categorias (Nombre) values (@Nombre)");
-                datos.setearParametros("@Nombre", nuevo.Nombre);
+                datos.setearParametros("@Nombre", categoria.Nombre);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
@@ -64,6 +64,27 @@ namespace eCommerce.Datos
             {
                 datos.setearConsulta("update CATEGORIAS set Nombre = @Nombre where IdCategoria = @Id");
                 datos.setearParametros("@Nombre", categoria.Nombre);
+                datos.setearParametros("@Id", categoria.Id);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+
+        }
+
+        public void DesactivarCategoria(Categoria categoria)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("Update CATEGORIAS Set Activo = 0 WHERE IdCategoria = @Id");
                 datos.setearParametros("@Id", categoria.Id);
                 datos.ejecutarAccion();
 
