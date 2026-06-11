@@ -63,7 +63,8 @@ namespace eCommerce.Datos
             try
             {
                 datos.setearConsulta("update CATEGORIAS set Nombre = @Nombre where IdCategoria = @Id");
-                datos.setearParametros("Nombre", categoria.Nombre);
+                datos.setearParametros("@Nombre", categoria.Nombre);
+                datos.setearParametros("@Id", categoria.Id);
                 datos.ejecutarAccion();
 
             }
