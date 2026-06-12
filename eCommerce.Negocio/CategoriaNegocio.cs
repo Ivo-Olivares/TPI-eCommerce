@@ -36,5 +36,11 @@ namespace eCommerce.Negocio
             datos.DesactivarCategoria(categoria);
         }
 
+        public void ActivarCategoria(Categoria categoria)
+        {
+            CategoriaDatos datos = new CategoriaDatos();
+            datos.ActivarCategoria(categoria);
+        }
+
     }
 }

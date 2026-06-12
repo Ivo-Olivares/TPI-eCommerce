@@ -26,9 +26,9 @@
                             <asp:LinkButton
                                 ID="btnDesactivar"
                                 runat="server"
-                                CommandName="Desactivar"
-                                CommandArgument='<%# Eval("Id") %>'
-                                Text="Desactivar" />
+                                Text='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
+                                CommandName='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
+                                CommandArgument='<%# Eval("Id") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

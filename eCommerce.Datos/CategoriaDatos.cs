@@ -95,7 +95,24 @@ namespace eCommerce.Datos
                 throw ex;
             }
 
+        }
 
+        public void ActivarCategoria(Categoria categoria)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("Update CATEGORIAS Set Activo = 1 WHERE IdCategoria = @Id");
+                datos.setearParametros("@Id", categoria.Id);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
         }
     }

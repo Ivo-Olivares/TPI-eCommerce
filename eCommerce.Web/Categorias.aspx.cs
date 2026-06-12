@@ -65,15 +65,6 @@ namespace eCommerce.Web
 
         }
 
-        protected void dgvCategorias_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridViewRow fila = dgvCategorias.SelectedRow;
-            txtNombreCategoria.Text = fila.Cells[1].Text;
-            ViewState["IdCategoria"] = dgvCategorias.SelectedDataKey.Value;
-            btnAgregarCategoria.Text = "Modificar Categoría";
-            btnCancelar.Visible = true;
-        }
-
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             ViewState["IdCategoria"] = null;
@@ -110,6 +101,27 @@ namespace eCommerce.Web
 
                 dgvCategorias.DataSource = negocio.Listar();
                 dgvCategorias.DataBind();
+
+                ViewState["IdCategoria"] = null;
+                txtNombreCategoria.Text = "";
+                btnAgregarCategoria.Text = "Agregar Categoría";
+                btnCancelar.Visible = false;
+            }
+
+            if (e.CommandName == "Activar")
+            {
+                Categoria categoria = new Categoria();
+                categoria.Id = id;
+
+                negocio.ActivarCategoria(categoria);
+
+                dgvCategorias.DataSource = negocio.Listar();
+                dgvCategorias.DataBind();
+
+                ViewState["IdCategoria"] = null;
+                txtNombreCategoria.Text = "";
+                btnAgregarCategoria.Text = "Agregar Categoría";
+                btnCancelar.Visible = false;
             }
         }
     }
