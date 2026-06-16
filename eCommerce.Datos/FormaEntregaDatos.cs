@@ -16,7 +16,7 @@ namespace eCommerce.Datos
 
             try
             {
-                datos.setearConsulta("SELECT IdFormaEntrega, Descripcion FROM FORMASENTREGA");
+                datos.setearConsulta("SELECT IdFormaEntrega, Descripcion, Activo FROM FORMASENTREGA");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -24,6 +24,7 @@ namespace eCommerce.Datos
                     FormaEntrega formaEntrega = new FormaEntrega();
                     formaEntrega.Id = (int)datos.Lector["IdFormaEntrega"];
                     formaEntrega.Descripcion = (string)datos.Lector["Descripcion"];
+                    formaEntrega.Activo = (bool)datos.Lector["Activo"];
 
                     lista.Add(formaEntrega);
                 }
@@ -38,6 +39,81 @@ namespace eCommerce.Datos
             {
                 datos.cerrarConexion();
             }
+        }
+
+        public void AgregarFormaEntrega(FormaEntrega formaEntrega)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("insert into FORMASENTREGA (Descripcion) values (@Descripcion)");
+                datos.setearParametros("@Descripcion", formaEntrega.Descripcion);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ModificarFormaEntrega(FormaEntrega formaEntrega)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("update FORMASENTREGA set Descripcion = @Descripcion where IdFormaEntrega = @Id");
+                datos.setearParametros("@Descripcion", formaEntrega.Descripcion);
+                datos.setearParametros("@Id", formaEntrega.Id);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+
+        }
+
+        public void DesactivarFormaEntrega(FormaEntrega formaEntrega)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("Update FORMASENTREGA Set Activo = 0 WHERE IdFormaEntrega = @Id");
+                datos.setearParametros("@Id", formaEntrega.Id);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public void ActivarFormaEntrega(FormaEntrega formaEntrega)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("Update FORMASENTREGA Set Activo = 1 WHERE IdFormaEntrega = @Id");
+                datos.setearParametros("@Id", formaEntrega.Id);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
     }
 }
