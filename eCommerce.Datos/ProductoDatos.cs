@@ -71,5 +71,28 @@ namespace eCommerce.Datos
                 throw ex;
             }
         }
+
+        public void ModificarProducto(Producto producto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("update PRODUCTOS set IdCategoria = @IdCategoria, IdMarca = @IdMarca, Sku = @Sku, Nombre = @Nombre, Descripcion = @Descripcion, Precio = @Precio, Stock = @Stock where IdProducto = @Id");
+                datos.setearParametros("@IdCategoria", producto.Categoria.Id);
+                datos.setearParametros("@IdMarca", producto.Marca.Id);
+                datos.setearParametros("@Sku", producto.Sku);
+                datos.setearParametros("@Nombre", producto.Nombre);
+                datos.setearParametros("@Descripcion", producto.Descripcion);
+                datos.setearParametros("@Precio", producto.Precio);
+                datos.setearParametros("@Stock", producto.Stock);
+                datos.setearParametros("@Id", producto.Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

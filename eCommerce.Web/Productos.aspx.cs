@@ -59,7 +59,17 @@ namespace eCommerce.Web
                 producto.Stock = int.Parse(txtStock.Text.Trim());
 
                 ProductoNegocio negocio = new ProductoNegocio();
-                negocio.AgregarProducto(producto);
+
+                if (ViewState["IdProducto"] != null)
+                {
+                    producto.Id = (int)ViewState["IdProducto"];
+                    negocio.ModificarProducto(producto);
+                }
+                else
+                {
+                    negocio.AgregarProducto(producto);
+                }
+
                 CargarProductos();
 
                 LimpiarFormulario();
@@ -92,6 +102,27 @@ namespace eCommerce.Web
 
         protected void dgvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            int id = int.Parse(e.CommandArgument.ToString());
+
+            ProductoNegocio negocio = new ProductoNegocio();
+
+            if (e.CommandName == "Editar")
+            {
+                Producto producto = negocio.Listar().Find(x => x.Id == id);
+
+                txtSku.Text = producto.Sku;
+                txtNombreProducto.Text = producto.Nombre;
+                txtDescripcion.Text = producto.Descripcion;
+                ddlCategoria.SelectedValue = producto.Categoria.Id.ToString();
+                ddlMarca.SelectedValue = producto.Marca.Id.ToString();
+                txtPrecio.Text = producto.Precio.ToString();
+                txtStock.Text = producto.Stock.ToString();
+
+                ViewState["IdProducto"] = producto.Id;
+
+                btnAgregarProducto.Text = "Modificar Producto";
+                btnCancelar.Visible = true;
+            }
         }
     }
 }

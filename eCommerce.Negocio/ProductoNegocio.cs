@@ -21,5 +21,11 @@ namespace eCommerce.Negocio
             ProductoDatos datos = new ProductoDatos();
             datos.AgregarProducto(producto);
         }
+
+        public void ModificarProducto(Producto producto)
+        {
+            ProductoDatos datos = new ProductoDatos();
+            datos.ModificarProducto(producto);
+        }
     }
 }
