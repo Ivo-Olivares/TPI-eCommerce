@@ -1,9 +1,7 @@
-﻿using eCommerce.Negocio;
+using eCommerce.Dominio;
+using eCommerce.Negocio;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace eCommerce.Web
@@ -49,14 +47,42 @@ namespace eCommerce.Web
 
         protected void btnAgregarProducto_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Producto producto = new Producto();
+                producto.Sku = txtSku.Text.Trim();
+                producto.Nombre = txtNombreProducto.Text.Trim();
+                producto.Descripcion = txtDescripcion.Text.Trim();
+                producto.Categoria.Id = int.Parse(ddlCategoria.SelectedValue);
+                producto.Marca.Id = int.Parse(ddlMarca.SelectedValue);
+                producto.Precio = decimal.Parse(txtPrecio.Text.Trim());
+                producto.Stock = int.Parse(txtStock.Text.Trim());
+
+                ProductoNegocio negocio = new ProductoNegocio();
+                negocio.AgregarProducto(producto);
+                CargarProductos();
+
+                LimpiarFormulario();
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = ex.Message;
+            }
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            LimpiarFormulario();
+        }
+
+        private void LimpiarFormulario()
         {
             ViewState["IdProducto"] = null;
             txtSku.Text = "";
             txtNombreProducto.Text = "";
             txtDescripcion.Text = "";
+            ddlCategoria.SelectedValue = "0";
+            ddlMarca.SelectedValue = "0";
             txtPrecio.Text = "";
             txtStock.Text = "";
             lblError.Text = "";

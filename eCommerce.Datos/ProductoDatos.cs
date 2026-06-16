@@ -16,15 +16,18 @@ namespace eCommerce.Datos
 
             try
             {
-                datos.setearConsulta("Select P.IdProducto,P.Sku,P.Nombre As Producto,M.Nombre As Marca,C.Nombre As Categoria,P.Precio,P.Stock, P.Activo from PRODUCTOS P Inner Join MARCAS M On P.IdMarca = M.IdMarca Inner Join CATEGORIAS C On P.IdCategoria = C.IdCategoria;");
+                datos.setearConsulta("Select P.IdProducto,P.IdMarca,P.IdCategoria,P.Sku,P.Nombre As Producto,P.Descripcion,M.Nombre As Marca,C.Nombre As Categoria,P.Precio,P.Stock, P.Activo from PRODUCTOS P Inner Join MARCAS M On P.IdMarca = M.IdMarca Inner Join CATEGORIAS C On P.IdCategoria = C.IdCategoria;");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Producto producto = new Producto();
                     producto.Id = (int)datos.Lector["IdProducto"];
+                    producto.Marca.Id = (int)datos.Lector["IdMarca"];
+                    producto.Categoria.Id = (int)datos.Lector["IdCategoria"];
                     producto.Sku = (string)datos.Lector["Sku"];
                     producto.Nombre = (string)datos.Lector["Producto"];
+                    producto.Descripcion = datos.Lector["Descripcion"] is DBNull ? "" : (string)datos.Lector["Descripcion"];
                     producto.Marca.Nombre = (string)datos.Lector["Marca"];
                     producto.Categoria.Nombre = (string)datos.Lector["Categoria"];
                     producto.Precio = (decimal)datos.Lector["Precio"];
@@ -44,6 +47,28 @@ namespace eCommerce.Datos
             finally
             {
                 datos.cerrarConexion();
+            }
+        }
+
+        public void AgregarProducto(Producto producto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("insert into PRODUCTOS (IdCategoria, IdMarca, Sku, Nombre, Descripcion, Precio, Stock, Activo) values (@IdCategoria, @IdMarca, @Sku, @Nombre, @Descripcion, @Precio, @Stock, 1)");
+                datos.setearParametros("@IdCategoria", producto.Categoria.Id);
+                datos.setearParametros("@IdMarca", producto.Marca.Id);
+                datos.setearParametros("@Sku", producto.Sku);
+                datos.setearParametros("@Nombre", producto.Nombre);
+                datos.setearParametros("@Descripcion", producto.Descripcion);
+                datos.setearParametros("@Precio", producto.Precio);
+                datos.setearParametros("@Stock", producto.Stock);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }
