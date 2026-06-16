@@ -27,5 +27,17 @@ namespace eCommerce.Negocio
             ProductoDatos datos = new ProductoDatos();
             datos.ModificarProducto(producto);
         }
+
+        public void DesactivarProducto(Producto producto)
+        {
+            ProductoDatos datos = new ProductoDatos();
+            datos.DesactivarProducto(producto);
+        }
+
+        public void ActivarProducto(Producto producto)
+        {
+            ProductoDatos datos = new ProductoDatos();
+            datos.ActivarProducto(producto);
+        }
     }
 }

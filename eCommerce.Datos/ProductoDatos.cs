@@ -94,5 +94,37 @@ namespace eCommerce.Datos
                 throw ex;
             }
         }
+
+        public void DesactivarProducto(Producto producto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("Update PRODUCTOS Set Activo = 0 WHERE IdProducto = @Id");
+                datos.setearParametros("@Id", producto.Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ActivarProducto(Producto producto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("Update PRODUCTOS Set Activo = 1 WHERE IdProducto = @Id");
+                datos.setearParametros("@Id", producto.Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

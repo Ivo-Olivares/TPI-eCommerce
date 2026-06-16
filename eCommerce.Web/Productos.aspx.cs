@@ -123,6 +123,28 @@ namespace eCommerce.Web
                 btnAgregarProducto.Text = "Modificar Producto";
                 btnCancelar.Visible = true;
             }
+
+            if (e.CommandName == "Desactivar")
+            {
+                Producto producto = new Producto();
+                producto.Id = id;
+
+                negocio.DesactivarProducto(producto);
+
+                CargarProductos();
+                LimpiarFormulario();
+            }
+
+            if (e.CommandName == "Activar")
+            {
+                Producto producto = new Producto();
+                producto.Id = id;
+
+                negocio.ActivarProducto(producto);
+
+                CargarProductos();
+                LimpiarFormulario();
+            }
         }
     }
 }
