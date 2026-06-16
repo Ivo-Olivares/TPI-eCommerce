@@ -35,7 +35,17 @@ namespace eCommerce.Negocio
             datos.EliminarMarca(id);
         }
 
-       
+        public void DesactivarMarca(Marca marca)
+        {
+            MarcaDatos datos = new MarcaDatos();
+            datos.desactivarMarca(marca);
+        }
+
+        public void ActivarMarca(Marca marca)
+        {
+            MarcaDatos datos = new MarcaDatos();
+            datos.ActivarMarca(marca);
+        }
 
 
 

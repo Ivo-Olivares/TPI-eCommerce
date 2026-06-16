@@ -97,5 +97,41 @@ namespace eCommerce.Datos
         }
 
 
+        public void desactivarMarca(Marca marca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("update MARCAS set Activo = 0 where IdMarca = @Id");
+                datos.setearParametros("Id", marca.Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public void ActivarMarca(Marca marca)
+        {
+            try
+            {
+                AccesoDatos datos = new AccesoDatos();
+                  datos.setearConsulta("update MARCAS set Activo = 1 where IdMarca = @Id");
+                  datos.setearParametros("Id", marca.Id);
+                 datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
+
+        }
+
+
     }
 }
