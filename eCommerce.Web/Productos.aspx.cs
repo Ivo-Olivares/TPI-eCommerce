@@ -14,10 +14,37 @@ namespace eCommerce.Web
         {
             if (!IsPostBack)
             {
-                ProductoNegocio negocio = new ProductoNegocio();
-                dgvProductos.DataSource = negocio.Listar();
-                dgvProductos.DataBind();
+                CargarProductos();
+                CargarCategorias();
+                CargarMarcas();
             }
+        }
+
+        private void CargarProductos()
+        {
+            ProductoNegocio negocio = new ProductoNegocio();
+            dgvProductos.DataSource = negocio.Listar();
+            dgvProductos.DataBind();
+        }
+
+        private void CargarCategorias()
+        {
+            CategoriaNegocio negocio = new CategoriaNegocio();
+            ddlCategoria.DataSource = negocio.Listar().Where(x => x.Activo).ToList();
+            ddlCategoria.DataTextField = "Nombre";
+            ddlCategoria.DataValueField = "Id";
+            ddlCategoria.DataBind();
+            ddlCategoria.Items.Insert(0, new ListItem("Seleccionar categoria", "0"));
+        }
+
+        private void CargarMarcas()
+        {
+            MarcaNegocio negocio = new MarcaNegocio();
+            ddlMarca.DataSource = negocio.ListarMarcas();
+            ddlMarca.DataTextField = "Nombre";
+            ddlMarca.DataValueField = "Id";
+            ddlMarca.DataBind();
+            ddlMarca.Items.Insert(0, new ListItem("Seleccionar marca", "0"));
         }
 
         protected void btnAgregarProducto_Click(object sender, EventArgs e)
