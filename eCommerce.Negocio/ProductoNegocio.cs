@@ -18,12 +18,16 @@ namespace eCommerce.Negocio
 
         public void AgregarProducto(Producto producto)
         {
+            ValidarProducto(producto);
+
             ProductoDatos datos = new ProductoDatos();
             datos.AgregarProducto(producto);
         }
 
         public void ModificarProducto(Producto producto)
         {
+            ValidarProducto(producto);
+
             ProductoDatos datos = new ProductoDatos();
             datos.ModificarProducto(producto);
         }
@@ -38,6 +42,27 @@ namespace eCommerce.Negocio
         {
             ProductoDatos datos = new ProductoDatos();
             datos.ActivarProducto(producto);
+        }
+
+        private void ValidarProducto(Producto producto)
+        {
+            if (string.IsNullOrWhiteSpace(producto.Sku))
+                throw new Exception("El sku del producto no puede estar vacío.");
+
+            if (string.IsNullOrWhiteSpace(producto.Nombre))
+                throw new Exception("El nombre del producto no puede estar vacío.");
+
+            if (producto.Categoria.Id <= 0)
+                throw new Exception("Debe seleccionar una categoría.");
+
+            if (producto.Marca.Id <= 0)
+                throw new Exception("Debe seleccionar una marca.");
+
+            if (producto.Precio <= 0)
+                throw new Exception("El precio debe ser mayor a cero.");
+
+            if (producto.Stock < 0)
+                throw new Exception("El stock no puede ser negativo.");
         }
     }
 }

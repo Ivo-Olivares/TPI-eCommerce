@@ -55,8 +55,15 @@ namespace eCommerce.Web
                 producto.Descripcion = txtDescripcion.Text.Trim();
                 producto.Categoria.Id = int.Parse(ddlCategoria.SelectedValue);
                 producto.Marca.Id = int.Parse(ddlMarca.SelectedValue);
-                producto.Precio = decimal.Parse(txtPrecio.Text.Trim());
-                producto.Stock = int.Parse(txtStock.Text.Trim());
+
+                if (!decimal.TryParse(txtPrecio.Text.Trim(), out decimal precio))
+                    throw new Exception("El precio debe ser un número válido.");
+
+                if (!int.TryParse(txtStock.Text.Trim(), out int stock))
+                    throw new Exception("El stock debe ser un número válido.");
+
+                producto.Precio = precio;
+                producto.Stock = stock;
 
                 ProductoNegocio negocio = new ProductoNegocio();
 
