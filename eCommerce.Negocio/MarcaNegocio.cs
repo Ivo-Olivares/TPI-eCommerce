@@ -43,6 +43,12 @@ namespace eCommerce.Negocio
             datos.ActivarMarca(marca);
         }
 
+        public List<Marca> ListarInactivas()
+        {
+            MarcaDatos datos = new MarcaDatos();
+            return datos.ListarInactivas();
+        }
+
        
 
 

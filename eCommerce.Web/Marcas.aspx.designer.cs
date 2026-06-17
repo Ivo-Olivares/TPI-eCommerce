@@ -24,6 +24,15 @@ namespace eCommerce.Web
         protected global::System.Web.UI.WebControls.GridView dgvMarcas;
 
         /// <summary>
+        /// Control chkMostrarInactivas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkMostrarInactivas;
+
+        /// <summary>
         /// Control lblError.
         /// </summary>
         /// <remarks>
@@ -76,5 +85,14 @@ namespace eCommerce.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDesactivarMarca;
+
+        /// <summary>
+        /// Control btnActicarMarca.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnActicarMarca;
     }
 }

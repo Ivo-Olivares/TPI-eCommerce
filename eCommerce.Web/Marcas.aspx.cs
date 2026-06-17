@@ -94,5 +94,48 @@ namespace eCommerce.Web
             hfIdMarca.Value = "";   
 
         }
-    }
+
+        protected void btnActicarMarca_Click(object sender, EventArgs e)
+        {
+            Marca marca = new Marca();  
+            marca.Id = int.Parse(hfIdMarca.Value);
+
+            MarcaNegocio negocio = new MarcaNegocio();
+            negocio.ActivarMarca(marca);
+
+            dgvMarcas.DataSource = negocio.ListarMarcas();
+            dgvMarcas.DataBind();
+
+            if (chkMostrarInactivas.Checked)
+            {
+                dgvMarcas.DataSource = negocio.ListarInactivas();
+            }
+            else
+            {
+                dgvMarcas.DataSource = negocio.ListarMarcas();
+            }
+               
+            dgvMarcas.DataBind();
+
+            txtNombreMarca.Text = "";
+            hfIdMarca.Value = "";
+        }
+
+        protected void chkMostrarInactivas_CheckedChanged(object sender, EventArgs e)
+        {
+            MarcaNegocio negocio = new MarcaNegocio();
+            if(chkMostrarInactivas.Checked)
+            {
+                dgvMarcas.DataSource = negocio.ListarInactivas();
+                
+            }
+            else
+            {
+                dgvMarcas.DataSource = negocio.ListarMarcas();
+                
+            }
+
+            dgvMarcas.DataBind();
+        }
+        }
 }
