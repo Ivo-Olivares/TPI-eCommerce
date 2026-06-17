@@ -107,6 +107,16 @@ namespace eCommerce.Web
             btnCancelar.Visible = false;
         }
 
+        private void SeleccionarItemActual(DropDownList lista, int id, string texto)
+        {
+            string valor = id.ToString();
+
+            if (lista.Items.FindByValue(valor) == null)
+                lista.Items.Add(new ListItem(texto + " (inactiva)", valor));
+
+            lista.SelectedValue = valor;
+        }
+
         protected void dgvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int id = int.Parse(e.CommandArgument.ToString());
@@ -120,8 +130,8 @@ namespace eCommerce.Web
                 txtSku.Text = producto.Sku;
                 txtNombreProducto.Text = producto.Nombre;
                 txtDescripcion.Text = producto.Descripcion;
-                ddlCategoria.SelectedValue = producto.Categoria.Id.ToString();
-                ddlMarca.SelectedValue = producto.Marca.Id.ToString();
+                SeleccionarItemActual(ddlCategoria, producto.Categoria.Id, producto.Categoria.Nombre);
+                SeleccionarItemActual(ddlMarca, producto.Marca.Id, producto.Marca.Nombre);
                 txtPrecio.Text = producto.Precio.ToString();
                 txtStock.Text = producto.Stock.ToString();
 
