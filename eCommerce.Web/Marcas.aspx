@@ -29,6 +29,6 @@
 
 
     <asp:Button ID="btnAgregarMarca" runat="server" Text="Agregar Marcar" CssClass="btn btn-primary" OnClick="btnAgregarMarca_Click" />
-
+    <asp:Button ID="btnModificarMarca" runat="server" Text="Modificar Marca" CssClass="btn btn-warning" OnClick="btnModificarMarca_Click" />
     
 </asp:Content>

@@ -54,5 +54,29 @@ namespace eCommerce.Web
             txtNombreMarca.Text = fila.Cells[1].Text;
         }
 
+        protected void btnModificarMarca_Click(object sender, EventArgs e)
+        {
+            try
+            {
+              Marca marca = new Marca();  
+              marca.Id =int.Parse(hfIdMarca.Value);
+              marca.Nombre = txtNombreMarca.Text;
+
+              MarcaNegocio negocio = new MarcaNegocio();
+              negocio.ModificarMarca(marca);
+
+              dgvMarcas.DataSource = negocio.ListarMarcas();  
+              dgvMarcas.DataBind();
+
+              txtNombreMarca.Text = "";
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
+            
+        }
     }
 }

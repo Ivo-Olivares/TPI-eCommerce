@@ -65,7 +65,8 @@ namespace eCommerce.Datos
             try
             {
                 datos.setearConsulta("update MARCAS set Nombre = @Nombre where IdMarca = @Id");
-                datos.setearParametros("Nombre", marca.Nombre);
+                datos.setearParametros("@Nombre", marca.Nombre);
+                datos.setearParametros("id", marca.Id);
                 datos.ejecutarAccion();
 
             }
@@ -73,6 +74,10 @@ namespace eCommerce.Datos
             {
 
                 throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
 
 
