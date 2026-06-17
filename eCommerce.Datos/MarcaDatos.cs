@@ -17,7 +17,7 @@ namespace eCommerce.Datos
 
             try
             {
-                datos.setearConsulta("SELECT IdMarca, Nombre FROM MARCAS");
+                datos.setearConsulta("SELECT IdMarca, Nombre FROM MARCAS where Activo = 1");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -40,9 +40,6 @@ namespace eCommerce.Datos
                 datos.cerrarConexion();
             }
         }
-
-
-
 
         public void AgregarMarca(Marca nuevo)
         {
@@ -83,24 +80,6 @@ namespace eCommerce.Datos
 
 
         }
-
-        public void EliminarMarca(int id )
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConsulta("delete from MARCAS where IdMarca = @Id");
-                datos.setearParametros("@Id", id);
-                datos.ejecutarAccion();
-
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
 
         public void desactivarMarca(Marca marca)
         {

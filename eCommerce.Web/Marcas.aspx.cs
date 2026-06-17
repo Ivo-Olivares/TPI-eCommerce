@@ -78,5 +78,21 @@ namespace eCommerce.Web
            
             
         }
+
+        protected void btnDesactivarMarca_Click(object sender, EventArgs e)
+        {
+            Marca marca = new Marca();
+            marca.Id = int.Parse(hfIdMarca.Value);
+            
+            MarcaNegocio negocio = new MarcaNegocio();
+            negocio.DesactivarMarca(marca);
+            
+            dgvMarcas.DataSource = negocio.ListarMarcas();
+            dgvMarcas.DataBind();
+            
+            txtNombreMarca.Text = "";
+            hfIdMarca.Value = "";   
+
+        }
     }
 }
