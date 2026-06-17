@@ -58,6 +58,9 @@ namespace eCommerce.Web
         {
             try
             {
+              if (string.IsNullOrWhiteSpace(hfIdMarca.Value))
+                  throw new Exception("Debe seleccionar una marca.");
+
               Marca marca = new Marca();  
               marca.Id =int.Parse(hfIdMarca.Value);
               marca.Nombre = txtNombreMarca.Text;
@@ -81,6 +84,12 @@ namespace eCommerce.Web
 
         protected void btnDesactivarMarca_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(hfIdMarca.Value))
+            {
+                lblError.Text = "Debe seleccionar una marca.";
+                return;
+            }
+
             Marca marca = new Marca();
             marca.Id = int.Parse(hfIdMarca.Value);
             
@@ -97,6 +106,12 @@ namespace eCommerce.Web
 
         protected void btnActicarMarca_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(hfIdMarca.Value))
+            {
+                lblError.Text = "Debe seleccionar una marca.";
+                return;
+            }
+
             Marca marca = new Marca();  
             marca.Id = int.Parse(hfIdMarca.Value);
 
