@@ -3,19 +3,76 @@
 
     <div class="row">
         <div class="col">
-            <asp:GridView runat="server" ID="dgvProductos" AutoGenerateColumns="false" CssClass="table table-bordered">
+            <asp:GridView runat="server" ID="dgvProductos" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-bordered" OnRowCommand="dgvProductos_RowCommand">
                 <Columns>
                     <asp:BoundField HeaderText="Id" DataField="Id" />
                     <asp:BoundField HeaderText="Sku" DataField="Sku" />
                     <asp:BoundField HeaderText="Producto" DataField="Nombre" />
+                    <asp:BoundField HeaderText="Descripcion" DataField="Descripcion" />
                     <asp:BoundField HeaderText="Marca" DataField="Marca" />
                     <asp:BoundField HeaderText="Categoria" DataField="Categoria" />
                     <asp:BoundField HeaderText="Precio" DataField="Precio" />
                     <asp:BoundField HeaderText="Stock" DataField="Stock" />
-                    <asp:BoundField HeaderText="Activo" DataField="Activo" />
+                    <asp:TemplateField HeaderText="Activo">
+                        <ItemTemplate>
+                            <%# (bool)Eval("Activo") ? "Sí" : "No" %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Acción">
+                        <ItemTemplate>
+                            <asp:LinkButton
+                                ID="btnEditar"
+                                runat="server"
+                                CommandName="Editar"
+                                CommandArgument='<%# Eval("Id") %>'
+                                Text="Editar" />
+                            |
+                            <asp:LinkButton
+                                ID="btnDesactivar"
+                                runat="server"
+                                Text='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
+                                CommandName='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
+                                CommandArgument='<%# Eval("Id") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
         </div>
     </div>
+
+    <asp:Label runat="server" ID="lblError" ForeColor="Red"></asp:Label>
+
+    <br />
+
+    <asp:TextBox runat="server" ID="txtSku" CssClass="form-control" Placeholder="Sku" />
+
+    <br />
+
+    <asp:TextBox runat="server" ID="txtNombreProducto" CssClass="form-control" Placeholder="Nombre del producto" />
+
+    <br />
+
+    <asp:TextBox runat="server" ID="txtDescripcion" CssClass="form-control" Placeholder="Descripcion" TextMode="MultiLine" Rows="3" />
+
+    <br />
+
+    <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="form-control" />
+
+    <br />
+
+    <asp:DropDownList runat="server" ID="ddlMarca" CssClass="form-control" />
+
+    <br />
+
+    <asp:TextBox runat="server" ID="txtPrecio" CssClass="form-control" Placeholder="Precio" />
+
+    <br />
+
+    <asp:TextBox runat="server" ID="txtStock" CssClass="form-control" Placeholder="Stock" />
+
+    <br />
+
+    <asp:Button ID="btnAgregarProducto" runat="server" Text="Agregar Producto" CssClass="btn btn-primary" OnClick="btnAgregarProducto_Click" />
+    <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" Visible="false" OnClick="btnCancelar_Click" CssClass="btn btn-secondary" />
 
 </asp:Content>
