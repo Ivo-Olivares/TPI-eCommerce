@@ -29,14 +29,27 @@ namespace eCommerce.Negocio
             MarcaDatos datos = new MarcaDatos();
             datos.ModificarMarca(marca);
         }
-        public void EliminarMarca(int id)
+        
+
+        public void DesactivarMarca(Marca marca)
         {
             MarcaDatos datos = new MarcaDatos();
-            datos.EliminarMarca(id);
+            datos.desactivarMarca(marca);
+        }
+
+        public void ActivarMarca(Marca marca)
+        {
+            MarcaDatos datos = new MarcaDatos();
+            datos.ActivarMarca(marca);
+        }
+
+        public List<Marca> ListarInactivas()
+        {
+            MarcaDatos datos = new MarcaDatos();
+            return datos.ListarInactivas();
         }
 
        
-
 
 
 

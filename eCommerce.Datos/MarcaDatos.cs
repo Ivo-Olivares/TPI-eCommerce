@@ -10,6 +10,36 @@ namespace eCommerce.Datos
 {
     public class MarcaDatos
     {
+        public List<Marca> ListarInactivas()
+        {
+            List<Marca> lista = new List<Marca>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT IdMarca, Nombre FROM MARCAS where Activo = 0");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Marca marca = new Marca();
+                    marca.Id = (int)datos.Lector["IdMarca"];
+                    marca.Nombre = (string)datos.Lector["Nombre"];
+
+                    lista.Add(marca);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
         public List<Marca> ListarMarcas()
         {
             List<Marca> lista = new List<Marca>();
@@ -17,7 +47,7 @@ namespace eCommerce.Datos
 
             try
             {
-                datos.setearConsulta("SELECT IdMarca, Nombre FROM MARCAS");
+                datos.setearConsulta("SELECT IdMarca, Nombre FROM MARCAS where Activo = 1");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -41,9 +71,6 @@ namespace eCommerce.Datos
             }
         }
 
-
-
-
         public void AgregarMarca(Marca nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -65,7 +92,8 @@ namespace eCommerce.Datos
             try
             {
                 datos.setearConsulta("update MARCAS set Nombre = @Nombre where IdMarca = @Id");
-                datos.setearParametros("Nombre", marca.Nombre);
+                datos.setearParametros("@Nombre", marca.Nombre);
+                datos.setearParametros("id", marca.Id);
                 datos.ejecutarAccion();
 
             }
@@ -73,20 +101,40 @@ namespace eCommerce.Datos
             {
 
                 throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
 
 
 
         }
 
-        public void EliminarMarca(int id )
+        public void desactivarMarca(Marca marca)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("delete from MARCAS where IdMarca = @Id");
-                datos.setearParametros("@Id", id);
+                datos.setearConsulta("update MARCAS set Activo = 0 where IdMarca = @Id");
+                datos.setearParametros("Id", marca.Id);
                 datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public void ActivarMarca(Marca marca)
+        {
+            try
+            {
+                AccesoDatos datos = new AccesoDatos();
+                  datos.setearConsulta("update MARCAS set Activo = 1 where IdMarca = @Id");
+                  datos.setearParametros("Id", marca.Id);
+                 datos.ejecutarAccion();
 
             }
             catch (Exception ex)
@@ -94,6 +142,8 @@ namespace eCommerce.Datos
 
                 throw ex;
             }
+            
+
         }
 
 
