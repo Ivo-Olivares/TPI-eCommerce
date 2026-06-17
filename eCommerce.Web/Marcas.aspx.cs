@@ -40,10 +40,19 @@ namespace eCommerce.Web
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message; 
+                lblError.Text = ex.Message;
             }
-            
-          
+
+
         }
+
+
+        protected void dgvMarcas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow fila = dgvMarcas.SelectedRow;
+            hfIdMarca.Value = fila.Cells[0].Text;
+            txtNombreMarca.Text = fila.Cells[1].Text;
+        }
+
     }
 }
