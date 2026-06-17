@@ -75,8 +75,7 @@ namespace eCommerce.Web
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                lblError.Text = ex.Message;
             }
            
             
