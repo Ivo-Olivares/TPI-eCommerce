@@ -3,40 +3,42 @@
 
     <div class="row">
         <div class="col">
-            <asp:GridView runat="server" ID="dgvProductos" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-bordered" OnRowCommand="dgvProductos_RowCommand">
-                <Columns>
-                    <asp:BoundField HeaderText="Id" DataField="Id" />
-                    <asp:BoundField HeaderText="Sku" DataField="Sku" />
-                    <asp:BoundField HeaderText="Producto" DataField="Nombre" />
-                    <asp:BoundField HeaderText="Descripcion" DataField="Descripcion" />
-                    <asp:BoundField HeaderText="Marca" DataField="Marca" />
-                    <asp:BoundField HeaderText="Categoria" DataField="Categoria" />
-                    <asp:BoundField HeaderText="Precio" DataField="Precio" />
-                    <asp:BoundField HeaderText="Stock" DataField="Stock" />
-                    <asp:TemplateField HeaderText="Activo">
-                        <ItemTemplate>
-                            <%# (bool)Eval("Activo") ? "Sí" : "No" %>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Acción">
-                        <ItemTemplate>
-                            <asp:LinkButton
-                                ID="btnEditar"
-                                runat="server"
-                                CommandName="Editar"
-                                CommandArgument='<%# Eval("Id") %>'
-                                Text="Editar" />
-                            |
-                            <asp:LinkButton
-                                ID="btnDesactivar"
-                                runat="server"
-                                Text='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
-                                CommandName='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
-                                CommandArgument='<%# Eval("Id") %>' />
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                </Columns>
-            </asp:GridView>
+            <div class="table-responsive">
+                <asp:GridView runat="server" ID="dgvProductos" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-bordered" OnRowCommand="dgvProductos_RowCommand">
+                    <Columns>
+                        <asp:BoundField HeaderText="Id" DataField="Id" />
+                        <asp:BoundField HeaderText="Sku" DataField="Sku" />
+                        <asp:BoundField HeaderText="Producto" DataField="Nombre" />
+                        <asp:BoundField HeaderText="Descripcion" DataField="Descripcion" />
+                        <asp:BoundField HeaderText="Marca" DataField="Marca" />
+                        <asp:BoundField HeaderText="Categoria" DataField="Categoria" />
+                        <asp:BoundField HeaderText="Precio" DataField="Precio" />
+                        <asp:BoundField HeaderText="Stock" DataField="Stock" />
+                        <asp:TemplateField HeaderText="Activo">
+                            <ItemTemplate>
+                                <%# (bool)Eval("Activo") ? "Sí" : "No" %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Acción">
+                            <ItemTemplate>
+                                <asp:LinkButton
+                                    ID="btnEditar"
+                                    runat="server"
+                                    CommandName="Editar"
+                                    CommandArgument='<%# Eval("Id") %>'
+                                    Text="Editar" />
+                                |
+                                <asp:LinkButton
+                                    ID="btnDesactivar"
+                                    runat="server"
+                                    Text='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
+                                    CommandName='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
+                                    CommandArgument='<%# Eval("Id") %>' />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </div>
         </div>
     </div>
 
