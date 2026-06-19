@@ -52,6 +52,12 @@ namespace eCommerce.Negocio
             if (string.IsNullOrWhiteSpace(producto.Nombre))
                 throw new Exception("El nombre del producto no puede estar vacío.");
 
+            producto.Sku = producto.Sku.Trim();
+            producto.Nombre = producto.Nombre.Trim();
+
+            if (EsSoloNumeros(producto.Nombre))
+                throw new Exception("El nombre del producto no puede contener solamente numeros.");
+
             if (producto.Categoria.Id <= 0)
                 throw new Exception("Debe seleccionar una categoría.");
 
@@ -63,6 +69,22 @@ namespace eCommerce.Negocio
 
             if (producto.Stock < 0)
                 throw new Exception("El stock no puede ser negativo.");
+
+            Producto productoConMismoSku = Listar().Find(x => string.Equals(x.Sku, producto.Sku, StringComparison.InvariantCultureIgnoreCase) && x.Id != producto.Id);
+
+            if (productoConMismoSku != null)
+                throw new Exception("Ya existe un producto con ese sku.");
+
+            Producto productoConMismoNombre = Listar().Find(x => string.Equals(x.Nombre, producto.Nombre, StringComparison.InvariantCultureIgnoreCase) && x.Id != producto.Id);
+
+            if (productoConMismoNombre != null)
+                throw new Exception("Ya existe un producto con ese nombre.");
+        }
+
+        private bool EsSoloNumeros(string texto)
+        {
+            string textoSinEspacios = new string(texto.Where(x => !char.IsWhiteSpace(x)).ToArray());
+            return textoSinEspacios.All(char.IsDigit);
         }
     }
 }
