@@ -19,3 +19,75 @@ textarea {
         padding: 0;
     }
 }
+
+.registro-page {
+    background: #f6f8fb;
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.registro-shell {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.registro-header {
+    margin-bottom: 1rem;
+}
+
+.registro-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.registro-section {
+    background: #fff;
+    border: 1px solid #d9e1ea;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.registro-section h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.registro-page .form-label {
+    font-weight: 600;
+    margin-bottom: .35rem;
+}
+
+.registro-page .form-control {
+    max-width: none;
+    min-height: 42px;
+}
+
+.registro-actions {
+    display: flex;
+    gap: .75rem;
+    justify-content: flex-end;
+    padding-top: .25rem;
+}
+
+@media screen and (max-width: 575px) {
+    .registro-section {
+        padding: 1rem;
+    }
+
+    .registro-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .registro-actions {
+        flex-direction: column;
+    }
+
+    .registro-actions .btn {
+        width: 100%;
+    }
+}
