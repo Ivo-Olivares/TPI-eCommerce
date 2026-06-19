@@ -22,8 +22,13 @@ namespace eCommerce.Negocio
                 throw new Exception("El nombre de la marca no puede estar vacío.");
 
             MarcaDatos datos = new MarcaDatos();
+
+            if (datos.ExisteMarca(marca.Nombre))
+                throw new Exception("Ya existe una marca con ese nombre.");
+
             datos.AgregarMarca(marca);
         }
+
         public void ModificarMarca(Marca marca)
         {
             MarcaDatos datos = new MarcaDatos();
@@ -48,6 +53,7 @@ namespace eCommerce.Negocio
             MarcaDatos datos = new MarcaDatos();
             return datos.ListarInactivas();
         }
+
 
        
 

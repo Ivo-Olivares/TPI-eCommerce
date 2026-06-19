@@ -146,6 +146,38 @@ namespace eCommerce.Datos
 
         }
 
+        public bool ExisteMarca(string nombre)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) Cantidad  FROM MARCAS WHERE nombre = @nombre");
+                datos.setearParametros("@nombre", nombre);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return (int)datos.Lector["Cantidad"] > 0;
+
+                    return false;
+
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return false;
+
+        }
+
+
 
     }
 }
