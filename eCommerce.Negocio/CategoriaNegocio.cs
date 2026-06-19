@@ -18,14 +18,15 @@ namespace eCommerce.Negocio
 
         public void AgregarCategoria(Categoria categoria)
         {
-            if (string.IsNullOrWhiteSpace(categoria.Nombre))
-                throw new Exception("El nombre de la Categoria no puede estar vacío.");
+            ValidarCategoria(categoria);
 
             CategoriaDatos datos = new CategoriaDatos();
             datos.AgregarCategoria(categoria);
         }
         public void ModificarCategoria(Categoria categoria)
         {
+            ValidarCategoria(categoria);
+
             CategoriaDatos datos = new CategoriaDatos();
             datos.ModificarCategoria(categoria);
         }
@@ -42,5 +43,26 @@ namespace eCommerce.Negocio
             datos.ActivarCategoria(categoria);
         }
 
+        private void ValidarCategoria(Categoria categoria)
+        {
+            if (string.IsNullOrWhiteSpace(categoria.Nombre))
+                throw new Exception("El nombre de la Categoria no puede estar vacío.");
+
+            categoria.Nombre = categoria.Nombre.Trim();
+
+            if (EsSoloNumeros(categoria.Nombre))
+                throw new Exception("El nombre de la Categoria no puede contener solamente numeros.");
+
+            Categoria categoriaExistente = Listar().Find(x => string.Equals(x.Nombre, categoria.Nombre, StringComparison.InvariantCultureIgnoreCase) && x.Id != categoria.Id);
+
+            if (categoriaExistente != null)
+                throw new Exception("Ya existe una Categoria con ese nombre.");
+        }
+
+        private bool EsSoloNumeros(string texto)
+        {
+            string textoSinEspacios = new string(texto.Where(x => !char.IsWhiteSpace(x)).ToArray());
+            return textoSinEspacios.All(char.IsDigit);
+        }
     }
 }
