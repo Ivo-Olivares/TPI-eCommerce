@@ -42,5 +42,11 @@ namespace eCommerce.Negocio
             datos.ActivarCategoria(categoria);
         }
 
+        public void EliminarCategoria(int id)
+        {
+            CategoriaDatos datos = new CategoriaDatos();
+            datos.EliminarCategoria(id);
+        }
+
     }
 }

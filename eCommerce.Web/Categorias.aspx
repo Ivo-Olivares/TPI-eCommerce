@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col">
-            <asp:GridView runat="server" ID="dgvCategorias" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-bordered" OnRowCommand="dgvCategorias_RowCommand" >
+            <asp:GridView runat="server" ID="dgvCategorias" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-bordered" OnRowCommand="dgvCategorias_RowCommand">
                 <Columns>
                     <asp:BoundField HeaderText="Id" DataField="Id" />
                     <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
@@ -29,6 +29,14 @@
                                 Text='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
                                 CommandName='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
                                 CommandArgument='<%# Eval("Id") %>' />
+                            |
+                            <asp:LinkButton
+                                ID="btnEliminar"
+                                runat="server"
+                                CommandName="Eliminar"
+                                CommandArgument='<%# Eval("Id") %>'
+                                Text="Eliminar"
+                                OnClientClick="return confirm('Esta accion no se puede deshacer. ¿Desea eliminar la categoria?');" />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
