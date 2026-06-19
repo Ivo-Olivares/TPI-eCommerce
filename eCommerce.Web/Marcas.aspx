@@ -38,7 +38,7 @@
     <br />
 
 
-    <asp:Button ID="btnAgregarMarca" runat="server" Text="Agregar Marcar" CssClass="btn btn-primary" OnClick="btnAgregarMarca_Click" />
+    <asp:Button ID="btnAgregarMarca" runat="server" Text="Agregar Marca" CssClass="btn btn-primary" OnClick="btnAgregarMarca_Click" />
     <asp:Button ID="btnModificarMarca" runat="server" Text="Modificar Marca" CssClass="btn btn-warning" OnClick="btnModificarMarca_Click" />
     <asp:Button ID="btnDesactivarMarca" runat="server" Text="Desactivar Marca" CssClass="btn btn-danger" OnClick="btnDesactivarMarca_Click" />
     <asp:Button ID="btnActicarMarca" runat="server" Text="Activar Marca" CssClass="btn btn-primary" OnClick="btnActicarMarca_Click"/>
