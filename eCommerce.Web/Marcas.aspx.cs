@@ -26,130 +26,104 @@ namespace eCommerce.Web
         {
             try
             {
+                if (ViewState["IdMarca"] != null)
+                {
+                    Marca marca = new Marca();
+
+                    marca.Id = (int)ViewState["IdMarca"];
+                    marca.Nombre = txtNombreMarca.Text.Trim();
+
+                    MarcaNegocio negocio = new MarcaNegocio();
+
+                    negocio.ModificarMarca(marca);
+                    dgvMarcas.DataSource = negocio.ListarMarcas();
+                    dgvMarcas.DataBind();
+
+                    ViewState["IdMarca"] = null;
+                    txtNombreMarca.Text = "";
+                    lblError.Text = "";
+
+                    btnAgregarMarca.Text = "Agregar Marca";
+                }
+                else
+                {
+                    Marca marca = new Marca();
+                    marca.Nombre = txtNombreMarca.Text.Trim();
+
+                    MarcaNegocio negocio = new MarcaNegocio();
+                    negocio.AgregarMArca(marca);
+                    dgvMarcas.DataSource = negocio.ListarMarcas();
+                    dgvMarcas.DataBind();
+
+                    txtNombreMarca.Text = "";
+                    lblError.Text = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = ex.Message;
+            }
+
+        }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            ViewState["IdMarca"] = null;
+            txtNombreMarca.Text = "";
+            lblError.Text = "";
+            btnAgregarMarca.Text = "Agregar Marca";
+            btnCancelar.Visible = false;
+        }
+
+        protected void dgvMarcas_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int id = int.Parse(e.CommandArgument.ToString());
+
+            MarcaNegocio negocio = new MarcaNegocio();
+
+            if (e.CommandName == "Editar")
+            {
+                Marca marca = negocio.ListarMarcas().Find(x => x.Id == id);
+
+                txtNombreMarca.Text = marca.Nombre;
+
+                ViewState["IdMarca"] = marca.Id;
+
+                btnAgregarMarca.Text = "Modificar Marca";
+                btnCancelar.Visible = true;
+            }
+
+            if (e.CommandName == "Desactivar")
+            {
                 Marca marca = new Marca();
-                marca.Nombre = txtNombreMarca.Text;
-                MarcaNegocio negocio = new MarcaNegocio();
-                negocio.AgregarMArca(marca);
+                marca.Id = id;
+
+                negocio.DesactivarMarca(marca);
 
                 dgvMarcas.DataSource = negocio.ListarMarcas();
                 dgvMarcas.DataBind();
 
+                ViewState["IdMarca"] = null;
                 txtNombreMarca.Text = "";
-                lblError.Text = "";
-
-            }
-            catch (Exception ex)
-            {
-                lblError.Text = ex.Message;
+                btnAgregarMarca.Text = "Agregar Marca";
+                btnCancelar.Visible = false;
             }
 
-
-        }
-
-
-        protected void dgvMarcas_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridViewRow fila = dgvMarcas.SelectedRow;
-            hfIdMarca.Value = fila.Cells[0].Text;
-            txtNombreMarca.Text = fila.Cells[1].Text;
-        }
-
-        protected void btnModificarMarca_Click(object sender, EventArgs e)
-        {
-            try
+            if (e.CommandName == "Activar")
             {
-              if (string.IsNullOrWhiteSpace(hfIdMarca.Value))
-                  throw new Exception("Debe seleccionar una marca.");
+                Marca marca = new Marca();
+                marca.Id = id;
 
-              Marca marca = new Marca();  
-              marca.Id =int.Parse(hfIdMarca.Value);
-              marca.Nombre = txtNombreMarca.Text;
+                negocio.ActivarMarca(marca);
 
-              MarcaNegocio negocio = new MarcaNegocio();
-              negocio.ModificarMarca(marca);
-
-              dgvMarcas.DataSource = negocio.ListarMarcas();  
-              dgvMarcas.DataBind();
-
-              txtNombreMarca.Text = "";
-            }
-            catch (Exception ex)
-            {
-                lblError.Text = ex.Message;
-            }
-           
-            
-        }
-
-        protected void btnDesactivarMarca_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(hfIdMarca.Value))
-            {
-                lblError.Text = "Debe seleccionar una marca.";
-                return;
-            }
-
-            Marca marca = new Marca();
-            marca.Id = int.Parse(hfIdMarca.Value);
-            
-            MarcaNegocio negocio = new MarcaNegocio();
-            negocio.DesactivarMarca(marca);
-            
-            dgvMarcas.DataSource = negocio.ListarMarcas();
-            dgvMarcas.DataBind();
-            
-            txtNombreMarca.Text = "";
-            hfIdMarca.Value = "";   
-
-        }
-
-        protected void btnActicarMarca_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(hfIdMarca.Value))
-            {
-                lblError.Text = "Debe seleccionar una marca.";
-                return;
-            }
-
-            Marca marca = new Marca();  
-            marca.Id = int.Parse(hfIdMarca.Value);
-
-            MarcaNegocio negocio = new MarcaNegocio();
-            negocio.ActivarMarca(marca);
-
-            dgvMarcas.DataSource = negocio.ListarMarcas();
-            dgvMarcas.DataBind();
-
-            if (chkMostrarInactivas.Checked)
-            {
-                dgvMarcas.DataSource = negocio.ListarInactivas();
-            }
-            else
-            {
                 dgvMarcas.DataSource = negocio.ListarMarcas();
-            }
-               
-            dgvMarcas.DataBind();
+                dgvMarcas.DataBind();
 
-            txtNombreMarca.Text = "";
-            hfIdMarca.Value = "";
-        }
-
-        protected void chkMostrarInactivas_CheckedChanged(object sender, EventArgs e)
-        {
-            MarcaNegocio negocio = new MarcaNegocio();
-            if(chkMostrarInactivas.Checked)
-            {
-                dgvMarcas.DataSource = negocio.ListarInactivas();
-                
+                ViewState["IdMarca"] = null;
+                txtNombreMarca.Text = "";
+                btnAgregarMarca.Text = "Agregar Marca";
+                btnCancelar.Visible = false;
             }
-            else
-            {
-                dgvMarcas.DataSource = negocio.ListarMarcas();
-                
-            }
-
-            dgvMarcas.DataBind();
         }
-        }
+    }
 }
