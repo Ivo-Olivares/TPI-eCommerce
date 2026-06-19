@@ -60,15 +60,10 @@ namespace eCommerce.Negocio
             if (EsSoloNumeros(marca.Nombre))
                 throw new Exception("El nombre de la marca no puede contener solamente numeros.");
 
-            Marca marcaExistente = ListarTodasLasMarcas().Find(x => string.Equals(x.Nombre, marca.Nombre, StringComparison.InvariantCultureIgnoreCase) && x.Id != marca.Id);
+            Marca marcaExistente = ListarMarcas().Find(x => string.Equals(x.Nombre, marca.Nombre, StringComparison.InvariantCultureIgnoreCase) && x.Id != marca.Id);
 
             if (marcaExistente != null)
                 throw new Exception("Ya existe una marca con ese nombre.");
-        }
-
-        private List<Marca> ListarTodasLasMarcas()
-        {
-            return ListarMarcas().Concat(ListarInactivas()).ToList();
         }
 
         private bool EsSoloNumeros(string texto)
