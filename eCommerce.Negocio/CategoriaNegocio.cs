@@ -43,6 +43,12 @@ namespace eCommerce.Negocio
             datos.ActivarCategoria(categoria);
         }
 
+        public void EliminarCategoria(int id)
+        {
+            CategoriaDatos datos = new CategoriaDatos();
+            datos.EliminarCategoria(id);
+        }
+
         private void ValidarCategoria(Categoria categoria)
         {
             if (string.IsNullOrWhiteSpace(categoria.Nombre))

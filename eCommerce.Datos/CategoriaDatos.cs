@@ -115,5 +115,21 @@ namespace eCommerce.Datos
             }
 
         }
+
+        public void EliminarCategoria(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("DELETE FROM CATEGORIAS WHERE IdCategoria = @Id");
+                datos.setearParametros("@Id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
