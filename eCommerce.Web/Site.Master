@@ -44,11 +44,13 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Catalogo">Catalogo</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Carrito">Carrito</a></li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item" runat="server" id="liIngresar"><a class="nav-link" runat="server" href="~/Login">Ingresar</a></li>
                         <li class="nav-item" runat="server" id="liRegistrarse"><a class="nav-link" runat="server" href="~/Registro">Registrarse</a></li>
                         <li class="nav-item" runat="server" id="liMiPerfil"><a class="nav-link" runat="server" href="~/MiPerfil">Mi perfil</a></li>
