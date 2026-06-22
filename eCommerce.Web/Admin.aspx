@@ -24,11 +24,16 @@
         </div>
     </div>
 
-    
+
     <div class="row mb-3">
         <div class="col-md-6">
             <a href="Productos.aspx" class="btn btn-primary w-100">Productos</a>
         </div>
+        <div class="col-md-6">
+            <a href="EstadosPedido.aspx" class="btn btn-primary w-100">Estados de Pedido</a>
+        </div>
     </div>
+
+
 
 </asp:Content>
