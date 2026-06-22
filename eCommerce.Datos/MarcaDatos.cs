@@ -55,6 +55,7 @@ namespace eCommerce.Datos
             {
                 throw ex;
             }
+            finally { datos.cerrarConexion(); }
         }
         public void ModificarMarca(Marca marca)
         {
@@ -96,16 +97,20 @@ namespace eCommerce.Datos
 
                 throw ex;
             }
+            finally             {
+                datos.cerrarConexion();
+            }
         }
 
         public void ActivarMarca(Marca marca)
         {
+            AccesoDatos datos = new AccesoDatos();
             try
             {
-                AccesoDatos datos = new AccesoDatos();
-                  datos.setearConsulta("update MARCAS set Activo = 1 where IdMarca = @Id");
-                  datos.setearParametros("Id", marca.Id);
-                 datos.ejecutarAccion();
+                
+                datos.setearConsulta("update MARCAS set Activo = 1 where IdMarca = @Id");
+                datos.setearParametros("Id", marca.Id);
+                datos.ejecutarAccion();
 
             }
             catch (Exception ex)
@@ -113,8 +118,13 @@ namespace eCommerce.Datos
 
                 throw ex;
             }
-            
+            finally
+            {
+                    
+                datos.cerrarConexion();
 
+
+            }
         }
 
         public bool ExisteMarca(string nombre)
@@ -147,6 +157,55 @@ namespace eCommerce.Datos
             return false;
 
         }
+
+        public List<Marca> FiltrarMarcas(string filtroNombre, string estado)
+        {
+            List<Marca> lista = new List<Marca>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+
+                string consulta = "SELECT IdMarca, Nombre , Activo FROM MARCAS WHERE Nombre LIKE @filtro";
+                if (estado == "Activos")
+                {
+                    consulta += " AND Activo = 1";
+                }
+                else if (estado == "Inactivos")
+                {
+                    consulta += " AND Activo = 0";
+                }
+
+                datos.setearConsulta(consulta);
+                datos.setearParametros("@filtro", "%" + filtroNombre.Trim() + "%");
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Marca marca = new Marca();
+
+                    marca.Id = (int)datos.Lector["IdMarca"];
+                    marca.Nombre = (string)datos.Lector["Nombre"];
+                    marca.Activo = (bool)datos.Lector["Activo"];
+                   
+                    lista.Add(marca);
+                }
+
+                return lista;
+            }
+
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
 
 

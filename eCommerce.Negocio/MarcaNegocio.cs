@@ -21,10 +21,6 @@ namespace eCommerce.Negocio
             ValidarMarca(marca);
 
             MarcaDatos datos = new MarcaDatos();
-
-            if (datos.ExisteMarca(marca.Nombre))
-                throw new Exception("Ya existe una marca con ese nombre.");
-
             datos.AgregarMarca(marca);
         }
 
@@ -72,6 +68,11 @@ namespace eCommerce.Negocio
             return textoSinEspacios.All(char.IsDigit);
         }
 
+        public List <Marca> FiltrarMarcas(string filtroNombre,string estado)
+        {
+            MarcaDatos datos = new MarcaDatos();
+            return datos.FiltrarMarcas(filtroNombre, estado);
+        }
 
 
 
