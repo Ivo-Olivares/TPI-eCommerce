@@ -16,6 +16,7 @@
                 <asp:Label runat="server" ID="lblError" CssClass="alert alert-danger d-block" Visible="false" />
                 <div class="d-flex gap-2">
                     <asp:Button runat="server" ID="btnIngresar" CssClass="btn btn-primary" Text="Ingresar" OnClick="btnIngresar_Click" />
+                    <asp:Button runat="server" ID="btnInvitado" CssClass="btn btn-outline-primary" Text="Entrar como invitado" OnClick="btnInvitado_Click" />
                     <a runat="server" href="~/Registro" class="btn btn-outline-secondary">Crear cuenta</a>
                 </div>
             </div>

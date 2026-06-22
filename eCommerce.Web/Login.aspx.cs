@@ -29,6 +29,16 @@ namespace eCommerce.Web
             }
         }
 
+        protected void btnInvitado_Click(object sender, EventArgs e)
+        {
+            UsuarioNegocio negocio = new UsuarioNegocio();
+
+            Session["Usuario"] = negocio.CrearInvitado();
+            Session["EsInvitado"] = true;
+
+            Response.Redirect("~/Default.aspx", false);
+        }
+
         private void MostrarError(string mensaje)
         {
             lblError.Text = mensaje;
