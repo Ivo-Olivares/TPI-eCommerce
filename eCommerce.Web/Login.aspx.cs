@@ -18,8 +18,7 @@ namespace eCommerce.Web
                 UsuarioNegocio negocio = new UsuarioNegocio();
                 Usuario usuario = negocio.Login(txtEmail.Text, txtClave.Text);
 
-                Session["Usuario"] = usuario;
-                Session["EsInvitado"] = false;
+                AutenticacionSesion.IniciarSesion(Session, usuario);
 
                 Response.Redirect("~/Default.aspx", false);
             }
@@ -33,8 +32,7 @@ namespace eCommerce.Web
         {
             UsuarioNegocio negocio = new UsuarioNegocio();
 
-            Session["Usuario"] = negocio.CrearInvitado();
-            Session["EsInvitado"] = true;
+            AutenticacionSesion.IniciarSesionInvitado(Session, negocio.CrearInvitado());
 
             Response.Redirect("~/Default.aspx", false);
         }

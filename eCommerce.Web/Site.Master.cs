@@ -17,36 +17,22 @@ namespace eCommerce.Web
 
         protected void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            Session.Clear();
+            AutenticacionSesion.CerrarSesion(Session);
             Response.Redirect("~/Default.aspx", false);
         }
 
         private void ConfigurarNavegacion()
         {
-            Usuario usuario = Session["Usuario"] as Usuario;
+            Usuario usuario = AutenticacionSesion.ObtenerUsuario(Session);
             bool hayUsuario = usuario != null;
-            bool esInvitado = Session["EsInvitado"] is bool && (bool)Session["EsInvitado"];
+            bool esInvitado = AutenticacionSesion.EsInvitado(Session);
 
             liIngresar.Visible = !hayUsuario;
             liRegistrarse.Visible = !hayUsuario;
             liMiPerfil.Visible = hayUsuario && !esInvitado;
             liMisCompras.Visible = hayUsuario && !esInvitado;
-            liAdmin.Visible = TieneRol(usuario, "Admin") || TieneRol(usuario, "Vendedor");
+            liAdmin.Visible = AutenticacionSesion.TieneRol(usuario, AutenticacionSesion.RolAdmin) || AutenticacionSesion.TieneRol(usuario, AutenticacionSesion.RolVendedor);
             liCerrarSesion.Visible = hayUsuario;
-        }
-
-        private bool TieneRol(Usuario usuario, string nombreRol)
-        {
-            if (usuario == null || usuario.Roles == null)
-                return false;
-
-            foreach (Rol rol in usuario.Roles)
-            {
-                if (string.Equals(rol.Nombre, nombreRol, StringComparison.InvariantCultureIgnoreCase))
-                    return true;
-            }
-
-            return false;
         }
     }
 }

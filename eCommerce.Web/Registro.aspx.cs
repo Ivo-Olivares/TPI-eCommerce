@@ -21,8 +21,7 @@ namespace eCommerce.Web
                 UsuarioNegocio negocio = new UsuarioNegocio();
                 Usuario usuarioRegistrado = negocio.RegistrarCliente(usuario, direccion, txtConfirmarClave.Text);
 
-                Session["Usuario"] = usuarioRegistrado;
-                Session["EsInvitado"] = false;
+                AutenticacionSesion.IniciarSesion(Session, usuarioRegistrado);
 
                 Response.Redirect("~/Default.aspx", false);
             }
