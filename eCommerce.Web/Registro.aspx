@@ -19,6 +19,14 @@
                         <asp:TextBox runat="server" ID="txtApellido" CssClass="form-control" />
                     </div>
                     <div class="col-md-6">
+                        <asp:Label runat="server" AssociatedControlID="txtDni" CssClass="form-label" Text="DNI" />
+                        <asp:TextBox runat="server" ID="txtDni" CssClass="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <asp:Label runat="server" AssociatedControlID="txtFechaNacimiento" CssClass="form-label" Text="Fecha de nacimiento" />
+                        <asp:TextBox runat="server" ID="txtFechaNacimiento" CssClass="form-control" TextMode="Date" />
+                    </div>
+                    <div class="col-md-6">
                         <asp:Label runat="server" AssociatedControlID="txtEmail" CssClass="form-label" Text="Email" />
                         <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" TextMode="Email" />
                     </div>
@@ -68,7 +76,8 @@
             </div>
 
             <div class="registro-actions">
-                <asp:Button runat="server" ID="btnRegistrarse" CssClass="btn btn-primary" Text="Registrarse" />
+                <asp:Label runat="server" ID="lblError" CssClass="alert alert-danger mb-0 flex-grow-1" Visible="false" />
+                <asp:Button runat="server" ID="btnRegistrarse" CssClass="btn btn-primary" Text="Registrarse" OnClick="btnRegistrarse_Click" />
                 <a runat="server" href="~/Login" class="btn btn-outline-secondary">Ingresar</a>
             </div>
         </div>
