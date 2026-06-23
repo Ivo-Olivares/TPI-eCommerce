@@ -35,16 +35,6 @@
            OnClick="btnFiltrar_Click" />
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
    
     <div class="row">
         <div class="col">
@@ -73,6 +63,14 @@
                                 Text='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
                                 CommandName='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
                                 CommandArgument='<%# Eval("Id") %>' />
+
+                            <asp:LinkButton
+                                ID="btnEliminar"
+                                runat="server"
+                                CommandName="Editar"
+                                commandArgument='<%# Eval("Id") %>'
+                                text ="Eliminar"
+                                OnClientClick="return confirm('Esta accion no se puede deshacer. ¿Desea eliminar la categoria?');" />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

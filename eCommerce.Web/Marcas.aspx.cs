@@ -124,6 +124,30 @@
                     btnAgregarMarca.Text = "Agregar Marca";
                     btnCancelar.Visible = false;
                 }
+
+                if(e.CommandName == "Eliminar")
+            {
+                try
+                {
+                    negocio.eliminarMarca(id);
+
+                    dgvMarcas.DataSource = negocio.ListarMarcas();
+                    dgvMarcas.DataBind();
+
+                    ViewState["IdMarca"] = null;
+                    txtNombreMarca.Text = "";
+                    btnAgregarMarca.Text = "Agregar Marca";
+                    btnCancelar.Visible = false;
+                     lblError.Text = "Marca eliminada correctamente.";
+
+                }
+                catch (Exception )
+                {
+
+                    lblError.Text = "No se puede eliminar la categoría porque tiene productos asociados.";
+                }
+                   
+            }
             }
 
             protected void btnFiltrar_Click(object sender, EventArgs e)
@@ -158,5 +182,7 @@
                 ddlFiltroEstado.SelectedValue);
             dgvMarcas.DataBind();
         }
+
+     
     }
  }

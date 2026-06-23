@@ -127,6 +127,40 @@ namespace eCommerce.Datos
             }
         }
 
+        public void EliminarMarca( int Id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("delete from MARCAS where IdMarca = @Id");
+                datos.setearParametros("Id", Id); 
+                datos.ejecutarLectura();
+                
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }   
+
+        }
+
+
+
+
+
+
+
+
         public bool ExisteMarca(string nombre)
         {
             AccesoDatos datos = new AccesoDatos();
