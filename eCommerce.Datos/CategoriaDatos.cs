@@ -131,5 +131,60 @@ namespace eCommerce.Datos
                 throw ex;
             }
         }
+
+        public List<Categoria> filtrarCategorias(string filtroNombre, string estado)
+        {
+            List<Categoria> lista = new List<Categoria>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+
+                string consulta = "SELECT IdCategoria, Nombre , Activo FROM CATEGORIAS WHERE Nombre LIKE @filtro";
+                if (estado == "Activos")
+                {
+                    consulta += " AND Activo = 1";
+                }
+                else if (estado == "Inactivos")
+                {
+                    consulta += " AND Activo = 0";
+                }
+
+                datos.setearConsulta(consulta);
+                datos.setearParametros("@filtro", "%" + filtroNombre.Trim() + "%");
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Categoria categoria = new Categoria();
+
+                    categoria.Id = (int)datos.Lector["IdCategoria"];
+                    categoria.Nombre = (string)datos.Lector["Nombre"];
+                    categoria.Activo = (bool)datos.Lector["Activo"];
+
+                    lista.Add(categoria);
+                }
+
+                return lista;
+            }
+
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
+
+
+
     }
 }

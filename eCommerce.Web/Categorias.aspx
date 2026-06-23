@@ -2,6 +2,34 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+
+      <div class="row mb-3">
+     <div class="col-md-4">
+
+         <asp:TextBox 
+             runat="server" ID="txtFiltroNombre"
+             cssClass="form-control" 
+             placeholder="filtrar por nombre"
+             AutoPostBack ="true" 
+             OntextChanged="txtFiltroNombre_TextChanged"/>
+     </div>
+       
+
+      <div class="col-md-3">
+          <asp:DropDownList 
+              runat="server"
+              ID="ddlFiltroEstado"
+              CssClass="form-control"
+              AutoPostBack="true" OnSelectedIndexChanged="ddlFiltroEstado_SelectedIndexChanged">
+
+          <asp:ListItem Text="Todos" Value="Todos" />
+          <asp:ListItem Text="Activos" Value="Activos" />
+          <asp:ListItem Text="Inactivos" Value="Inactivos" />
+      </asp:DropDownList>
+      </div>
+      
+     
+</div>
     <div class="row">
         <div class="col">
             <asp:GridView runat="server" ID="dgvCategorias" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-bordered" OnRowCommand="dgvCategorias_RowCommand">

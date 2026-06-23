@@ -145,5 +145,29 @@ namespace eCommerce.Web
                 }
             }
         }
+
+        protected void txtFiltroNombre_TextChanged(object sender, EventArgs e)
+        {
+            CategoriaNegocio negocio = new CategoriaNegocio();  
+
+            dgvCategorias.DataSource = negocio.FiltrarCategorias(
+                txtFiltroNombre.Text,
+                ddlFiltroEstado.SelectedValue);
+            dgvCategorias.DataBind();
+
+        }
+
+        protected void ddlFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            CategoriaNegocio negocio = new CategoriaNegocio();
+
+            dgvCategorias.DataSource = negocio.FiltrarCategorias(
+                txtFiltroNombre.Text,
+                ddlFiltroEstado.SelectedValue);
+
+            dgvCategorias.DataBind();
+
+        }
     }
 }

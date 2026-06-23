@@ -70,5 +70,17 @@ namespace eCommerce.Negocio
             string textoSinEspacios = new string(texto.Where(x => !char.IsWhiteSpace(x)).ToArray());
             return textoSinEspacios.All(char.IsDigit);
         }
+
+
+        public List<Categoria> FiltrarCategorias (string filtroNombre , string estado)
+        {
+
+            CategoriaDatos datos = new CategoriaDatos();
+            return datos.filtrarCategorias(filtroNombre, estado);
+        }
+
+
+
+
     }
 }
