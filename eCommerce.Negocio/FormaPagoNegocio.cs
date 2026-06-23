@@ -64,5 +64,14 @@ namespace eCommerce.Negocio
             string textoSinEspacios = new string(texto.Where(x => !char.IsWhiteSpace(x)).ToArray());
             return textoSinEspacios.All(char.IsDigit);
         }
+
+
+
+        public List<FormaPago> filtrarFormaPago(string filtroDescripcion,string estado)
+        {
+            FormaPagoDatos datos = new FormaPagoDatos();
+            return datos.FiltrarFormasPagos ( filtroDescripcion , estado);
+
+        }
     }
 }

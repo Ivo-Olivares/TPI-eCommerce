@@ -1,6 +1,59 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FormasEntrega.aspx.cs" Inherits="eCommerce.Web.FormasEntrega" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+      <div class="row mb-3">
+     <div class="col-md-4">
+
+         <asp:TextBox 
+             runat="server" ID="txtFiltrodescripcion"
+             cssClass="form-control" 
+             placeholder="filtrar por Descripcion"
+             AutoPostBack ="true" 
+             OntextChanged="txtFiltrodescripcion_TextChanged"/>
+     </div>
+       
+
+      <div class="col-md-3">
+          <asp:DropDownList 
+              runat="server"
+              ID="ddlFiltroEstado"
+              CssClass="form-control"
+              AutoPostBack="true" OnSelectedIndexChanged="ddlFiltroEstado_SelectedIndexChanged">
+
+          <asp:ListItem Text="Todos" Value="Todos" />
+          <asp:ListItem Text="Activos" Value="Activos" />
+          <asp:ListItem Text="Inactivos" Value="Inactivos" />
+      </asp:DropDownList>
+      </div>
+      
+     
+</div>
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="row">
         <div class="col">
             <asp:GridView runat="server" ID="dgvFormasEntrega" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-bordered" OnRowCommand="dgvFormasEntrega_RowCommand" >

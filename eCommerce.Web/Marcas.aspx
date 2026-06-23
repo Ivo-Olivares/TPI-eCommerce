@@ -26,14 +26,7 @@
         </asp:DropDownList>
         </div>
         
-        <div class="col-md-2">
-         <asp:Button
-           runat="server"
-           ID="btnFiltrar"
-           Text="Filtrar"
-           CssClass="btn btn-secondary"
-           OnClick="btnFiltrar_Click" />
-    </div>
+       
   </div>
    
     <div class="row">
@@ -67,7 +60,7 @@
                             <asp:LinkButton
                                 ID="btnEliminar"
                                 runat="server"
-                                CommandName="Editar"
+                                CommandName="Eliminar"
                                 commandArgument='<%# Eval("Id") %>'
                                 text ="Eliminar"
                                 OnClientClick="return confirm('Esta accion no se puede deshacer. ¿Desea eliminar la categoria?');" />

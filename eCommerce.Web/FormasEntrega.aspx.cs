@@ -124,5 +124,29 @@ namespace eCommerce.Web
                 btnCancelar.Visible = false;
             }
         }
+
+        private void FiltrarArticulo ()
+        {
+            FormaEntregaNegocio negocio = new FormaEntregaNegocio();
+
+            dgvFormasEntrega.DataSource= negocio.filtrarentrega(txtFiltrodescripcion.Text, ddlFiltroEstado.SelectedValue);
+
+            dgvFormasEntrega.DataBind();
+
+
+
+        }
+
+        protected void txtFiltrodescripcion_TextChanged(object sender, EventArgs e)
+        {
+
+
+            FiltrarArticulo();
+        }
+
+        protected void ddlFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FiltrarArticulo();
+        }
     }
 }

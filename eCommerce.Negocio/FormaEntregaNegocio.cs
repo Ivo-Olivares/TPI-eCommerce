@@ -64,5 +64,12 @@ namespace eCommerce.Negocio
             string textoSinEspacios = new string(texto.Where(x => !char.IsWhiteSpace(x)).ToArray());
             return textoSinEspacios.All(char.IsDigit);
         }
+
+
+        public List<FormaEntrega> filtrarentrega (string filtroDescripcion, string estado)
+        {
+            FormaEntregaDatos datos = new FormaEntregaDatos();
+            return datos.FiltrarEntregas(filtroDescripcion, estado);
+        }
     }
 }

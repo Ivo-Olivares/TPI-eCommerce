@@ -1,4 +1,5 @@
-﻿using eCommerce.Dominio;
+﻿using eCommerce.Datos;
+using eCommerce.Dominio;
 using eCommerce.Negocio;
 using System;
 using System.Collections.Generic;
@@ -145,29 +146,27 @@ namespace eCommerce.Web
                 }
             }
         }
-
-        protected void txtFiltroNombre_TextChanged(object sender, EventArgs e)
+        private void AplicarFiltro()
         {
-            CategoriaNegocio negocio = new CategoriaNegocio();  
-
-            dgvCategorias.DataSource = negocio.FiltrarCategorias(
-                txtFiltroNombre.Text,
-                ddlFiltroEstado.SelectedValue);
-            dgvCategorias.DataBind();
-
-        }
-
-        protected void ddlFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
             CategoriaNegocio negocio = new CategoriaNegocio();
 
             dgvCategorias.DataSource = negocio.FiltrarCategorias(
                 txtFiltroNombre.Text,
-                ddlFiltroEstado.SelectedValue);
+                ddlFiltroEstado.SelectedValue
+            );
 
             dgvCategorias.DataBind();
+        }
 
+
+        protected void txtFiltroNombre_TextChanged(object sender, EventArgs e)
+        {
+            AplicarFiltro();
+        }
+
+        protected void ddlFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AplicarFiltro();
         }
     }
 }

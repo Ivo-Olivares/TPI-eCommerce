@@ -150,39 +150,28 @@
             }
             }
 
-            protected void btnFiltrar_Click(object sender, EventArgs e)
+
+            private void AplicarFiltro() 
             {
-                MarcaNegocio negocio = new MarcaNegocio();
+                MarcaNegocio marca = new MarcaNegocio();    
                 
-                dgvMarcas.DataSource = negocio.FiltrarMarcas(
-                    txtFiltroNombre.Text,
-                    ddlFiltroEstado.SelectedValue
-                );
-                
+                dgvMarcas.DataSource= marca.FiltrarMarcas(txtFiltroNombre.Text,ddlFiltroEstado.SelectedValue);
                 dgvMarcas.DataBind();
+
             }
+
 
         protected void ddlFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MarcaNegocio negocio = new MarcaNegocio();
-            dgvMarcas.DataSource = negocio.FiltrarMarcas(
-                txtFiltroNombre.Text,
-                ddlFiltroEstado.SelectedValue
-            );
-            dgvMarcas.DataBind();
-
+            AplicarFiltro();
         }
 
         protected void txtFiltroNombre_TextChanged(object sender, EventArgs e)
         {
-            MarcaNegocio negocio = new MarcaNegocio();
-
-            dgvMarcas.DataSource = negocio.FiltrarMarcas(
-                txtFiltroNombre.Text,
-                ddlFiltroEstado.SelectedValue);
-            dgvMarcas.DataBind();
+            AplicarFiltro();
         }
 
      
-    }
- }
+        }
+     }
+    

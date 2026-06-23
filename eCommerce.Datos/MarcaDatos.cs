@@ -135,7 +135,7 @@ namespace eCommerce.Datos
             {
                 datos.setearConsulta("delete from MARCAS where IdMarca = @Id");
                 datos.setearParametros("Id", Id); 
-                datos.ejecutarLectura();
+                datos.ejecutarAccion();
                 
 
 

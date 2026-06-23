@@ -1,6 +1,34 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FormasPago.aspx.cs" Inherits="eCommerce.Web.FormasPago" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+
+   <div class="row mb-3">
+       <div class="col-md-4">
+
+              <asp:TextBox runat="server" 
+                ID="txtFiltroDescripcion"
+                cssclass="form-control"
+                placeholder ="filtrar por descripcion"
+                AutopostBack="true"
+                OnTextchanged ="txtFiltroDescripcion_TextChanged" />
+           </div>
+
+       
+        <div class="col-md-3">
+              <asp:DropDownList
+                runat="server"
+                ID="ddlFiltroEstado"
+                CssClass="form-control"
+                AutoPostBack="true"
+                OnSelectedIndexChanged="ddlFiltroEstado_SelectedIndexChanged">
+                <asp:ListItem Text="Todos" Value="Todos" />
+                <asp:ListItem Text="Activos" Value="Activos" />
+                <asp:ListItem Text="Inactivos" Value="Inactivos" />
+            </asp:DropDownList>
+           </div>
+
+         </div>
+
         <div class="row">
         <div class="col">
             <asp:GridView runat="server" ID="dgvFormasPago" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-bordered" OnRowCommand="dgvFormasPago_RowCommand" >

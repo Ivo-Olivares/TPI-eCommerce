@@ -13,9 +13,12 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            FormaPagoNegocio negocio = new FormaPagoNegocio();
-            dgvFormasPago.DataSource = negocio.Listar();
-            dgvFormasPago.DataBind();
+            if (!IsPostBack)
+            {
+                FormaPagoNegocio negocio = new FormaPagoNegocio();
+                dgvFormasPago.DataSource = negocio.Listar();
+                dgvFormasPago.DataBind();
+            }
         }
 
         protected void btnAgregarFormaPago_Click(object sender, EventArgs e)
@@ -32,8 +35,7 @@ namespace eCommerce.Web
                     FormaPagoNegocio negocio = new FormaPagoNegocio();
 
                     negocio.ModificarFormaPago(formaPago);
-                    dgvFormasPago.DataSource = negocio.Listar();
-                    dgvFormasPago.DataBind();
+                    AplicarFiltro();
 
                     ViewState["IdFormaPago"] = null;
                     txtNombreFormaPago.Text = "";
@@ -48,8 +50,7 @@ namespace eCommerce.Web
 
                     FormaPagoNegocio negocio = new FormaPagoNegocio();
                     negocio.AgregarFormaPago(formaPago);
-                    dgvFormasPago.DataSource = negocio.Listar();
-                    dgvFormasPago.DataBind();
+                    AplicarFiltro();
 
                     txtNombreFormaPago.Text = "";
                     lblError.Text = "";
@@ -96,8 +97,7 @@ namespace eCommerce.Web
 
                 negocio.DesactivarFormaPago(formaPago);
 
-                dgvFormasPago.DataSource = negocio.Listar();
-                dgvFormasPago.DataBind();
+                AplicarFiltro();
 
                 ViewState["IdFormaPago"] = null;
                 txtNombreFormaPago.Text = "";
@@ -112,8 +112,7 @@ namespace eCommerce.Web
 
                 negocio.ActivarFormaPago(formaPago);
 
-                dgvFormasPago.DataSource = negocio.Listar();
-                dgvFormasPago.DataBind();
+                AplicarFiltro();
 
                 ViewState["IdFormaPago"] = null;
                 txtNombreFormaPago.Text = "";
@@ -121,5 +120,36 @@ namespace eCommerce.Web
                 btnCancelar.Visible = false;
             }
         }
+
+
+
+
+
+
+        private void AplicarFiltro()
+        {
+            FormaPagoNegocio negocio = new FormaPagoNegocio();
+
+            dgvFormasPago.DataSource = negocio.filtrarFormaPago(txtFiltroDescripcion.Text, ddlFiltroEstado.SelectedValue);
+            dgvFormasPago.DataBind();
+
+        }
+
+        
+        protected void txtFiltroDescripcion_TextChanged(object sender, EventArgs e)
+        {
+            AplicarFiltro();
+
+        }
+
+        protected void ddlFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AplicarFiltro();
+
+        }
+    
+    
+    
     }
+
 }

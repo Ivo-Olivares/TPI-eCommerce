@@ -115,5 +115,66 @@ namespace eCommerce.Datos
             }
 
         }
+
+
+        public List<FormaPago>FiltrarFormasPagos(string filtroDecripcion, string estado)
+        {
+            List<FormaPago> lista = new List<FormaPago>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                string consulta = "select IdFormaPago, Descripcion, Activo FROM FORMASPAGO WHERE Descripcion LIKE @filtro";
+
+
+                if (estado == "Activos")
+                {
+                    consulta += " AND Activo = 1";
+                }
+                else if (estado == "Inactivos")
+
+                {
+                    consulta += " AND Activo = 0";
+                }
+
+                datos.setearConsulta(consulta);
+                datos.setearParametros ("@filtro", "%" + filtroDecripcion.Trim() + "%");
+
+                datos.ejecutarLectura();
+
+
+                while (datos.Lector.Read())
+                {
+                    FormaPago formaPago = new FormaPago();
+                    formaPago.Id = (int)datos.Lector["IdFormaPago"];
+                    formaPago.Descripcion = (string)datos.Lector["Descripcion"];
+                    formaPago.Activo = (bool)datos.Lector["Activo"];
+
+                    lista.Add(formaPago);
+                }
+
+                return lista;
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+
+
+
+
+
+
+
+
+        }
     }
 }

@@ -115,5 +115,55 @@ namespace eCommerce.Datos
             }
 
         }
+        public List<FormaEntrega> FiltrarEntregas(string filtroDescripcion, string estado)
+        {
+            List<FormaEntrega> lista = new List<FormaEntrega>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+
+                string consulta = "SELECT IdFormaEntrega, Descripcion , Activo FROM FORMASENTREGA WHERE Descripcion LIKE @filtro";
+                if (estado == "Activos")
+                {
+                    consulta += " AND Activo = 1";
+                }
+                else if (estado == "Inactivos")
+                {
+                    consulta += " AND Activo = 0";
+                }
+
+                datos.setearConsulta(consulta);
+                datos.setearParametros("@filtro", "%" + filtroDescripcion.Trim() + "%");
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    FormaEntrega entrega = new FormaEntrega();
+
+                    entrega.Id = (int)datos.Lector["IdformaEntrega"];
+                    entrega.Descripcion = (string)datos.Lector["Descripcion"];
+                    entrega.Activo = (bool)datos.Lector["Activo"];
+
+                    lista.Add(entrega);
+                }
+
+                return lista;
+            }
+
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
     }
 }
