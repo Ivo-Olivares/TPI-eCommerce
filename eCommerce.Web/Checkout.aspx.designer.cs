@@ -1,53 +1,19 @@
-﻿//------------------------------------------------------------------------------
-// <generado automáticamente>
-//     Este código fue generado por una herramienta.
-//
-//     Los cambios en este archivo podrían causar un comportamiento incorrecto y se perderán si
-//     se vuelve a generar el código. 
-// </generado automáticamente>
-//------------------------------------------------------------------------------
-
 namespace eCommerce.Web
 {
-
-
     public partial class Checkout
     {
-
-        /// <summary>
-        /// Control ddlEntrega.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEntrega;
-
-        /// <summary>
-        /// Control txtDireccion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDireccion;
-
-        /// <summary>
-        /// Control ddlFormaPago.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
+        protected global::System.Web.UI.WebControls.Panel pnlCheckout;
+        protected global::System.Web.UI.WebControls.TextBox txtCalle;
+        protected global::System.Web.UI.WebControls.TextBox txtAltura;
+        protected global::System.Web.UI.WebControls.TextBox txtLocalidad;
+        protected global::System.Web.UI.WebControls.TextBox txtProvincia;
+        protected global::System.Web.UI.WebControls.TextBox txtCp;
+        protected global::System.Web.UI.WebControls.TextBox txtObservaciones;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFormaEntrega;
         protected global::System.Web.UI.WebControls.DropDownList ddlFormaPago;
-
-        /// <summary>
-        /// Control btnConfirmar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvResumen;
+        protected global::System.Web.UI.WebControls.Label lblTotal;
         protected global::System.Web.UI.WebControls.Button btnConfirmar;
     }
 }

@@ -1,60 +1,92 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" 
-AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="eCommerce.Web.Checkout" %>
+<%@ Page Title="Checkout" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="eCommerce.Web.Checkout" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
-    <div class="container mt-4">
-        <h2>Checkout</h2>
-        <p>Completa los datos para finalizar la compra.</p>
-        <hr />
-        <h4> Datos de entrega </h4>
-
-        <div class="mb-3">
-            <label>Tipo de entrega</label>
-            <asp:DropDownlist ID="ddlEntrega" runat="server" CssClass="form-control">
-                <asp:ListItem Text="Seleccionar" Value="" />
-                <asp:ListItem Text="Retiro en sucursal" Value="Retiro" />
-                <asp:ListItem Text="Envio a domicilio" Value="Envio" />   
-            </asp:DropDownlist>
-        </div>
-
-        <div class="mb-3">
-            <label>Direccion</label>
-            <asp:textbox ID="txtDireccion" runat="server" Cssclass="form-control" /> </div>
-
-        <div class="mb-3">
-            <label> Forma de pago </label>
-            <asp:DropDownList ID="ddlFormaPago" runat="server" CssClass="form-control">
-                <asp:ListItem Text="Seleccionar" Value="" />
-                <asp:ListItem Text="Efectivo" Value="Efectivo" />
-                <asp:ListItem Text="Tranferencia" Value="Tranferencia" />
-                <asp:ListItem Text="Tarjeta" Value="Tarjeta" />
-            </asp:DropDownList>
-        </div>
-
-        <hr />
-        <h4> Resumen del pedido </h4>
-            <div class="card p-3 mb-3">
-                <p><strong>Productos:</strong> Pendiente de implementacion</p>
-                <p><strong>Total</strong>Pendiente de implementacion</p>
+    <main class="py-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h1 class="h3 mb-1">Checkout</h1>
+                <p class="text-muted mb-0">Completa los datos para finalizar la compra.</p>
             </div>
+            <a runat="server" href="~/Carrito" class="btn btn-outline-secondary">Volver al carrito</a>
+        </div>
 
-    <asp:Button ID="btnConfirmar" runat="server" text="Confirmar compra" CssClass="btn btn-primary" />
+        <asp:Label runat="server" ID="lblMensaje" CssClass="alert alert-info d-block" Visible="false" />
 
-    </div>
+        <asp:Panel runat="server" ID="pnlCheckout">
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <div class="border rounded p-3 mb-3">
+                        <h2 class="h5 mb-3">Datos de entrega</h2>
 
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <asp:Label runat="server" AssociatedControlID="txtCalle" CssClass="form-label" Text="Calle" />
+                                <asp:TextBox runat="server" ID="txtCalle" CssClass="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <asp:Label runat="server" AssociatedControlID="txtAltura" CssClass="form-label" Text="Altura" />
+                                <asp:TextBox runat="server" ID="txtAltura" CssClass="form-control" TextMode="Number" />
+                            </div>
+                            <div class="col-md-6">
+                                <asp:Label runat="server" AssociatedControlID="txtLocalidad" CssClass="form-label" Text="Localidad" />
+                                <asp:TextBox runat="server" ID="txtLocalidad" CssClass="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <asp:Label runat="server" AssociatedControlID="txtProvincia" CssClass="form-label" Text="Provincia" />
+                                <asp:TextBox runat="server" ID="txtProvincia" CssClass="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <asp:Label runat="server" AssociatedControlID="txtCp" CssClass="form-label" Text="Codigo postal" />
+                                <asp:TextBox runat="server" ID="txtCp" CssClass="form-control" TextMode="Number" />
+                            </div>
+                            <div class="col-md-8">
+                                <asp:Label runat="server" AssociatedControlID="txtObservaciones" CssClass="form-label" Text="Observaciones" />
+                                <asp:TextBox runat="server" ID="txtObservaciones" CssClass="form-control" />
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="border rounded p-3">
+                        <h2 class="h5 mb-3">Pago y entrega</h2>
 
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <asp:Label runat="server" AssociatedControlID="ddlFormaEntrega" CssClass="form-label" Text="Forma de entrega" />
+                                <asp:DropDownList runat="server" ID="ddlFormaEntrega" CssClass="form-select" />
+                            </div>
+                            <div class="col-md-6">
+                                <asp:Label runat="server" AssociatedControlID="ddlFormaPago" CssClass="form-label" Text="Forma de pago" />
+                                <asp:DropDownList runat="server" ID="ddlFormaPago" CssClass="form-select" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-lg-5">
+                    <div class="border rounded p-3">
+                        <h2 class="h5 mb-3">Resumen del pedido</h2>
 
+                        <asp:GridView runat="server" ID="dgvResumen" AutoGenerateColumns="false" CssClass="table table-sm">
+                            <Columns>
+                                <asp:BoundField DataField="NombreProducto" HeaderText="Producto" />
+                                <asp:BoundField DataField="Cantidad" HeaderText="Cant." />
+                                <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" />
+                            </Columns>
+                        </asp:GridView>
 
+                        <div class="d-flex justify-content-between fs-5">
+                            <span>Total</span>
+                            <strong>
+                                <asp:Label runat="server" ID="lblTotal" />
+                            </strong>
+                        </div>
 
-
-
-
-
-
-
-
-
+                        <div class="d-grid mt-3">
+                            <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar compra" CssClass="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </asp:Panel>
+    </main>
 </asp:Content>
