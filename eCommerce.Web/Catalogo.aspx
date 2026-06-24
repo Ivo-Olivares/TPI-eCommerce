@@ -17,70 +17,39 @@
             </div>
             <div class="col-md-3">
                 <asp:Label runat="server" AssociatedControlID="ddlCategoria" CssClass="form-label" Text="Categoria" />
-                <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="form-select">
-                    <asp:ListItem Text="Todas" Value="" />
-                    <asp:ListItem Text="Tecnologia" Value="Tecnologia" />
-                    <asp:ListItem Text="Hogar" Value="Hogar" />
-                    <asp:ListItem Text="Indumentaria" Value="Indumentaria" />
-                </asp:DropDownList>
+                <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="form-select" />
             </div>
             <div class="col-md-3">
                 <asp:Label runat="server" AssociatedControlID="ddlMarca" CssClass="form-label" Text="Marca" />
-                <asp:DropDownList runat="server" ID="ddlMarca" CssClass="form-select">
-                    <asp:ListItem Text="Todas" Value="" />
-                    <asp:ListItem Text="Marca A" Value="Marca A" />
-                    <asp:ListItem Text="Marca B" Value="Marca B" />
-                    <asp:ListItem Text="Marca C" Value="Marca C" />
-                </asp:DropDownList>
+                <asp:DropDownList runat="server" ID="ddlMarca" CssClass="form-select" />
             </div>
             <div class="col-md-2">
-                <asp:Button runat="server" ID="btnBuscar" CssClass="btn btn-primary w-100" Text="Buscar" />
+                <asp:Button runat="server" ID="btnBuscar" CssClass="btn btn-primary w-100" Text="Buscar" OnClick="btnBuscar_Click" />
             </div>
         </div>
 
+        <asp:Label runat="server" ID="lblMensaje" CssClass="alert alert-info d-block" Visible="false" />
+
         <div class="row g-3">
-            <div class="col-md-4">
-                <div class="border rounded h-100 p-3">
-                    <div class="bg-light border rounded mb-3 d-flex align-items-center justify-content-center" style="height: 160px;">
-                        <span class="text-muted">Imagen producto</span>
+            <asp:Repeater runat="server" ID="rptProductos">
+                <ItemTemplate>
+                    <div class="col-md-4">
+                        <div class="border rounded h-100 p-3">
+                            <div class="bg-light border rounded mb-3 d-flex align-items-center justify-content-center" style="height: 160px;">
+                                <span class="text-muted">Imagen producto</span>
+                            </div>
+                            <h2 class="h5"><%# Eval("Nombre") %></h2>
+                            <p class="text-muted mb-1"><%# Eval("Marca.Nombre") %> | <%# Eval("Categoria.Nombre") %></p>
+                            <p class="text-muted"><%# Eval("Descripcion") %></p>
+                            <p class="fw-bold mb-1"><%# Eval("Precio", "{0:C}") %></p>
+                            <p class="text-muted small mb-2">Stock disponible: <%# Eval("Stock") %></p>
+                            <div class="d-flex gap-2">
+                                <a href='<%# "DetalleProducto.aspx?id=" + Eval("Id") %>' class="btn btn-outline-primary btn-sm">Ver detalle</a>
+                            </div>
+                        </div>
                     </div>
-                    <h2 class="h5">Producto destacado</h2>
-                    <p class="text-muted">Descripcion breve del producto publicado en el catalogo.</p>
-                    <p class="fw-bold mb-2">$ 25.000,00</p>
-                    <div class="d-flex gap-2">
-                        <a runat="server" href="~/DetalleProducto" class="btn btn-outline-primary btn-sm">Ver detalle</a>
-                        <asp:Button runat="server" ID="btnAgregarProducto1" CssClass="btn btn-primary btn-sm" Text="Agregar" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="border rounded h-100 p-3">
-                    <div class="bg-light border rounded mb-3 d-flex align-items-center justify-content-center" style="height: 160px;">
-                        <span class="text-muted">Imagen producto</span>
-                    </div>
-                    <h2 class="h5">Producto con stock</h2>
-                    <p class="text-muted">Ficha resumida para simular el listado publico de productos.</p>
-                    <p class="fw-bold mb-2">$ 18.500,00</p>
-                    <div class="d-flex gap-2">
-                        <a runat="server" href="~/DetalleProducto" class="btn btn-outline-primary btn-sm">Ver detalle</a>
-                        <asp:Button runat="server" ID="btnAgregarProducto2" CssClass="btn btn-primary btn-sm" Text="Agregar" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="border rounded h-100 p-3">
-                    <div class="bg-light border rounded mb-3 d-flex align-items-center justify-content-center" style="height: 160px;">
-                        <span class="text-muted">Imagen producto</span>
-                    </div>
-                    <h2 class="h5">Producto nuevo</h2>
-                    <p class="text-muted">Tarjeta prevista para mostrar precio, marca, categoria y acciones.</p>
-                    <p class="fw-bold mb-2">$ 32.900,00</p>
-                    <div class="d-flex gap-2">
-                        <a runat="server" href="~/DetalleProducto" class="btn btn-outline-primary btn-sm">Ver detalle</a>
-                        <asp:Button runat="server" ID="btnAgregarProducto3" CssClass="btn btn-primary btn-sm" Text="Agregar" />
-                    </div>
-                </div>
-            </div>
+                </ItemTemplate>
+            </asp:Repeater>
         </div>
     </main>
 </asp:Content>
