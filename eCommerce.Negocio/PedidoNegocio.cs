@@ -7,6 +7,15 @@ namespace eCommerce.Negocio
 {
     public class PedidoNegocio
     {
+        public List<Pedido> ListarPorUsuario(int idUsuario, int? idEstado, DateTime? fechaDesde, DateTime? fechaHasta)
+        {
+            if (idUsuario <= 0)
+                throw new Exception("Debe iniciar sesion para ver sus compras.");
+
+            PedidoDatos datos = new PedidoDatos();
+            return datos.ListarPorUsuario(idUsuario, idEstado, fechaDesde, fechaHasta);
+        }
+
         public int ConfirmarPedido(Usuario usuario, Direccion direccion, int idFormaPago, int idFormaEntrega, List<ItemCarrito> items)
         {
             ValidarPedido(usuario, direccion, idFormaPago, idFormaEntrega, items);

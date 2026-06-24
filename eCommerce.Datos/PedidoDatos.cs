@@ -10,6 +10,66 @@ namespace eCommerce.Datos
 {
     public class PedidoDatos
     {
+        public List<Pedido> ListarPorUsuario(int idUsuario, int? idEstado, DateTime? fechaDesde, DateTime? fechaHasta)
+        {
+            List<Pedido> lista = new List<Pedido>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                string consulta = "SELECT P.IdPedido, P.FechaCreacion, P.FechaEntrega, P.Total, FP.IdFormaPago, FP.Descripcion AS FormaPago, FE.IdFormaEntrega, FE.Descripcion AS FormaEntrega, EP.IdEstadoPedido, EP.Descripcion AS EstadoPedido FROM PEDIDOS P INNER JOIN FORMASPAGO FP ON P.IdFormaPago = FP.IdFormaPago INNER JOIN FORMASENTREGA FE ON P.IdFormaEntrega = FE.IdFormaEntrega INNER JOIN ESTADOSPEDIDO EP ON P.IdEstadoPedido = EP.IdEstadoPedido WHERE P.IdUsuario = @IdUsuario";
+
+                if (idEstado.HasValue)
+                    consulta += " AND P.IdEstadoPedido = @IdEstado";
+
+                if (fechaDesde.HasValue)
+                    consulta += " AND P.FechaCreacion >= @FechaDesde";
+
+                if (fechaHasta.HasValue)
+                    consulta += " AND P.FechaCreacion < DATEADD(DAY, 1, @FechaHasta)";
+
+                consulta += " ORDER BY P.FechaCreacion DESC";
+
+                datos.setearConsulta(consulta);
+                datos.setearParametros("@IdUsuario", idUsuario);
+
+                if (idEstado.HasValue)
+                    datos.setearParametros("@IdEstado", idEstado.Value);
+
+                if (fechaDesde.HasValue)
+                    datos.setearParametros("@FechaDesde", fechaDesde.Value);
+
+                if (fechaHasta.HasValue)
+                    datos.setearParametros("@FechaHasta", fechaHasta.Value);
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Pedido pedido = new Pedido();
+                    pedido.Id = (int)datos.Lector["IdPedido"];
+                    pedido.FechaCreacion = (DateTime)datos.Lector["FechaCreacion"];
+                    pedido.FechaEntrega = datos.Lector["FechaEntrega"] is DBNull ? (DateTime?)null : (DateTime)datos.Lector["FechaEntrega"];
+                    pedido.Total = (decimal)datos.Lector["Total"];
+                    pedido.FormaPago = new FormaPago { Id = (int)datos.Lector["IdFormaPago"], Descripcion = (string)datos.Lector["FormaPago"] };
+                    pedido.FormaEntrega = new FormaEntrega { Id = (int)datos.Lector["IdFormaEntrega"], Descripcion = (string)datos.Lector["FormaEntrega"] };
+                    pedido.EstadoPedido = new EstadoPedido { Id = (int)datos.Lector["IdEstadoPedido"], Descripcion = (string)datos.Lector["EstadoPedido"] };
+
+                    lista.Add(pedido);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public int ConfirmarPedido(Usuario usuario, Direccion direccion, int idFormaPago, int idFormaEntrega, List<ItemCarrito> items)
         {
             using (SqlConnection conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString))
