@@ -15,13 +15,9 @@ namespace eCommerce.Web
             if (!IsPostBack)
             {
                 CargarFiltros();
+                CargarFiltrosDesdeQueryString();
                 CargarProductos();
             }
-        }
-
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            CargarProductos();
         }
 
         protected void rptProductos_ItemCommand(object source, RepeaterCommandEventArgs e)
@@ -121,6 +117,19 @@ namespace eCommerce.Web
                 productos = productos.Where(x => x.Marca.Id == idMarca).ToList();
 
             return productos;
+        }
+
+        private void CargarFiltrosDesdeQueryString()
+        {
+            txtBuscar.Text = Request.QueryString["buscar"] ?? "";
+            SeleccionarValor(ddlCategoria, Request.QueryString["categoria"]);
+            SeleccionarValor(ddlMarca, Request.QueryString["marca"]);
+        }
+
+        private void SeleccionarValor(DropDownList lista, string valor)
+        {
+            if (!string.IsNullOrWhiteSpace(valor) && lista.Items.FindByValue(valor) != null)
+                lista.SelectedValue = valor;
         }
 
         private void MostrarMensaje(string mensaje, string cssClass)

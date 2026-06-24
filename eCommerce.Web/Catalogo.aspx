@@ -24,7 +24,7 @@
                 <asp:DropDownList runat="server" ID="ddlMarca" CssClass="form-select" />
             </div>
             <div class="col-md-2">
-                <asp:Button runat="server" ID="btnBuscar" CssClass="btn btn-primary w-100" Text="Buscar" OnClick="btnBuscar_Click" />
+                <button type="button" class="btn btn-primary w-100" onclick="var p = new URLSearchParams(); var b = document.getElementById('MainContent_txtBuscar').value; var c = document.getElementById('MainContent_ddlCategoria').value; var m = document.getElementById('MainContent_ddlMarca').value; if (b) p.set('buscar', b); if (c) p.set('categoria', c); if (m) p.set('marca', m); window.location.href = 'Catalogo' + (p.toString() ? '?' + p.toString() : '');">Buscar</button>
             </div>
         </div>
 
@@ -52,5 +52,6 @@
                 </ItemTemplate>
             </asp:Repeater>
         </div>
+
     </main>
 </asp:Content>
