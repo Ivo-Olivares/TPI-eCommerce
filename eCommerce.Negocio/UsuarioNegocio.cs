@@ -24,7 +24,6 @@ namespace eCommerce.Negocio
             if (datos.ExisteEmail(usuario.Email))
                 throw new Exception("Ya existe un usuario registrado con ese email.");
 
-            usuario.Rol = RolCliente;
             usuario.Activo = true;
             usuario.Clave = HashearClave(usuario.Clave);
 
@@ -59,7 +58,6 @@ namespace eCommerce.Negocio
             usuario.Nombre = "Invitado";
             usuario.Apellido = "";
             usuario.Email = "";
-            usuario.Rol = RolInvitado;
             usuario.Activo = true;
             usuario.Roles = new List<Rol> { new Rol { Id = 0, Nombre = RolInvitado } };
             usuario.ListaDirecciones = new List<Direccion>();
