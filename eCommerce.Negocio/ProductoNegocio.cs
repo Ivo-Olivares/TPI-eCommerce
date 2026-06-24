@@ -16,6 +16,11 @@ namespace eCommerce.Negocio
             return datos.ListarProductos();
         }
 
+        public Producto BuscarPorId(int id)
+        {
+            return Listar().Find(x => x.Id == id);
+        }
+
         public void AgregarProducto(Producto producto)
         {
             ValidarProducto(producto);
