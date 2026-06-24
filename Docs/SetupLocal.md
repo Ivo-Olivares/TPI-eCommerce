@@ -30,6 +30,7 @@ Si la base ya existia antes de los cambios de autenticacion, ejecutar:
 
 ```powershell
 sqlcmd -S .\SQLEXPRESS -E -i Docs\AutenticacionUsuarios_ActualizarDB.sql
+sqlcmd -S .\SQLEXPRESS -E -i Docs\FlujoCompra_ActualizarDB.sql
 sqlcmd -S .\SQLEXPRESS -E -i Docs\CrearUsuarioAdminLocal.sql
 ```
 

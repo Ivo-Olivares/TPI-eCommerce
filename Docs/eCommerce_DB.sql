@@ -117,6 +117,13 @@ INSERT INTO ROLES (Nombre) VALUES ('Cliente');
 INSERT INTO ROLES (Nombre) VALUES ('Vendedor');
 INSERT INTO ROLES (Nombre) VALUES ('Admin');
 
+INSERT INTO ESTADOSPEDIDO (Descripcion, Activo) VALUES ('Pendiente', 1);
+INSERT INTO ESTADOSPEDIDO (Descripcion, Activo) VALUES ('Pagado', 1);
+INSERT INTO ESTADOSPEDIDO (Descripcion, Activo) VALUES ('En preparacion', 1);
+INSERT INTO ESTADOSPEDIDO (Descripcion, Activo) VALUES ('Enviado', 1);
+INSERT INTO ESTADOSPEDIDO (Descripcion, Activo) VALUES ('Entregado', 1);
+INSERT INTO ESTADOSPEDIDO (Descripcion, Activo) VALUES ('Cancelado', 1);
+
 CREATE TABLE PEDIDOS(
     IdPedido INT PRIMARY KEY IDENTITY(1,1),
 

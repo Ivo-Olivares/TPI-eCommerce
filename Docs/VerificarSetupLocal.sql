@@ -68,6 +68,40 @@ BEGIN
     RETURN;
 END
 
+PRINT 'Verificando estados base de pedido...';
+
+DECLARE @EstadosPedidoRequeridos TABLE (Descripcion VARCHAR(50) NOT NULL);
+
+INSERT INTO @EstadosPedidoRequeridos (Descripcion)
+VALUES
+    ('Pendiente'),
+    ('Pagado'),
+    ('En preparacion'),
+    ('Enviado'),
+    ('Entregado'),
+    ('Cancelado');
+
+SELECT
+    EReq.Descripcion AS EstadoPedido,
+    CASE WHEN E.IdEstadoPedido IS NULL THEN 'FALTA' ELSE 'OK' END AS Estado
+FROM @EstadosPedidoRequeridos EReq
+LEFT JOIN ESTADOSPEDIDO E
+    ON E.Descripcion = EReq.Descripcion
+    AND E.Activo = 1;
+
+IF EXISTS (
+    SELECT 1
+    FROM @EstadosPedidoRequeridos EReq
+    LEFT JOIN ESTADOSPEDIDO E
+        ON E.Descripcion = EReq.Descripcion
+        AND E.Activo = 1
+    WHERE E.IdEstadoPedido IS NULL
+)
+BEGIN
+    RAISERROR('Faltan estados base de pedido activos para el setup local.', 16, 1);
+    RETURN;
+END
+
 PRINT 'Verificando usuario admin local...';
 
 SELECT
