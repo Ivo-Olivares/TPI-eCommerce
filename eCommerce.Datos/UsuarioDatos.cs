@@ -12,7 +12,7 @@ namespace eCommerce.Datos
 
             try
             {
-                datos.setearConsulta("SELECT IdUsuario, Nombre, Apellido, Dni, FechaNacimiento, Email, Telefono, Clave, Rol, Activo FROM USUARIOS WHERE Email = @Email");
+                datos.setearConsulta("SELECT IdUsuario, Nombre, Apellido, Dni, FechaNacimiento, Email, Telefono, Clave, Activo FROM USUARIOS WHERE Email = @Email");
                 datos.setearParametros("@Email", email);
                 datos.ejecutarLectura();
 
@@ -62,7 +62,7 @@ namespace eCommerce.Datos
 
             try
             {
-                datos.setearConsulta("INSERT INTO USUARIOS (Nombre, Apellido, Dni, FechaNacimiento, Email, Telefono, Clave, Rol, Activo) OUTPUT INSERTED.IdUsuario VALUES (@Nombre, @Apellido, @Dni, @FechaNacimiento, @Email, @Telefono, @Clave, @Rol, 1)");
+                datos.setearConsulta("INSERT INTO USUARIOS (Nombre, Apellido, Dni, FechaNacimiento, Email, Telefono, Clave, Activo) OUTPUT INSERTED.IdUsuario VALUES (@Nombre, @Apellido, @Dni, @FechaNacimiento, @Email, @Telefono, @Clave, 1)");
                 datos.setearParametros("@Nombre", usuario.Nombre);
                 datos.setearParametros("@Apellido", usuario.Apellido);
                 datos.setearParametros("@Dni", usuario.Dni);
@@ -70,7 +70,6 @@ namespace eCommerce.Datos
                 datos.setearParametros("@Email", usuario.Email);
                 datos.setearParametros("@Telefono", usuario.Telefono);
                 datos.setearParametros("@Clave", usuario.Clave);
-                datos.setearParametros("@Rol", usuario.Rol);
                 datos.ejecutarLectura();
 
                 if (datos.Lector.Read())
@@ -170,7 +169,6 @@ namespace eCommerce.Datos
             usuario.Email = (string)datos.Lector["Email"];
             usuario.Telefono = (string)datos.Lector["Telefono"];
             usuario.Clave = (string)datos.Lector["Clave"];
-            usuario.Rol = (string)datos.Lector["Rol"];
             usuario.Activo = (bool)datos.Lector["Activo"];
             usuario.ListaDirecciones = new List<Direccion>();
             usuario.Roles = new List<Rol>();

@@ -13,6 +13,7 @@ La base local debe tener las tablas de autenticacion creadas. Si todavia no las 
 
 ```powershell
 sqlcmd -S .\SQLEXPRESS -E -i Docs\AutenticacionUsuarios_ActualizarDB.sql
+sqlcmd -S .\SQLEXPRESS -E -i Docs\LimpiezaRoles_ActualizarDB.sql
 ```
 
 ## Ejecutar el script

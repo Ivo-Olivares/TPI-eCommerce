@@ -16,7 +16,6 @@ namespace eCommerce.Dominio
         public string Email { get; set; }
         public string Telefono { get; set; }
         public string Clave { get; set; }
-        public string Rol { get; set; }
         public List<Rol> Roles { get; set; }
         public bool Activo { get; set; }
         public List<Direccion> ListaDirecciones { get; set; }
