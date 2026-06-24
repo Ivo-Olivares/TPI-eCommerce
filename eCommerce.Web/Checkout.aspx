@@ -82,7 +82,7 @@
                         </div>
 
                         <div class="d-grid mt-3">
-                            <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar compra" CssClass="btn btn-primary" OnClick="btnConfirmar_Click" />
+                            <button type="submit" name="accionCheckout" value="confirmar" class="btn btn-primary">Confirmar compra</button>
                         </div>
                     </div>
                 </div>

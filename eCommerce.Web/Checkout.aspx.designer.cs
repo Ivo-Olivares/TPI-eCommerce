@@ -14,6 +14,5 @@ namespace eCommerce.Web
         protected global::System.Web.UI.WebControls.DropDownList ddlFormaPago;
         protected global::System.Web.UI.WebControls.GridView dgvResumen;
         protected global::System.Web.UI.WebControls.Label lblTotal;
-        protected global::System.Web.UI.WebControls.Button btnConfirmar;
     }
 }

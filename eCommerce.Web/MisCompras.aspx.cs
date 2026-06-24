@@ -12,26 +12,21 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            Usuario usuario = AutenticacionSesion.ObtenerUsuario(Session);
+
+            if (usuario == null || AutenticacionSesion.EsInvitado(Session))
             {
-                Usuario usuario = AutenticacionSesion.ObtenerUsuario(Session);
-
-                if (usuario == null || AutenticacionSesion.EsInvitado(Session))
-                {
-                    MostrarMensaje("Debe iniciar sesion para ver sus compras.", "alert alert-warning d-block");
-                    pnlCompras.Visible = false;
-                    return;
-                }
-
-                CargarEstados();
-                CargarCompras();
-                MostrarPedidoConfirmado();
+                MostrarMensaje("Debe iniciar sesion para ver sus compras.", "alert alert-warning d-block");
+                pnlCompras.Visible = false;
+                return;
             }
-        }
 
-        protected void btnFiltrar_Click(object sender, EventArgs e)
-        {
+            CargarEstados();
+            SeleccionarEstadoDesdeForm();
             CargarCompras();
+
+            if (!IsPostBack)
+                MostrarPedidoConfirmado();
         }
 
         private void CargarEstados()
@@ -75,6 +70,14 @@ namespace eCommerce.Web
                 return idEstado;
 
             return null;
+        }
+
+        private void SeleccionarEstadoDesdeForm()
+        {
+            string estado = Request.Form[ddlEstado.UniqueID];
+
+            if (!string.IsNullOrWhiteSpace(estado) && ddlEstado.Items.FindByValue(estado) != null)
+                ddlEstado.SelectedValue = estado;
         }
 
         private DateTime? ObtenerFecha(string valor)

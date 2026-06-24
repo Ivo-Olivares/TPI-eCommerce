@@ -10,7 +10,10 @@ namespace eCommerce.Web
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
+            {
                 CargarProducto();
+                ProcesarAgregarDesdeQueryString();
+            }
         }
 
         private void CargarProducto()
@@ -50,14 +53,17 @@ namespace eCommerce.Web
             }
         }
 
-        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
+        private void ProcesarAgregarDesdeQueryString()
         {
+            if (Request.QueryString["agregar"] != "1" || ViewState["IdProducto"] == null)
+                return;
+
             try
             {
                 int idProducto = (int)ViewState["IdProducto"];
                 int cantidad;
 
-                if (!int.TryParse(txtCantidad.Text, out cantidad))
+                if (!int.TryParse(Request.QueryString["cantidad"], out cantidad))
                     throw new Exception("Debe ingresar una cantidad valida.");
 
                 ProductoNegocio negocio = new ProductoNegocio();

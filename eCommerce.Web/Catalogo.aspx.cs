@@ -14,30 +14,41 @@ namespace eCommerce.Web
         {
             if (!IsPostBack)
             {
+                if (ProcesarAgregarDesdeQueryString())
+                    return;
+
                 CargarFiltros();
                 CargarFiltrosDesdeQueryString();
                 CargarProductos();
+
+                if (Request.QueryString["agregado"] == "1")
+                    MostrarMensaje("Producto agregado al carrito.", "alert alert-success d-block");
             }
         }
 
-        protected void rptProductos_ItemCommand(object source, RepeaterCommandEventArgs e)
+        private bool ProcesarAgregarDesdeQueryString()
         {
-            if (e.CommandName != "Agregar")
-                return;
+            int idProducto;
+            if (!int.TryParse(Request.QueryString["agregar"], out idProducto))
+                return false;
 
             try
             {
-                int idProducto = int.Parse(e.CommandArgument.ToString());
                 ProductoNegocio negocio = new ProductoNegocio();
                 Producto producto = negocio.BuscarPorId(idProducto);
 
                 CarritoSesion.Agregar(Session, producto, 1);
-                CargarProductos();
-                MostrarMensaje("Producto agregado al carrito.", "alert alert-success d-block");
+                Response.Redirect("~/Catalogo?agregado=1", false);
+                Context.ApplicationInstance.CompleteRequest();
+                return true;
             }
             catch (Exception ex)
             {
+                CargarFiltros();
+                CargarFiltrosDesdeQueryString();
+                CargarProductos();
                 MostrarMensaje(ex.Message, "alert alert-danger d-block");
+                return true;
             }
         }
 

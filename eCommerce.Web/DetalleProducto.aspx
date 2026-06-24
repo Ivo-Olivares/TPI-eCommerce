@@ -43,7 +43,7 @@
                         <asp:TextBox runat="server" ID="txtCantidad" CssClass="form-control" TextMode="Number" Text="1" />
                     </div>
                     <div class="col-sm-8">
-                        <asp:Button runat="server" ID="btnAgregarCarrito" CssClass="btn btn-primary" Text="Agregar al carrito" OnClick="btnAgregarCarrito_Click" />
+                        <button type="button" class="btn btn-primary" onclick="window.location.href = 'DetalleProducto?id=<%= Request.QueryString["id"] %>&agregar=1&cantidad=' + encodeURIComponent(document.getElementById('MainContent_txtCantidad').value);">Agregar al carrito</button>
                         <a runat="server" href="~/Carrito" class="btn btn-outline-secondary ms-2">Ir al carrito</a>
                     </div>
                 </div>

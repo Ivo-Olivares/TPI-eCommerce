@@ -31,7 +31,7 @@
         <asp:Label runat="server" ID="lblMensaje" CssClass="alert alert-info d-block" Visible="false" />
 
         <div class="row g-3">
-            <asp:Repeater runat="server" ID="rptProductos" OnItemCommand="rptProductos_ItemCommand">
+            <asp:Repeater runat="server" ID="rptProductos">
                 <ItemTemplate>
                     <div class="col-md-4">
                         <div class="border rounded h-100 p-3">
@@ -45,7 +45,7 @@
                             <p class="text-muted small mb-2">Stock disponible: <%# Eval("Stock") %></p>
                             <div class="d-flex gap-2">
                                 <a href='<%# "DetalleProducto.aspx?id=" + Eval("Id") %>' class="btn btn-outline-primary btn-sm">Ver detalle</a>
-                                <asp:LinkButton runat="server" CssClass="btn btn-primary btn-sm" Text="Agregar" CommandName="Agregar" CommandArgument='<%# Eval("Id") %>' />
+                                <a href='<%# "Catalogo?agregar=" + Eval("Id") %>' class="btn btn-primary btn-sm">Agregar</a>
                             </div>
                         </div>
                     </div>

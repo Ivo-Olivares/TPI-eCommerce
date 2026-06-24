@@ -12,6 +12,9 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (IsPostBack)
+                ConfirmarCompra();
+
             if (!IsPostBack)
             {
                 CargarCombos();
@@ -61,10 +64,9 @@ namespace eCommerce.Web
             lblMensaje.Visible = !tieneItems;
             lblMensaje.Text = tieneItems ? "" : "El carrito esta vacio.";
             lblTotal.Text = CarritoSesion.CalcularTotal(Session).ToString("C");
-            btnConfirmar.Enabled = tieneItems;
         }
 
-        protected void btnConfirmar_Click(object sender, EventArgs e)
+        private void ConfirmarCompra()
         {
             try
             {
@@ -76,8 +78,8 @@ namespace eCommerce.Web
                 int idFormaPago;
                 int idFormaEntrega;
 
-                int.TryParse(ddlFormaPago.SelectedValue, out idFormaPago);
-                int.TryParse(ddlFormaEntrega.SelectedValue, out idFormaEntrega);
+                int.TryParse(Request.Form[ddlFormaPago.UniqueID], out idFormaPago);
+                int.TryParse(Request.Form[ddlFormaEntrega.UniqueID], out idFormaEntrega);
 
                 PedidoNegocio negocio = new PedidoNegocio();
                 int idPedido = negocio.ConfirmarPedido(usuario, CrearDireccionDesdeFormulario(), idFormaPago, idFormaEntrega, CarritoSesion.Obtener(Session));
@@ -88,6 +90,7 @@ namespace eCommerce.Web
             catch (Exception ex)
             {
                 MostrarMensaje(ex.Message, "alert alert-danger d-block");
+                CargarResumen();
             }
         }
 

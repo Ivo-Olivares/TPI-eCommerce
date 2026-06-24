@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using eCommerce.Dominio;
 
 namespace eCommerce.Web
@@ -10,8 +9,8 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-                CargarCarrito();
+            ProcesarAcciones();
+            CargarCarrito();
         }
 
         private void CargarCarrito()
@@ -31,35 +30,45 @@ namespace eCommerce.Web
             lblTotal.Text = total.ToString("C");
         }
 
-        protected void dgvCarrito_RowCommand(object sender, GridViewCommandEventArgs e)
+        private void ProcesarAcciones()
         {
-            if (e.CommandName != "ActualizarCantidad" && e.CommandName != "Quitar")
+            if (ProcesarQuitar())
                 return;
 
+            if (IsPostBack)
+                ProcesarActualizarCantidades();
+        }
+
+        private bool ProcesarQuitar()
+        {
+            int idProducto;
+            if (!int.TryParse(Request.QueryString["quitar"], out idProducto))
+                return false;
+
+            CarritoSesion.Quitar(Session, idProducto);
+            Response.Redirect("~/Carrito?quitado=1", false);
+            Context.ApplicationInstance.CompleteRequest();
+            return true;
+        }
+
+        private void ProcesarActualizarCantidades()
+        {
             try
             {
-                int indice = Convert.ToInt32(e.CommandArgument);
-                int idProducto = (int)dgvCarrito.DataKeys[indice].Value;
+                List<ItemCarrito> carrito = CarritoSesion.Obtener(Session);
 
-                if (e.CommandName == "Quitar")
+                foreach (ItemCarrito item in carrito)
                 {
-                    CarritoSesion.Quitar(Session, idProducto);
-                    CargarCarrito();
-                    MostrarMensaje("Producto quitado del carrito.", "alert alert-success d-block");
-                }
-                else
-                {
-                    GridViewRow fila = dgvCarrito.Rows[indice];
-                    TextBox txtCantidad = fila.FindControl("txtCantidad") as TextBox;
                     int cantidad;
+                    string valor = Request.Form["cantidad_" + item.IdProducto];
 
-                    if (txtCantidad == null || !int.TryParse(txtCantidad.Text, out cantidad))
+                    if (!int.TryParse(valor, out cantidad))
                         throw new Exception("Debe ingresar una cantidad valida.");
 
-                    CarritoSesion.ActualizarCantidad(Session, idProducto, cantidad);
-                    CargarCarrito();
-                    MostrarMensaje("Cantidad actualizada.", "alert alert-success d-block");
+                    CarritoSesion.ActualizarCantidad(Session, item.IdProducto, cantidad);
                 }
+
+                MostrarMensaje("Cantidades actualizadas.", "alert alert-success d-block");
             }
             catch (Exception ex)
             {

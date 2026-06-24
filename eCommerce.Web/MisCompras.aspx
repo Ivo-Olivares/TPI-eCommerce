@@ -21,7 +21,7 @@
                 <asp:TextBox runat="server" ID="txtFechaHasta" CssClass="form-control" TextMode="Date" />
             </div>
             <div class="col-md-3">
-                <asp:Button runat="server" ID="btnFiltrar" CssClass="btn btn-outline-primary w-100" Text="Filtrar" OnClick="btnFiltrar_Click" />
+                <button type="submit" name="accionCompras" value="filtrar" class="btn btn-outline-primary w-100">Filtrar</button>
             </div>
         </div>
 

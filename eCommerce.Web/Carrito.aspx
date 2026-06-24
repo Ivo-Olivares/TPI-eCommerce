@@ -10,20 +10,19 @@
             <a runat="server" href="~/Catalogo" class="btn btn-outline-secondary">Seguir comprando</a>
         </div>
 
-        <asp:GridView runat="server" ID="dgvCarrito" AutoGenerateColumns="false" CssClass="table table-bordered table-striped" DataKeyNames="IdProducto" OnRowCommand="dgvCarrito_RowCommand">
+        <asp:GridView runat="server" ID="dgvCarrito" AutoGenerateColumns="false" CssClass="table table-bordered table-striped">
             <Columns>
                 <asp:BoundField DataField="NombreProducto" HeaderText="Producto" />
                 <asp:TemplateField HeaderText="Cantidad">
                     <ItemTemplate>
-                        <asp:TextBox runat="server" ID="txtCantidad" CssClass="form-control form-control-sm" TextMode="Number" Text='<%# Eval("Cantidad") %>' />
+                        <input class="form-control form-control-sm" type="number" name='cantidad_<%# Eval("IdProducto") %>' value='<%# Eval("Cantidad") %>' />
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio unitario" DataFormatString="{0:C}" />
                 <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" />
                 <asp:TemplateField HeaderText="Accion">
                     <ItemTemplate>
-                        <asp:LinkButton runat="server" CssClass="btn btn-outline-primary btn-sm me-1" Text="Actualizar" CommandName="ActualizarCantidad" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
-                        <asp:LinkButton runat="server" CssClass="btn btn-outline-danger btn-sm" Text="Quitar" CommandName="Quitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                        <a class="btn btn-outline-danger btn-sm" href='<%# "Carrito?quitar=" + Eval("IdProducto") %>'>Quitar</a>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -53,6 +52,7 @@
                     </div>
                     <div class="d-grid gap-2 mt-3">
                         <a runat="server" href="~/Checkout" class="btn btn-primary">Continuar al checkout</a>
+                        <button type="submit" name="accionCarrito" value="actualizar" class="btn btn-outline-primary">Actualizar cantidades</button>
                         <a runat="server" href="~/Catalogo" class="btn btn-outline-secondary">Seguir comprando</a>
                     </div>
                 </div>
