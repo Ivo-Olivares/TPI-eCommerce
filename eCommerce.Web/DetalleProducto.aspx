@@ -43,7 +43,7 @@
                         <asp:TextBox runat="server" ID="txtCantidad" CssClass="form-control" TextMode="Number" Text="1" />
                     </div>
                     <div class="col-sm-8">
-                        <asp:Button runat="server" ID="btnAgregarCarrito" CssClass="btn btn-primary" Text="Agregar al carrito" />
+                        <asp:Button runat="server" ID="btnAgregarCarrito" CssClass="btn btn-primary" Text="Agregar al carrito" OnClick="btnAgregarCarrito_Click" />
                         <a runat="server" href="~/Carrito" class="btn btn-outline-secondary ms-2">Ir al carrito</a>
                     </div>
                 </div>

@@ -50,9 +50,38 @@ namespace eCommerce.Web
             }
         }
 
+        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idProducto = (int)ViewState["IdProducto"];
+                int cantidad;
+
+                if (!int.TryParse(txtCantidad.Text, out cantidad))
+                    throw new Exception("Debe ingresar una cantidad valida.");
+
+                ProductoNegocio negocio = new ProductoNegocio();
+                Producto producto = negocio.BuscarPorId(idProducto);
+
+                CarritoSesion.Agregar(Session, producto, cantidad);
+                lblError.Text = "Producto agregado al carrito.";
+                lblError.CssClass = "alert alert-success d-block";
+                lblError.Visible = true;
+                pnlProducto.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = ex.Message;
+                lblError.CssClass = "alert alert-danger d-block";
+                lblError.Visible = true;
+                pnlProducto.Visible = true;
+            }
+        }
+
         private void MostrarError(string mensaje)
         {
             lblError.Text = mensaje;
+            lblError.CssClass = "alert alert-warning d-block";
             lblError.Visible = true;
             pnlProducto.Visible = false;
         }

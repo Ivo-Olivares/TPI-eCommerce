@@ -12,20 +12,23 @@
 
         <asp:GridView runat="server" ID="dgvCarrito" AutoGenerateColumns="false" CssClass="table table-bordered table-striped">
             <Columns>
-                <asp:BoundField HeaderText="Producto" />
-                <asp:BoundField HeaderText="Cantidad" />
-                <asp:BoundField HeaderText="Precio unitario" />
-                <asp:BoundField HeaderText="Subtotal" />
-                <asp:ButtonField Text="Quitar" ButtonType="Button" />
+                <asp:BoundField DataField="NombreProducto" HeaderText="Producto" />
+                <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+                <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio unitario" DataFormatString="{0:C}" />
+                <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" />
             </Columns>
         </asp:GridView>
 
-        <div class="row justify-content-end">
+        <asp:Label runat="server" ID="lblMensaje" CssClass="alert alert-info d-block" Visible="false" />
+
+        <asp:Panel runat="server" ID="pnlResumen" CssClass="row justify-content-end">
             <div class="col-md-4">
                 <div class="border rounded p-3">
                     <div class="d-flex justify-content-between">
                         <span>Subtotal</span>
-                        <strong>$ 75.400,00</strong>
+                        <strong>
+                            <asp:Label runat="server" ID="lblSubtotal" />
+                        </strong>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span>Envio</span>
@@ -34,14 +37,15 @@
                     <hr />
                     <div class="d-flex justify-content-between fs-5">
                         <span>Total</span>
-                        <strong>$ 75.400,00</strong>
+                        <strong>
+                            <asp:Label runat="server" ID="lblTotal" />
+                        </strong>
                     </div>
                     <div class="d-grid gap-2 mt-3">
                         <a runat="server" href="~/Checkout" class="btn btn-primary">Continuar al checkout</a>
-                        <asp:Button runat="server" ID="btnActualizar" CssClass="btn btn-outline-secondary" Text="Actualizar cantidades" />
                     </div>
                 </div>
             </div>
-        </div>
+        </asp:Panel>
     </main>
 </asp:Content>

@@ -24,6 +24,27 @@ namespace eCommerce.Web
             CargarProductos();
         }
 
+        protected void rptProductos_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName != "Agregar")
+                return;
+
+            try
+            {
+                int idProducto = int.Parse(e.CommandArgument.ToString());
+                ProductoNegocio negocio = new ProductoNegocio();
+                Producto producto = negocio.BuscarPorId(idProducto);
+
+                CarritoSesion.Agregar(Session, producto, 1);
+                CargarProductos();
+                MostrarMensaje("Producto agregado al carrito.", "alert alert-success d-block");
+            }
+            catch (Exception ex)
+            {
+                MostrarMensaje(ex.Message, "alert alert-danger d-block");
+            }
+        }
+
         private void CargarFiltros()
         {
             CargarCategorias();
@@ -70,11 +91,12 @@ namespace eCommerce.Web
 
                 lblMensaje.Visible = productos.Count == 0;
                 lblMensaje.Text = productos.Count == 0 ? "No se encontraron productos disponibles." : "";
+                if (productos.Count == 0)
+                    lblMensaje.CssClass = "alert alert-info d-block";
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
-                lblMensaje.Visible = true;
+                MostrarMensaje(ex.Message, "alert alert-danger d-block");
             }
         }
 
@@ -99,6 +121,13 @@ namespace eCommerce.Web
                 productos = productos.Where(x => x.Marca.Id == idMarca).ToList();
 
             return productos;
+        }
+
+        private void MostrarMensaje(string mensaje, string cssClass)
+        {
+            lblMensaje.Text = mensaje;
+            lblMensaje.CssClass = cssClass;
+            lblMensaje.Visible = true;
         }
     }
 }
