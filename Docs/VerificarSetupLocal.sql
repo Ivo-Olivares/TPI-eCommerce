@@ -1,12 +1,14 @@
 USE eCommerce_DB;
 GO
 
+SET NOCOUNT ON;
+
 PRINT 'Verificando tablas principales...';
 
-SELECT
-    V.Tabla,
-    CASE WHEN T.TABLE_NAME IS NULL THEN 'FALTA' ELSE 'OK' END AS Estado
-FROM (VALUES
+DECLARE @TablasRequeridas TABLE (Nombre VARCHAR(50) NOT NULL);
+
+INSERT INTO @TablasRequeridas (Nombre)
+VALUES
     ('USUARIOS'),
     ('ROLES'),
     ('USUARIOS_ROLES'),
@@ -14,24 +16,57 @@ FROM (VALUES
     ('MARCAS'),
     ('PRODUCTOS'),
     ('PEDIDOS'),
-    ('DETALLESPEDIDO')
-) AS V(Tabla)
+    ('DETALLESPEDIDO');
+
+SELECT
+    TReq.Nombre AS Tabla,
+    CASE WHEN T.TABLE_NAME IS NULL THEN 'FALTA' ELSE 'OK' END AS Estado
+FROM @TablasRequeridas TReq
 LEFT JOIN INFORMATION_SCHEMA.TABLES T
-    ON T.TABLE_NAME = V.Tabla
+    ON T.TABLE_NAME = TReq.Nombre
     AND T.TABLE_TYPE = 'BASE TABLE';
+
+IF EXISTS (
+    SELECT 1
+    FROM @TablasRequeridas TReq
+    LEFT JOIN INFORMATION_SCHEMA.TABLES T
+        ON T.TABLE_NAME = TReq.Nombre
+        AND T.TABLE_TYPE = 'BASE TABLE'
+    WHERE T.TABLE_NAME IS NULL
+)
+BEGIN
+    RAISERROR('Faltan tablas requeridas para el setup local.', 16, 1);
+    RETURN;
+END
 
 PRINT 'Verificando roles base...';
 
-SELECT
-    V.Rol,
-    CASE WHEN R.Nombre IS NULL THEN 'FALTA' ELSE 'OK' END AS Estado
-FROM (VALUES
+DECLARE @RolesRequeridos TABLE (Nombre VARCHAR(50) NOT NULL);
+
+INSERT INTO @RolesRequeridos (Nombre)
+VALUES
     ('Cliente'),
     ('Vendedor'),
-    ('Admin')
-) AS V(Rol)
+    ('Admin');
+
+SELECT
+    RReq.Nombre AS Rol,
+    CASE WHEN R.Nombre IS NULL THEN 'FALTA' ELSE 'OK' END AS Estado
+FROM @RolesRequeridos RReq
 LEFT JOIN ROLES R
-    ON R.Nombre = V.Rol;
+    ON R.Nombre = RReq.Nombre;
+
+IF EXISTS (
+    SELECT 1
+    FROM @RolesRequeridos RReq
+    LEFT JOIN ROLES R
+        ON R.Nombre = RReq.Nombre
+    WHERE R.Nombre IS NULL
+)
+BEGIN
+    RAISERROR('Faltan roles base para el setup local.', 16, 1);
+    RETURN;
+END
 
 PRINT 'Verificando usuario admin local...';
 
@@ -55,6 +90,7 @@ IF NOT EXISTS (
 )
 BEGIN
     RAISERROR('El usuario admin@admin.com no existe, no esta activo o no tiene rol Admin.', 16, 1);
+    RETURN;
 END
 ELSE
 BEGIN
