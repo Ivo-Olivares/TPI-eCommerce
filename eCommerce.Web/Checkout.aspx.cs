@@ -63,5 +63,58 @@ namespace eCommerce.Web
             lblTotal.Text = CarritoSesion.CalcularTotal(Session).ToString("C");
             btnConfirmar.Enabled = tieneItems;
         }
+
+        protected void btnConfirmar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Usuario usuario = AutenticacionSesion.ObtenerUsuario(Session);
+
+                if (usuario == null || AutenticacionSesion.EsInvitado(Session))
+                    throw new Exception("Debe iniciar sesion o registrarse para confirmar la compra.");
+
+                int idFormaPago;
+                int idFormaEntrega;
+
+                int.TryParse(ddlFormaPago.SelectedValue, out idFormaPago);
+                int.TryParse(ddlFormaEntrega.SelectedValue, out idFormaEntrega);
+
+                PedidoNegocio negocio = new PedidoNegocio();
+                int idPedido = negocio.ConfirmarPedido(usuario, CrearDireccionDesdeFormulario(), idFormaPago, idFormaEntrega, CarritoSesion.Obtener(Session));
+
+                CarritoSesion.Vaciar(Session);
+                Response.Redirect("~/MisCompras.aspx?pedido=" + idPedido, false);
+            }
+            catch (Exception ex)
+            {
+                MostrarMensaje(ex.Message, "alert alert-danger d-block");
+            }
+        }
+
+        private Direccion CrearDireccionDesdeFormulario()
+        {
+            Direccion direccion = new Direccion();
+            direccion.Calle = txtCalle.Text;
+            direccion.Localidad = txtLocalidad.Text;
+            direccion.Provincia = txtProvincia.Text;
+            direccion.Observaciones = txtObservaciones.Text;
+
+            int altura;
+            if (int.TryParse(txtAltura.Text, out altura))
+                direccion.Altura = altura;
+
+            int cp;
+            if (int.TryParse(txtCp.Text, out cp))
+                direccion.Cp = cp;
+
+            return direccion;
+        }
+
+        private void MostrarMensaje(string mensaje, string cssClass)
+        {
+            lblMensaje.Text = mensaje;
+            lblMensaje.CssClass = cssClass;
+            lblMensaje.Visible = true;
+        }
     }
 }
