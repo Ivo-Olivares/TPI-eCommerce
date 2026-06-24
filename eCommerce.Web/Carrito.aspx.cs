@@ -9,11 +9,11 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ProcesarAcciones();
-            CargarCarrito();
+            bool preservarMensaje = ProcesarAcciones();
+            CargarCarrito(preservarMensaje);
         }
 
-        private void CargarCarrito()
+        private void CargarCarrito(bool preservarMensaje)
         {
             List<ItemCarrito> carrito = CarritoSesion.Obtener(Session);
 
@@ -22,21 +22,30 @@ namespace eCommerce.Web
 
             bool tieneItems = carrito.Count > 0;
             pnlResumen.Visible = tieneItems;
-            lblMensaje.Visible = !tieneItems;
-            lblMensaje.Text = tieneItems ? "" : "El carrito esta vacio.";
+
+            if (!preservarMensaje)
+            {
+                lblMensaje.Visible = !tieneItems;
+                lblMensaje.Text = tieneItems ? "" : "El carrito esta vacio.";
+            }
 
             decimal total = CarritoSesion.CalcularTotal(Session);
             lblSubtotal.Text = total.ToString("C");
             lblTotal.Text = total.ToString("C");
         }
 
-        private void ProcesarAcciones()
+        private bool ProcesarAcciones()
         {
             if (ProcesarQuitar())
-                return;
+                return true;
 
             if (IsPostBack)
+            {
                 ProcesarActualizarCantidades();
+                return true;
+            }
+
+            return false;
         }
 
         private bool ProcesarQuitar()

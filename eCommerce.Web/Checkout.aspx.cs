@@ -12,13 +12,10 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack)
-                ConfirmarCompra();
-
             if (!IsPostBack)
             {
                 CargarCombos();
-                CargarResumen();
+                CargarResumen(false);
             }
         }
 
@@ -52,7 +49,12 @@ namespace eCommerce.Web
             ddlFormaPago.Items.Insert(0, new ListItem("Seleccionar", ""));
         }
 
-        private void CargarResumen()
+        protected void btnConfirmarCompra_Click(object sender, EventArgs e)
+        {
+            ConfirmarCompra();
+        }
+
+        private void CargarResumen(bool preservarMensaje)
         {
             List<ItemCarrito> carrito = CarritoSesion.Obtener(Session);
 
@@ -61,8 +63,13 @@ namespace eCommerce.Web
 
             bool tieneItems = carrito.Count > 0;
             pnlCheckout.Visible = tieneItems;
-            lblMensaje.Visible = !tieneItems;
-            lblMensaje.Text = tieneItems ? "" : "El carrito esta vacio.";
+
+            if (!preservarMensaje)
+            {
+                lblMensaje.Visible = !tieneItems;
+                lblMensaje.Text = tieneItems ? "" : "El carrito esta vacio.";
+            }
+
             lblTotal.Text = CarritoSesion.CalcularTotal(Session).ToString("C");
         }
 
@@ -90,7 +97,7 @@ namespace eCommerce.Web
             catch (Exception ex)
             {
                 MostrarMensaje(ex.Message, "alert alert-danger d-block");
-                CargarResumen();
+                CargarResumen(true);
             }
         }
 
