@@ -16,7 +16,7 @@ namespace eCommerce.Datos
 
             try
             {
-                datos.setearConsulta("Select P.IdProducto,P.IdMarca,P.IdCategoria,P.Sku,P.Nombre As Producto,P.Descripcion,M.Nombre As Marca,C.Nombre As Categoria,P.Precio,P.Stock, P.Activo from PRODUCTOS P Inner Join MARCAS M On P.IdMarca = M.IdMarca Inner Join CATEGORIAS C On P.IdCategoria = C.IdCategoria;");
+                datos.setearConsulta("Select P.IdProducto,P.IdMarca,P.IdCategoria,P.Sku,P.Nombre As Producto,P.Descripcion,M.Nombre As Marca,M.Activo As MarcaActiva,C.Nombre As Categoria,C.Activo As CategoriaActiva,P.Precio,P.Stock, P.Activo from PRODUCTOS P Inner Join MARCAS M On P.IdMarca = M.IdMarca Inner Join CATEGORIAS C On P.IdCategoria = C.IdCategoria;");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -29,7 +29,9 @@ namespace eCommerce.Datos
                     producto.Nombre = (string)datos.Lector["Producto"];
                     producto.Descripcion = datos.Lector["Descripcion"] is DBNull ? "" : (string)datos.Lector["Descripcion"];
                     producto.Marca.Nombre = (string)datos.Lector["Marca"];
+                    producto.Marca.Activo = (bool)datos.Lector["MarcaActiva"];
                     producto.Categoria.Nombre = (string)datos.Lector["Categoria"];
+                    producto.Categoria.Activo = (bool)datos.Lector["CategoriaActiva"];
                     producto.Precio = (decimal)datos.Lector["Precio"];
                     producto.Stock = (int)datos.Lector["Stock"];
                     producto.Activo = (bool)datos.Lector["Activo"];
