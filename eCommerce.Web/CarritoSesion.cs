@@ -59,6 +59,32 @@ namespace eCommerce.Web
             return Obtener(session).Sum(x => x.Subtotal);
         }
 
+        public static void ActualizarCantidad(HttpSessionState session, int idProducto, int cantidad)
+        {
+            if (cantidad <= 0)
+                throw new Exception("La cantidad debe ser mayor a cero.");
+
+            List<ItemCarrito> carrito = Obtener(session);
+            ItemCarrito item = carrito.Find(x => x.IdProducto == idProducto);
+
+            if (item == null)
+                throw new Exception("El producto no esta en el carrito.");
+
+            if (cantidad > item.StockDisponible)
+                throw new Exception("No hay stock suficiente para esa cantidad.");
+
+            item.Cantidad = cantidad;
+        }
+
+        public static void Quitar(HttpSessionState session, int idProducto)
+        {
+            List<ItemCarrito> carrito = Obtener(session);
+            ItemCarrito item = carrito.Find(x => x.IdProducto == idProducto);
+
+            if (item != null)
+                carrito.Remove(item);
+        }
+
         public static void Vaciar(HttpSessionState session)
         {
             session[ClaveCarrito] = new List<ItemCarrito>();

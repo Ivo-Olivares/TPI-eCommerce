@@ -10,12 +10,22 @@
             <a runat="server" href="~/Catalogo" class="btn btn-outline-secondary">Seguir comprando</a>
         </div>
 
-        <asp:GridView runat="server" ID="dgvCarrito" AutoGenerateColumns="false" CssClass="table table-bordered table-striped">
+        <asp:GridView runat="server" ID="dgvCarrito" AutoGenerateColumns="false" CssClass="table table-bordered table-striped" DataKeyNames="IdProducto" OnRowCommand="dgvCarrito_RowCommand">
             <Columns>
                 <asp:BoundField DataField="NombreProducto" HeaderText="Producto" />
-                <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+                <asp:TemplateField HeaderText="Cantidad">
+                    <ItemTemplate>
+                        <asp:TextBox runat="server" ID="txtCantidad" CssClass="form-control form-control-sm" TextMode="Number" Text='<%# Eval("Cantidad") %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio unitario" DataFormatString="{0:C}" />
                 <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" />
+                <asp:TemplateField HeaderText="Accion">
+                    <ItemTemplate>
+                        <asp:LinkButton runat="server" CssClass="btn btn-outline-primary btn-sm me-1" Text="Actualizar" CommandName="ActualizarCantidad" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                        <asp:LinkButton runat="server" CssClass="btn btn-outline-danger btn-sm" Text="Quitar" CommandName="Quitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                    </ItemTemplate>
+                </asp:TemplateField>
             </Columns>
         </asp:GridView>
 
@@ -43,6 +53,7 @@
                     </div>
                     <div class="d-grid gap-2 mt-3">
                         <a runat="server" href="~/Checkout" class="btn btn-primary">Continuar al checkout</a>
+                        <a runat="server" href="~/Catalogo" class="btn btn-outline-secondary">Seguir comprando</a>
                     </div>
                 </div>
             </div>
