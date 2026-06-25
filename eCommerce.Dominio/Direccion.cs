@@ -14,7 +14,7 @@ namespace eCommerce.Dominio
         public int Altura { get; set; }
         public string Localidad { get; set; }
         public string Provincia { get; set; }
-        public int Cp { get; set; }
+        public string Cp { get; set; }
         public string Observaciones { get; set; }
     }
 }

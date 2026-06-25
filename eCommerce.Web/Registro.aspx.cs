@@ -55,14 +55,13 @@ namespace eCommerce.Web
             direccion.Localidad = txtLocalidad.Text;
             direccion.Provincia = txtProvincia.Text;
             direccion.Observaciones = txtObservaciones.Text;
+            direccion.Cp = txtCp.Text.Trim();
 
             int altura;
             if (int.TryParse(txtAltura.Text, out altura))
+            {
                 direccion.Altura = altura;
-
-            int cp;
-            if (int.TryParse(txtCp.Text, out cp))
-                direccion.Cp = cp;
+            }
 
             return direccion;
         }

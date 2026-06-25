@@ -57,14 +57,6 @@
                                 Text='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
                                 CommandName='<%# (bool)Eval("Activo") ? "Desactivar" : "Activar" %>'
                                 CommandArgument='<%# Eval("Id") %>' />
-                            |
-                            <asp:LinkButton
-                                ID="btnEliminar"
-                                runat="server"
-                                CommandName="Eliminar"
-                                CommandArgument='<%# Eval("Id") %>'
-                                Text="Eliminar"
-                                OnClientClick="return confirm('Esta accion no se puede deshacer. ¿Desea eliminar la categoria?');" />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

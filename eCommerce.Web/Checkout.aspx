@@ -43,18 +43,4 @@ AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="eCommerce.Web.Che
 
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </asp:Content>

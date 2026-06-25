@@ -137,7 +137,7 @@ namespace eCommerce.Negocio
             if (string.IsNullOrWhiteSpace(direccion.Provincia))
                 throw new Exception("La provincia no puede estar vacía.");
 
-            if (direccion.Cp <= 0)
+            if (string.IsNullOrWhiteSpace(direccion.Cp))
                 throw new Exception("El código postal debe ser mayor a cero.");
 
             direccion.Descripcion = "Principal";

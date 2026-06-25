@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AccesoDatos.cs" />
     <Compile Include="CategoriaDatos.cs" />
+    <Compile Include="DireccionDatos.cs" />
     <Compile Include="EstadoPedidoDatos.cs" />
     <Compile Include="FormaEntregaDatos.cs" />
     <Compile Include="FormaPagoDatos.cs" />

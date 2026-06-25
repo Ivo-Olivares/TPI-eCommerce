@@ -46,13 +46,6 @@ namespace eCommerce.Negocio
         }
 
 
-        public void eliminarMarca(int id)
-        {
-            MarcaDatos datos = new MarcaDatos();
-            datos.EliminarMarca(id);
-        }
-
-
         private void ValidarMarca(Marca marca)
         {
             if(string.IsNullOrWhiteSpace(marca.Nombre))

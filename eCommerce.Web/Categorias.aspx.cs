@@ -125,26 +125,6 @@ namespace eCommerce.Web
                 btnCancelar.Visible = false;
             }
 
-            if (e.CommandName == "Eliminar")
-            {
-                try
-                {
-                    negocio.EliminarCategoria(id);
-
-                    dgvCategorias.DataSource = negocio.Listar();
-                    dgvCategorias.DataBind();
-
-                    ViewState["IdCategoria"] = null;
-                    txtNombreCategoria.Text = "";
-                    btnAgregarCategoria.Text = "Agregar Categoría";
-                    btnCancelar.Visible = false;
-                    lblError.Text = "";
-                }
-                catch (Exception)
-                {
-                    lblError.Text = "No se puede eliminar la categoría porque tiene productos asociados.";
-                }
-            }
         }
         private void AplicarFiltro()
         {
