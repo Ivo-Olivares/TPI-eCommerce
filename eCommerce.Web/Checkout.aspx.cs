@@ -69,5 +69,40 @@ namespace eCommerce.Web
 
             ddlFormaPago.Items.Insert(0, new ListItem("Seleccionar forma de pago", ""));
         }
+
+        protected void btnConfirmar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                lblError.Visible = false;
+
+                Usuario usuario = AutenticacionSesion.ObtenerUsuario(Session);
+
+                if (usuario == null || AutenticacionSesion.EsInvitado(Session))
+                {
+                    Response.Redirect("~/Login.aspx", false);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(ddlDireccion.SelectedValue))
+                    throw new Exception("Debe seleccionar una dirección.");
+
+                if (string.IsNullOrWhiteSpace(ddlEntrega.SelectedValue))
+                    throw new Exception("Debe seleccionar una forma de entrega.");
+
+                if (string.IsNullOrWhiteSpace(ddlFormaPago.SelectedValue))
+                    throw new Exception("Debe seleccionar una forma de pago.");
+
+                int idDireccion = int.Parse(ddlDireccion.SelectedValue);
+                int idFormaEntrega = int.Parse(ddlEntrega.SelectedValue);
+                int idFormaPago = int.Parse(ddlFormaPago.SelectedValue);
+
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = ex.Message;
+                lblError.Visible = true;
+            }
+        }
     }
 }

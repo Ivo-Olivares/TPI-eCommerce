@@ -34,7 +34,9 @@
             <p><strong>Total</strong>Pendiente de implementacion</p>
         </div>
 
-        <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar compra" CssClass="btn btn-primary" />
+        <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-3" Visible="false" />
+
+        <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar compra" CssClass="btn btn-primary" OnClick="btnConfirmar_Click" />
 
     </div>
 
