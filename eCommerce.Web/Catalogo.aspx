@@ -52,9 +52,9 @@
                         <div class="bg-light border rounded mb-3 d-flex align-items-center justify-content-center catalogo-imagen">
                             <span class="text-muted">Sin imagen</span>
                         </div>
-                        <h2 class="h5 mb-1"><%# Eval("Nombre") %></h2>
-                        <p class="text-muted mb-2"><%# Eval("Marca.Nombre") %> | <%# Eval("Categoria.Nombre") %></p>
-                        <p class="mb-2 catalogo-descripcion"><%# Eval("Descripcion") %></p>
+                        <h2 class="h5 mb-1"><%#: Eval("Nombre") %></h2>
+                        <p class="text-muted mb-2"><%#: Eval("Marca.Nombre") %> | <%#: Eval("Categoria.Nombre") %></p>
+                        <p class="mb-2 catalogo-descripcion"><%#: Eval("Descripcion") %></p>
                         <div class="mt-auto">
                             <p class="fw-bold mb-1"><%# FormatearPrecio(Eval("Precio")) %></p>
                             <p class="text-muted mb-3">Stock disponible: <%# Eval("Stock") %></p>

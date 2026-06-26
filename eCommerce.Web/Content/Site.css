@@ -98,9 +98,7 @@ textarea {
 }
 
 .catalogo-page input,
-.catalogo-page select,
-.carrito-page input,
-.detalle-producto-page input {
+.catalogo-page select {
     max-width: none;
 }
 
@@ -112,6 +110,3 @@ textarea {
     min-height: 3rem;
 }
 
-.carrito-cantidad {
-    width: 90px;
-}
