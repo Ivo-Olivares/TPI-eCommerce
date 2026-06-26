@@ -61,5 +61,46 @@ namespace eCommerce.Datos
             return lista;
 
         }
+
+        public int AgregarPedido(Pedido pedido)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+            INSERT INTO PEDIDOS
+            (IdUsuario, IdFormaPago, IdFormaEntrega, IdEstadoPedido, IdDireccion, FechaCreacion, FechaEntrega, Total)
+            OUTPUT INSERTED.IdPedido
+            VALUES
+            (@IdUsuario, @IdFormaPago, @IdFormaEntrega, @IdEstadoPedido, @IdDireccion, @FechaCreacion, @FechaEntrega, @Total)");
+
+                datos.setearParametros("@IdUsuario", pedido.Usuario.Id);
+                datos.setearParametros("@IdFormaPago", pedido.FormaPago.Id);
+                datos.setearParametros("@IdFormaEntrega", pedido.FormaEntrega.Id);
+                datos.setearParametros("@IdEstadoPedido", pedido.EstadoPedido.Id);
+                datos.setearParametros("@IdDireccion", pedido.Direccion.Id);
+                datos.setearParametros("@FechaCreacion", pedido.FechaCreacion);
+                datos.setearParametros("@FechaEntrega", DBNull.Value);
+                datos.setearParametros("@Total", pedido.Total);
+
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return (int)datos.Lector["IdPedido"];
+                }
+
+                throw new Exception("No se pudo obtener el Id del pedido generado.");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
