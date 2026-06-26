@@ -96,3 +96,17 @@ textarea {
         width: 100%;
     }
 }
+
+.catalogo-page input,
+.catalogo-page select {
+    max-width: none;
+}
+
+.catalogo-imagen {
+    min-height: 160px;
+}
+
+.catalogo-descripcion {
+    min-height: 3rem;
+}
+
