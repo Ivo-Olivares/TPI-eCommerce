@@ -9,7 +9,12 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Negocio
 {
-    internal class PedidoNegocio
+    public class PedidoNegocio
     {
+        public List<Pedido> ListarPorUsuario(int idUsuario)
+        {
+            PedidoDatos datos = new PedidoDatos();
+            return datos.ListarPorUsuario(idUsuario);
+        }
     }
 }
