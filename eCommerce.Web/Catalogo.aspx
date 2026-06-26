@@ -1,86 +1,73 @@
 <%@ Page Title="Catalogo" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Catalogo.aspx.cs" Inherits="eCommerce.Web.Catalogo" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <main class="py-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
+    <main class="py-4 catalogo-page">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
             <div>
                 <h1 class="h3 mb-1">Catalogo de productos</h1>
-                <p class="text-muted mb-0">Pantalla prevista para busqueda y navegacion de productos publicados.</p>
+                <p class="text-muted mb-0">Productos disponibles para comprar.</p>
             </div>
             <a runat="server" href="~/Carrito" class="btn btn-outline-primary">Ver carrito</a>
         </div>
 
         <div class="row g-3 align-items-end mb-4">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <asp:Label runat="server" AssociatedControlID="txtBuscar" CssClass="form-label" Text="Buscar producto" />
                 <asp:TextBox runat="server" ID="txtBuscar" CssClass="form-control" />
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <asp:Label runat="server" AssociatedControlID="ddlCategoria" CssClass="form-label" Text="Categoria" />
-                <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="form-select">
-                    <asp:ListItem Text="Todas" Value="" />
-                    <asp:ListItem Text="Tecnologia" Value="Tecnologia" />
-                    <asp:ListItem Text="Hogar" Value="Hogar" />
-                    <asp:ListItem Text="Indumentaria" Value="Indumentaria" />
-                </asp:DropDownList>
-            </div>
-            <div class="col-md-3">
-                <asp:Label runat="server" AssociatedControlID="ddlMarca" CssClass="form-label" Text="Marca" />
-                <asp:DropDownList runat="server" ID="ddlMarca" CssClass="form-select">
-                    <asp:ListItem Text="Todas" Value="" />
-                    <asp:ListItem Text="Marca A" Value="Marca A" />
-                    <asp:ListItem Text="Marca B" Value="Marca B" />
-                    <asp:ListItem Text="Marca C" Value="Marca C" />
-                </asp:DropDownList>
+                <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="form-select" />
             </div>
             <div class="col-md-2">
-                <asp:Button runat="server" ID="btnBuscar" CssClass="btn btn-primary w-100" Text="Buscar" />
+                <asp:Label runat="server" AssociatedControlID="ddlMarca" CssClass="form-label" Text="Marca" />
+                <asp:DropDownList runat="server" ID="ddlMarca" CssClass="form-select" />
+            </div>
+            <div class="col-md-2">
+                <asp:Label runat="server" AssociatedControlID="ddlOrden" CssClass="form-label" Text="Ordenar" />
+                <asp:DropDownList runat="server" ID="ddlOrden" CssClass="form-select">
+                    <asp:ListItem Text="Nombre A-Z" Value="nombre" />
+                    <asp:ListItem Text="Menor precio" Value="precio-asc" />
+                    <asp:ListItem Text="Mayor precio" Value="precio-desc" />
+                    <asp:ListItem Text="Mas stock" Value="stock-desc" />
+                </asp:DropDownList>
+            </div>
+            <div class="col-md-3 d-flex gap-2">
+                <asp:Button runat="server" ID="btnBuscar" CssClass="btn btn-primary flex-fill" Text="Buscar" OnClick="btnBuscar_Click" />
+                <asp:Button runat="server" ID="btnLimpiar" CssClass="btn btn-outline-secondary" Text="Limpiar" OnClick="btnLimpiar_Click" />
             </div>
         </div>
 
-        <div class="row g-3">
-            <div class="col-md-4">
-                <div class="border rounded h-100 p-3">
-                    <div class="bg-light border rounded mb-3 d-flex align-items-center justify-content-center" style="height: 160px;">
-                        <span class="text-muted">Imagen producto</span>
-                    </div>
-                    <h2 class="h5">Producto destacado</h2>
-                    <p class="text-muted">Descripcion breve del producto publicado en el catalogo.</p>
-                    <p class="fw-bold mb-2">$ 25.000,00</p>
-                    <div class="d-flex gap-2">
-                        <a runat="server" href="~/DetalleProducto" class="btn btn-outline-primary btn-sm">Ver detalle</a>
-                        <asp:Button runat="server" ID="btnAgregarProducto1" CssClass="btn btn-primary btn-sm" Text="Agregar" />
-                    </div>
+        <asp:Panel runat="server" ID="pnlSinResultados" CssClass="alert alert-info" Visible="false">
+            No hay productos disponibles con esos filtros.
+        </asp:Panel>
+
+        <asp:Repeater runat="server" ID="rptProductos">
+            <HeaderTemplate>
+                <div class="row g-3">
+            </HeaderTemplate>
+            <ItemTemplate>
+                <div class="col-md-4">
+                    <article class="border rounded h-100 p-3 d-flex flex-column">
+                        <div class="bg-light border rounded mb-3 d-flex align-items-center justify-content-center catalogo-imagen">
+                            <span class="text-muted">Sin imagen</span>
+                        </div>
+                        <h2 class="h5 mb-1"><%# Eval("Nombre") %></h2>
+                        <p class="text-muted mb-2"><%# Eval("Marca.Nombre") %> | <%# Eval("Categoria.Nombre") %></p>
+                        <p class="mb-2 catalogo-descripcion"><%# Eval("Descripcion") %></p>
+                        <div class="mt-auto">
+                            <p class="fw-bold mb-1"><%# FormatearPrecio(Eval("Precio")) %></p>
+                            <p class="text-muted mb-3">Stock disponible: <%# Eval("Stock") %></p>
+                            <div class="d-flex gap-2">
+                                <a href='<%# ResolveUrl("~/DetalleProducto?id=" + Eval("Id")) %>' class="btn btn-outline-primary btn-sm">Ver detalle</a>
+                            </div>
+                        </div>
+                    </article>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="border rounded h-100 p-3">
-                    <div class="bg-light border rounded mb-3 d-flex align-items-center justify-content-center" style="height: 160px;">
-                        <span class="text-muted">Imagen producto</span>
-                    </div>
-                    <h2 class="h5">Producto con stock</h2>
-                    <p class="text-muted">Ficha resumida para simular el listado publico de productos.</p>
-                    <p class="fw-bold mb-2">$ 18.500,00</p>
-                    <div class="d-flex gap-2">
-                        <a runat="server" href="~/DetalleProducto" class="btn btn-outline-primary btn-sm">Ver detalle</a>
-                        <asp:Button runat="server" ID="btnAgregarProducto2" CssClass="btn btn-primary btn-sm" Text="Agregar" />
-                    </div>
+            </ItemTemplate>
+            <FooterTemplate>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="border rounded h-100 p-3">
-                    <div class="bg-light border rounded mb-3 d-flex align-items-center justify-content-center" style="height: 160px;">
-                        <span class="text-muted">Imagen producto</span>
-                    </div>
-                    <h2 class="h5">Producto nuevo</h2>
-                    <p class="text-muted">Tarjeta prevista para mostrar precio, marca, categoria y acciones.</p>
-                    <p class="fw-bold mb-2">$ 32.900,00</p>
-                    <div class="d-flex gap-2">
-                        <a runat="server" href="~/DetalleProducto" class="btn btn-outline-primary btn-sm">Ver detalle</a>
-                        <asp:Button runat="server" ID="btnAgregarProducto3" CssClass="btn btn-primary btn-sm" Text="Agregar" />
-                    </div>
-                </div>
-            </div>
-        </div>
+            </FooterTemplate>
+        </asp:Repeater>
     </main>
 </asp:Content>
