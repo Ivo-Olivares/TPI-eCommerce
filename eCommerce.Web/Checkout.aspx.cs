@@ -31,6 +31,7 @@ namespace eCommerce.Web
                 CargarDirecciones(usuario.Id);
                 CargarFormasEntrega();
                 CargarFormasPago();
+                CargarResumenPedido();
             }
         }
 
@@ -103,6 +104,14 @@ namespace eCommerce.Web
                 lblError.Text = ex.Message;
                 lblError.Visible = true;
             }
+        }
+
+        private void CargarResumenPedido()
+        {
+            dgvResumen.DataSource = null;
+            dgvResumen.DataBind();
+
+            lblTotal.Text = "$ 0,00";
         }
     }
 }

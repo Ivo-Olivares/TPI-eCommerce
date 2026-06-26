@@ -8,6 +8,15 @@ namespace eCommerce.Dominio
 {
     public class Pedido
     {
+        public Pedido()
+        {
+            Usuario = new Usuario();
+            FormaPago = new FormaPago();
+            FormaEntrega = new FormaEntrega();
+            EstadoPedido = new EstadoPedido();
+            Direccion = new Direccion();
+            ListaDetalles = new List<DetallePedido>();
+        }
         public int Id { get; set; }
         public DateTime FechaCreacion { get; set; }
         public DateTime? FechaEntrega { get; set; }
