@@ -206,6 +206,7 @@
       <DependentUpon>Admin.aspx</DependentUpon>
     </Compile>
     <Compile Include="AutenticacionSesion.cs" />
+    <Compile Include="CarritoSesion.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>

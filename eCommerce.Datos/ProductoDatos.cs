@@ -50,6 +50,46 @@ namespace eCommerce.Datos
             }
         }
 
+        public Producto ObtenerPorId(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("Select P.IdProducto,P.IdMarca,P.IdCategoria,P.Sku,P.Nombre As Producto,P.Descripcion,M.Nombre As Marca,C.Nombre As Categoria,P.Precio,P.Stock, P.Activo from PRODUCTOS P Inner Join MARCAS M On P.IdMarca = M.IdMarca Inner Join CATEGORIAS C On P.IdCategoria = C.IdCategoria Where P.IdProducto = @IdProducto;");
+                datos.setearParametros("@IdProducto", id);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Producto producto = new Producto();
+                    producto.Id = (int)datos.Lector["IdProducto"];
+                    producto.Marca.Id = (int)datos.Lector["IdMarca"];
+                    producto.Categoria.Id = (int)datos.Lector["IdCategoria"];
+                    producto.Sku = (string)datos.Lector["Sku"];
+                    producto.Nombre = (string)datos.Lector["Producto"];
+                    producto.Descripcion = datos.Lector["Descripcion"] is DBNull ? "" : (string)datos.Lector["Descripcion"];
+                    producto.Marca.Nombre = (string)datos.Lector["Marca"];
+                    producto.Categoria.Nombre = (string)datos.Lector["Categoria"];
+                    producto.Precio = (decimal)datos.Lector["Precio"];
+                    producto.Stock = (int)datos.Lector["Stock"];
+                    producto.Activo = (bool)datos.Lector["Activo"];
+
+                    return producto;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void AgregarProducto(Producto producto)
         {
             AccesoDatos datos = new AccesoDatos();

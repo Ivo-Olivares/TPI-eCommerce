@@ -21,6 +21,22 @@ namespace eCommerce.Negocio
             return Listar().Where(x => x.Activo).ToList();
         }
 
+        public Producto ObtenerPorId(int id)
+        {
+            ProductoDatos datos = new ProductoDatos();
+            return datos.ObtenerPorId(id);
+        }
+
+        public Producto ObtenerActivoPorId(int id)
+        {
+            Producto producto = ObtenerPorId(id);
+
+            if (producto == null || !producto.Activo)
+                return null;
+
+            return producto;
+        }
+
         public void AgregarProducto(Producto producto)
         {
             ValidarProducto(producto);

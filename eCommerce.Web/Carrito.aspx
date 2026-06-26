@@ -5,27 +5,60 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
                 <h1 class="h3 mb-1">Carrito de compras</h1>
-                <p class="text-muted mb-0">Pantalla prevista para revisar items, cantidades, subtotales y total.</p>
+                <p class="text-muted mb-0">Revisa los productos antes de continuar al checkout.</p>
             </div>
             <a runat="server" href="~/Catalogo" class="btn btn-outline-secondary">Seguir comprando</a>
         </div>
 
-        <asp:GridView runat="server" ID="dgvCarrito" AutoGenerateColumns="false" CssClass="table table-bordered table-striped">
-            <Columns>
-                <asp:BoundField HeaderText="Producto" />
-                <asp:BoundField HeaderText="Cantidad" />
-                <asp:BoundField HeaderText="Precio unitario" />
-                <asp:BoundField HeaderText="Subtotal" />
-                <asp:ButtonField Text="Quitar" ButtonType="Button" />
-            </Columns>
-        </asp:GridView>
+        <asp:Label runat="server" ID="lblError" CssClass="alert alert-danger d-block" Visible="false" />
+        <asp:Label runat="server" ID="lblExito" CssClass="alert alert-success d-block" Visible="false" />
 
-        <div class="row justify-content-end">
-            <div class="col-md-4">
+        <asp:Panel runat="server" ID="pnlVacio" CssClass="alert alert-info" Visible="false">
+            El carrito esta vacio.
+        </asp:Panel>
+
+        <asp:Panel runat="server" ID="pnlCarrito" Visible="false">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio unitario</th>
+                            <th style="width: 150px;">Cantidad</th>
+                            <th>Subtotal</th>
+                            <th style="width: 120px;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <asp:Repeater runat="server" ID="rptCarrito" OnItemCommand="rptCarrito_ItemCommand">
+                            <ItemTemplate>
+                                <tr>
+                                    <td>
+                                        <asp:HiddenField runat="server" ID="hdfIdProducto" Value='<%# Eval("Producto.Id") %>' />
+                                        <strong><%#: Eval("Producto.Nombre") %></strong>
+                                        <span class="text-muted d-block small"><%#: Eval("Producto.Marca.Nombre") %> | <%#: Eval("Producto.Categoria.Nombre") %></span>
+                                    </td>
+                                    <td><%# FormatearPrecio(Eval("PrecioUnitario")) %></td>
+                                    <td>
+                                        <asp:TextBox runat="server" ID="txtCantidadItem" CssClass="form-control" TextMode="Number" Text='<%# Eval("Cantidad") %>' />
+                                    </td>
+                                    <td><%# FormatearPrecio(Eval("Subtotal")) %></td>
+                                    <td>
+                                        <asp:Button runat="server" ID="btnQuitar" CssClass="btn btn-outline-danger btn-sm" Text="Quitar" CommandName="Quitar" CommandArgument='<%# Eval("Producto.Id") %>' />
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row justify-content-end">
+                <div class="col-md-4">
                 <div class="border rounded p-3">
                     <div class="d-flex justify-content-between">
                         <span>Subtotal</span>
-                        <strong>$ 75.400,00</strong>
+                        <strong><asp:Label runat="server" ID="lblSubtotal" /></strong>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span>Envio</span>
@@ -34,14 +67,15 @@
                     <hr />
                     <div class="d-flex justify-content-between fs-5">
                         <span>Total</span>
-                        <strong>$ 75.400,00</strong>
+                        <strong><asp:Label runat="server" ID="lblTotal" /></strong>
                     </div>
                     <div class="d-grid gap-2 mt-3">
-                        <a runat="server" href="~/Checkout" class="btn btn-primary">Continuar al checkout</a>
-                        <asp:Button runat="server" ID="btnActualizar" CssClass="btn btn-outline-secondary" Text="Actualizar cantidades" />
+                        <asp:HyperLink runat="server" ID="lnkCheckout" NavigateUrl="~/Checkout" CssClass="btn btn-primary">Continuar al checkout</asp:HyperLink>
+                        <asp:Button runat="server" ID="btnActualizar" CssClass="btn btn-outline-secondary" Text="Actualizar cantidades" OnClick="btnActualizar_Click" />
                     </div>
                 </div>
+                </div>
             </div>
-        </div>
+        </asp:Panel>
     </main>
 </asp:Content>
