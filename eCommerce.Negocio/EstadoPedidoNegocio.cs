@@ -64,5 +64,18 @@ namespace eCommerce.Negocio
             string textoSinEspacios = new string(texto.Where(x => !char.IsWhiteSpace(x)).ToArray());
             return textoSinEspacios.All(char.IsDigit);
         }
+
+        public EstadoPedido ObtenerEstadoInicial()
+        {
+            List<EstadoPedido> lista = Listar();
+
+            foreach (EstadoPedido estado in lista)
+            {
+                if (estado.Activo && string.Equals(estado.Descripcion, "Pendiente de pago", StringComparison.InvariantCultureIgnoreCase))
+                    return estado;
+            }
+
+            throw new Exception("No se encontro un estado inicial activo para el pedido.");
+        }
     }
 }

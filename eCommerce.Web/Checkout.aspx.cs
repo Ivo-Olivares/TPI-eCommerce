@@ -94,10 +94,6 @@ namespace eCommerce.Web
                 if (string.IsNullOrWhiteSpace(ddlFormaPago.SelectedValue))
                     throw new Exception("Debe seleccionar una forma de pago.");
 
-                int idDireccion = int.Parse(ddlDireccion.SelectedValue);
-                int idFormaEntrega = int.Parse(ddlEntrega.SelectedValue);
-                int idFormaPago = int.Parse(ddlFormaPago.SelectedValue);
-
             }
             catch (Exception ex)
             {
@@ -112,6 +108,24 @@ namespace eCommerce.Web
             dgvResumen.DataBind();
 
             lblTotal.Text = "$ 0,00";
+        }
+
+        private Pedido CrearPedidoDesdeCheckout(Usuario usuario, decimal total)
+        {
+            Pedido pedido = new Pedido();
+
+            pedido.Usuario.Id = usuario.Id;
+            pedido.Direccion.Id = int.Parse(ddlDireccion.SelectedValue);
+            pedido.FormaEntrega.Id = int.Parse(ddlEntrega.SelectedValue);
+            pedido.FormaPago.Id = int.Parse(ddlFormaPago.SelectedValue);
+            pedido.FechaCreacion = DateTime.Now;
+            pedido.FechaEntrega = null;
+            pedido.Total = total;
+
+            EstadoPedidoNegocio estadoNegocio = new EstadoPedidoNegocio();
+            pedido.EstadoPedido = estadoNegocio.ObtenerEstadoInicial();
+
+            return pedido;
         }
     }
 }
