@@ -39,6 +39,42 @@ namespace eCommerce.Web
             return session[ClaveEsInvitado] is bool && (bool)session[ClaveEsInvitado];
         }
 
+        public static bool EsUsuarioAutenticado(HttpSessionState session)
+        {
+            return ObtenerUsuario(session) != null && !EsInvitado(session);
+        }
+
+        public static bool TieneAlgunRol(HttpSessionState session, params string[] roles)
+        {
+            Usuario usuario = ObtenerUsuario(session);
+
+            if (usuario == null || roles == null)
+                return false;
+
+            foreach (string rol in roles)
+            {
+                if (TieneRol(usuario, rol))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public static bool PuedeAdministrarSistema(HttpSessionState session)
+        {
+            return EsUsuarioAutenticado(session) && TieneAlgunRol(session, RolAdmin);
+        }
+
+        public static bool PuedeGestionarProductos(HttpSessionState session)
+        {
+            return EsUsuarioAutenticado(session) && TieneAlgunRol(session, RolAdmin, RolVendedor);
+        }
+
+        public static bool PuedeGestionarPedidos(HttpSessionState session)
+        {
+            return EsUsuarioAutenticado(session) && TieneAlgunRol(session, RolAdmin, RolVendedor);
+        }
+
         public static bool TieneRol(Usuario usuario, string nombreRol)
         {
             if (usuario == null || usuario.Roles == null)
