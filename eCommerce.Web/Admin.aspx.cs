@@ -13,6 +13,22 @@ namespace eCommerce.Web
         {
             if (!AutorizacionPagina.RequerirGestionPedidos(Session, Response))
                 return;
+
+            ConfigurarPanelPorRol();
+        }
+
+        private void ConfigurarPanelPorRol()
+        {
+            bool esAdmin = AutenticacionSesion.PuedeAdministrarSistema(Session);
+
+            pnlCategorias.Visible = esAdmin;
+            pnlMarcas.Visible = esAdmin;
+            pnlFormasPago.Visible = esAdmin;
+            pnlFormasEntrega.Visible = esAdmin;
+            pnlEstadosPedido.Visible = esAdmin;
+
+            pnlProductos.Visible = AutenticacionSesion.PuedeGestionarProductos(Session);
+            pnlPedidos.Visible = AutenticacionSesion.PuedeGestionarPedidos(Session);
         }
     }
 }
