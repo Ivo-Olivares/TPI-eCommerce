@@ -60,7 +60,7 @@ namespace eCommerce.Web
         {
             FormaEntregaNegocio negocio = new FormaEntregaNegocio();
 
-            ddlEntrega.DataSource = negocio.Listar();
+            ddlEntrega.DataSource = negocio.Listar().Where(x => x.Activo).ToList();
             ddlEntrega.DataTextField = "Descripcion";
             ddlEntrega.DataValueField = "Id";
             ddlEntrega.DataBind();
@@ -72,7 +72,7 @@ namespace eCommerce.Web
         {
             FormaPagoNegocio negocio = new FormaPagoNegocio();
 
-            ddlFormaPago.DataSource = negocio.Listar();
+            ddlFormaPago.DataSource = negocio.Listar().Where(x => x.Activo).ToList();
             ddlFormaPago.DataTextField = "Descripcion";
             ddlFormaPago.DataValueField = "Id";
             ddlFormaPago.DataBind();
