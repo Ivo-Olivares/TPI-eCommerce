@@ -94,6 +94,14 @@ namespace eCommerce.Web
                     return;
                 }
 
+                List<DetallePedido> carrito = CarritoSesion.Obtener(Session);
+
+                if (carrito.Count == 0)
+                {
+                    throw new Exception("el carrito esta vacio");
+                }
+
+
                 if (string.IsNullOrWhiteSpace(ddlDireccion.SelectedValue))
                     throw new Exception("Debe seleccionar una dirección.");
 

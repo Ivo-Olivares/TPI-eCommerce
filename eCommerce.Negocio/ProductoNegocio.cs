@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace eCommerce.Negocio
 {
     public class ProductoNegocio
@@ -64,6 +65,71 @@ namespace eCommerce.Negocio
             ProductoDatos datos = new ProductoDatos();
             datos.ActivarProducto(producto);
         }
+
+        public void DescontarStock(int idproducto, int cantidad)
+        {
+
+            if (idproducto <= 0)
+                throw new Exception("el producto no es valido");
+
+            if (cantidad <= 0)
+                throw new Exception("la cantidad debe ser mayor a cero");
+
+
+            ProductoDatos datos = new ProductoDatos();
+            bool puedoDescontar = datos.DescontarStock(idproducto, cantidad);
+
+            if(!puedoDescontar)
+            {
+                throw new Exception("no hay stock suficiente para completar la compra.");
+
+            }
+
+
+
+        }
+
+        public void DescontarStockPedidos(List<DetallePedido> detalles)
+        {
+            throw new Exception("no hay productos para descontar stock");
+
+            foreach (DetallePedido detalle in detalles)
+            {
+                if (detalle.Producto == null || detalle.Producto.Id <= 0)
+                    throw new Exception("Uno de los productos no es valido");
+
+                    DescontarStock(detalle.Producto.Id, detalle.Cantidad);
+            }
+        }
+
+
+
+        public void ValidarstockDisponible (List<DetallePedido> detalles)
+        {
+            if (detalles == null || detalles.Count == 0)
+                throw new Exception("No hay productos para validar stock");
+
+            foreach (DetallePedido detalle in detalles)
+            {
+                if (detalle.Producto == null || detalle.Producto.Id <= 0)
+                    throw new Exception("Uno de los productos no es válido.");
+
+                if (detalle.Cantidad <= 0)
+                    throw new Exception("La cantidad debe ser mayor a cero.");
+
+                Producto producto = ObtenerActivoPorId(detalle.Producto.Id);
+
+                if (producto == null)
+                    throw new Exception("Uno de los productos ya no está disponible.");
+
+                if (detalle.Cantidad > producto.Stock)
+                    throw new Exception("No hay stock suficiente para el producto: " + producto.Nombre);
+            }
+
+
+        }
+
+
 
         private void ValidarProducto(Producto producto)
         {
