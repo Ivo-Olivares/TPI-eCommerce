@@ -10,6 +10,29 @@ namespace eCommerce.Negocio
 {
     public class DetallePedidoNegocio
     {
+
+        public List<DetallePedido> ListarPorPedido(int idPedido)
+        {
+            if (idPedido <= 0)
+                throw new Exception("El pedido no es válido.");
+
+            DetallePedidoDatos datos = new DetallePedidoDatos();
+            return datos.ListarPorPedido(idPedido);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public void AgregarDetallePedido(DetallePedido detalle)
         {
             if (detalle == null)

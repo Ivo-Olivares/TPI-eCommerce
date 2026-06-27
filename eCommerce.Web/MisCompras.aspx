@@ -29,7 +29,7 @@
         </div>
   
 
-        <asp:GridView runat="server" ID="dgvCompras" AutoGenerateColumns="false" CssClass="table table-bordered table-striped">
+        <asp:GridView runat="server" ID="dgvCompras" AutoGenerateColumns="false" CssClass="table table-bordered table-striped" DataKeyNames="Id" OnSelectedIndexChanged="dgvCompras_SelectedIndexChanged">
             <Columns>
                 <asp:BoundField HeaderText="Pedido" DataField="Id" />
                 <asp:BoundField HeaderText="Fecha" DataField="FechaCreacion" DataFormatString="{0:dd/mm/yyyy}" />
@@ -37,7 +37,19 @@
                 <asp:BoundField HeaderText="Forma de pago" datafield ="FormaPago.Descripcion" />
                 <asp:BoundField HeaderText="Forma de entrega" datafield ="FormaEntrega.Descripcion"/>
                 <asp:BoundField HeaderText="Total" datafield ="Total" DataFormatString="{0:c}"/>
+                <asp:CommandField HeaderText="Detalle" ShowSelectButton="true" SelectText="Ver detalle" />
             </Columns>
         </asp:GridView>
+
+        <asp:Panel runat="server" ID="pnlDetalle" Visible="false" CssClass="mt-4">
+           <h2 class="h5 mb-3">Detalle del pedido</h2>
+            <asp:GridView runat="server" ID="dgvDetalle" AutoGenerateColumns="false" CssClass="table table-bordered table-striped"> <Columns>
+            <asp:BoundField HeaderText="Producto" DataField="Producto.Nombre" />
+            <asp:BoundField HeaderText="Cantidad" DataField="Cantidad" />
+            <asp:BoundField HeaderText="Precio unitario" DataField="PrecioUnitario" DataFormatString="{0:C}" />
+            <asp:BoundField HeaderText="Subtotal" DataField="Subtotal" DataFormatString="{0:C}" />
+        </Columns>
+    </asp:GridView>
+</asp:Panel>
     </main>
 </asp:Content>

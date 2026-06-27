@@ -30,5 +30,56 @@ namespace eCommerce.Datos
                 throw ex;
             }
         }
+
+        public List<DetallePedido> ListarPorPedido (int idPedido)
+        {
+
+            List<DetallePedido> lista = new List<DetallePedido>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT DP.IdDetallePedido, DP.IdPedido, DP.IdProducto, P.Nombre Producto, DP.Cantidad, DP.PrecioUnitario, DP.Subtotal FROM DETALLESPEDIDO DP INNER JOIN PRODUCTOS P ON DP.IdProducto = P.IdProducto WHERE DP.IdPedido = @IdPedido");
+                datos.setearParametros("@IdPedido", idPedido);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    DetallePedido detalle = new DetallePedido();
+                    detalle.Id = (int)datos.Lector["IdDetallePedido"];
+                    detalle.Pedido = new Pedido();
+                    detalle.Pedido.Id = (int)datos.Lector["IdPedido"];
+                    detalle.Producto = new Producto();
+                    detalle.Producto.Id = (int)datos.Lector["IdProducto"];
+                    detalle.Producto.Nombre = (string)datos.Lector["Producto"];
+                    detalle.Cantidad = (int)datos.Lector["Cantidad"];
+                    detalle.PrecioUnitario = (decimal)datos.Lector["PrecioUnitario"];
+                    detalle.Subtotal = (decimal)datos.Lector["Subtotal"];
+
+                    lista.Add(detalle);
+                }
+
+                return lista;
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            finally
+
+            {
+                datos.cerrarConexion();
+            }
+
+
+
+        }
+
+
+
     }
 }

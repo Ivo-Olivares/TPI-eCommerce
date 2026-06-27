@@ -60,5 +60,22 @@ namespace eCommerce.Web
                 dgvCompras.DataBind();
             }
         }
+
+        protected void dgvCompras_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idPedido = (int)dgvCompras.SelectedDataKey.Value;
+
+            DetallePedidoNegocio negocio = new DetallePedidoNegocio();
+            List<DetallePedido> detalle = negocio.ListarPorPedido(idPedido);
+
+            dgvCompras.DataSource = detalle;
+            dgvDetalle.DataBind();
+
+            pnlDetalle.Visible = true;
+
+
+
+
+        }
     }
 }
