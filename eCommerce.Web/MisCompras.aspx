@@ -32,7 +32,7 @@
         <asp:GridView runat="server" ID="dgvCompras" AutoGenerateColumns="false" CssClass="table table-bordered table-striped" DataKeyNames="Id" OnSelectedIndexChanged="dgvCompras_SelectedIndexChanged">
             <Columns>
                 <asp:BoundField HeaderText="Pedido" DataField="Id" />
-                <asp:BoundField HeaderText="Fecha" DataField="FechaCreacion" DataFormatString="{0:dd/mm/yyyy}" />
+                <asp:BoundField HeaderText="Fecha" DataField="FechaCreacion" DataFormatString="{0:dd/MM/yyyy}" />
                 <asp:BoundField HeaderText="Estado" datafield ="EstadoPedido.Descripcion" />
                 <asp:BoundField HeaderText="Forma de pago" datafield ="FormaPago.Descripcion" />
                 <asp:BoundField HeaderText="Forma de entrega" datafield ="FormaEntrega.Descripcion"/>

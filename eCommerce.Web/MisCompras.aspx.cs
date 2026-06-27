@@ -40,6 +40,11 @@ namespace eCommerce.Web
                 List<Pedido> compras = negocio.ListarPorUsuario(usuario.Id);
 
 
+                if(!string.IsNullOrWhiteSpace(ddlEstado.SelectedValue))
+                {
+                    compras = compras.Where(x => x.EstadoPedido.Descripcion == ddlEstado.SelectedValue).ToList();
+                }
+
                 if (!string.IsNullOrWhiteSpace(txtFechaDesde.Text))
                 {
                     DateTime fechaDesde = DateTime.Parse(txtFechaDesde.Text);
@@ -68,7 +73,7 @@ namespace eCommerce.Web
             DetallePedidoNegocio negocio = new DetallePedidoNegocio();
             List<DetallePedido> detalle = negocio.ListarPorPedido(idPedido);
 
-            dgvCompras.DataSource = detalle;
+            dgvDetalle.DataSource = detalle;
             dgvDetalle.DataBind();
 
             pnlDetalle.Visible = true;
