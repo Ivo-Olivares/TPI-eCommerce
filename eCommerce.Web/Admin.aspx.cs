@@ -11,7 +11,8 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!AutorizacionPagina.RequerirGestionPedidos(Session, Response))
+                return;
         }
     }
 }
