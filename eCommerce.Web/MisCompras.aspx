@@ -24,18 +24,19 @@
                 <asp:TextBox runat="server" ID="txtFechaHasta" CssClass="form-control" TextMode="Date" />
             </div>
             <div class="col-md-3">
-                <asp:Button runat="server" ID="btnFiltrar" CssClass="btn btn-outline-primary w-100" Text="Filtrar" />
+                <asp:Button runat="server" ID="btnFiltrar" CssClass="btn btn-outline-primary w-100" Text="Filtrar" OnClick="btnFiltrar_Click" />
             </div>
         </div>
+  
 
         <asp:GridView runat="server" ID="dgvCompras" AutoGenerateColumns="false" CssClass="table table-bordered table-striped">
             <Columns>
-                <asp:BoundField HeaderText="Pedido" />
-                <asp:BoundField HeaderText="Fecha" />
-                <asp:BoundField HeaderText="Estado" />
-                <asp:BoundField HeaderText="Forma de pago" />
-                <asp:BoundField HeaderText="Forma de entrega" />
-                <asp:BoundField HeaderText="Total" />
+                <asp:BoundField HeaderText="Pedido" DataField="Id" />
+                <asp:BoundField HeaderText="Fecha" DataField="FechaCreacion" DataFormatString="{0:dd/mm/yyyy}" />
+                <asp:BoundField HeaderText="Estado" datafield ="EstadoPedido.Descripcion" />
+                <asp:BoundField HeaderText="Forma de pago" datafield ="FormaPago.Descripcion" />
+                <asp:BoundField HeaderText="Forma de entrega" datafield ="FormaEntrega.Descripcion"/>
+                <asp:BoundField HeaderText="Total" datafield ="Total" DataFormatString="{0:c}"/>
             </Columns>
         </asp:GridView>
     </main>

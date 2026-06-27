@@ -23,6 +23,15 @@ namespace eCommerce.Web
                     return;
                 }
 
+                List<DetallePedido> carrito = CarritoSesion.Obtener(Session);
+                if(carrito.Count == 0)
+                    {
+                    Response.Redirect("~/Carrito.aspx",false);
+                    return; 
+                }
+
+
+
                 if (usuario.Id <= 0)
                 {
                     throw new Exception("El usuario logueado no tiene un Id válido.");
