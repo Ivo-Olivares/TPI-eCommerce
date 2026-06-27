@@ -34,12 +34,19 @@
         <h4>Resumen del pedido</h4>
 
         <div class="card p-3 mb-3">
-            <asp:GridView ID="dgvResumen" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered">
+            <asp:GridView ID="dgvResumen" runat="server" AutoGenerateColumns="False" CssClass="table table-striped">
                 <Columns>
-                    <asp:BoundField HeaderText="Producto" DataField="Producto" />
-                    <asp:BoundField HeaderText="Cantidad" DataField="Cantidad" />
-                    <asp:BoundField HeaderText="Precio unitario" DataField="PrecioUnitario" DataFormatString="{0:C}" />
-                    <asp:BoundField HeaderText="Subtotal" DataField="Subtotal" DataFormatString="{0:C}" />
+                    <asp:TemplateField HeaderText="Producto">
+                        <ItemTemplate>
+                            <%# Eval("Producto.Nombre") %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+
+                    <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio unitario" DataFormatString="{0:C}" />
+
+                    <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" />
                 </Columns>
             </asp:GridView>
 

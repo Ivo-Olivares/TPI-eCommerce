@@ -121,10 +121,28 @@ namespace eCommerce.Web
 
         private void CargarResumenPedido()
         {
-            dgvResumen.DataSource = null;
+            List<DetallePedido> carrito = CarritoSesion.Obtener(Session);
+
+            if (carrito == null || carrito.Count == 0)
+            {
+                dgvResumen.DataSource = null;
+                dgvResumen.DataBind();
+
+                lblTotal.Text = "$ 0,00";
+                return;
+            }
+
+            dgvResumen.DataSource = carrito;
             dgvResumen.DataBind();
 
-            lblTotal.Text = "$ 0,00";
+            decimal total = 0;
+
+            foreach (DetallePedido item in carrito)
+            {
+                total += item.Subtotal;
+            }
+
+            lblTotal.Text = total.ToString("C");
         }
 
         private Pedido CrearPedidoDesdeCheckout(Usuario usuario, decimal total)
