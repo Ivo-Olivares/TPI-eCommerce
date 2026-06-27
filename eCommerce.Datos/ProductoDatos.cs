@@ -172,16 +172,16 @@ namespace eCommerce.Datos
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("UPDATE PRODUCTOS SET Stock=STOCK - @Cantidad WHERE datos.setearConsulta(\"UPDATE PRODUCTOS SET Stock = Stock - @Cantidad WHERE IdProducto = @IdProducto AND Activo = 1 AND Stock >= @Cantidad; SELECT @@ROWCOUNT AS FilasAfectadas;");
-                datos.setearParametros("IdProductos", idProducto);
-                datos.setearParametros("@cantidad", cantidad);
+                datos.setearConsulta("UPDATE PRODUCTOS SET Stock = Stock - @Cantidad WHERE IdProducto = @IdProducto AND Activo = 1 AND Stock >= @Cantidad; SELECT @@ROWCOUNT AS FilasAfectadas;");
+                datos.setearParametros("@IdProducto", idProducto);
+                datos.setearParametros("@Cantidad", cantidad);
 
 
                 datos.ejecutarLectura();
 
                 if (datos.Lector.Read())
                 {
-                    return (int)datos.Lector["filasAfectadas"] == 1;
+                    return (int)datos.Lector["FilasAfectadas"] == 1;
                 }
 
                 return false;

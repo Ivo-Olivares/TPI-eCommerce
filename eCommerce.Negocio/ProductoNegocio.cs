@@ -89,10 +89,13 @@ namespace eCommerce.Negocio
 
         }
 
-        public void DescontarStockPedidos(List<DetallePedido> detalles)
+        public void DescontarStockPedido(List<DetallePedido> detalles)
         {
-            throw new Exception("no hay productos para descontar stock");
 
+            if (detalles == null || detalles.Count == 0)
+            {   
+                throw new Exception("no hay productos para descontar stock");
+            }
             foreach (DetallePedido detalle in detalles)
             {
                 if (detalle.Producto == null || detalle.Producto.Id <= 0)
@@ -102,9 +105,7 @@ namespace eCommerce.Negocio
             }
         }
 
-
-
-        public void ValidarstockDisponible (List<DetallePedido> detalles)
+        public void ValidarStockDisponible(List<DetallePedido> detalles)
         {
             if (detalles == null || detalles.Count == 0)
                 throw new Exception("No hay productos para validar stock");
