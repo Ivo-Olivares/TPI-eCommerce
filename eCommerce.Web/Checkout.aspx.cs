@@ -24,10 +24,10 @@ namespace eCommerce.Web
                 }
 
                 List<DetallePedido> carrito = CarritoSesion.Obtener(Session);
-                if(carrito.Count == 0)
-                    {
-                    Response.Redirect("~/Carrito.aspx",false);
-                    return; 
+                if (carrito.Count == 0)
+                {
+                    Response.Redirect("~/Carrito.aspx", false);
+                    return;
                 }
 
 
@@ -111,6 +111,34 @@ namespace eCommerce.Web
                 if (string.IsNullOrWhiteSpace(ddlFormaPago.SelectedValue))
                     throw new Exception("Debe seleccionar una forma de pago.");
 
+                decimal total = CalcularTotal(carrito);
+
+                Pedido pedido = CrearPedidoDesdeCheckout(usuario, total);
+
+                PedidoNegocio pedidoNegocio = new PedidoNegocio();
+                int idPedido = pedidoNegocio.AgregarPedido(pedido);
+
+                DetallePedidoNegocio detalleNegocio = new DetallePedidoNegocio();
+
+                foreach (DetallePedido item in carrito)
+                {
+                    item.Pedido = new Pedido();
+                    item.Pedido.Id = idPedido;
+
+                    detalleNegocio.AgregarDetallePedido(item);
+                }
+
+                ProductoNegocio productoNegocio = new ProductoNegocio();
+                productoNegocio.DescontarStockPedido(carrito);
+
+                Session.Remove(CarritoSesion.ClaveCarrito);
+
+                lblError.CssClass = "text-success d-block mb-3";
+                lblError.Text = "Compra realizada correctamente.";
+                lblError.Visible = true;
+
+                btnConfirmar.Enabled = false;
+
             }
             catch (Exception ex)
             {
@@ -161,6 +189,18 @@ namespace eCommerce.Web
             pedido.EstadoPedido = estadoNegocio.ObtenerEstadoInicial();
 
             return pedido;
+        }
+
+        private decimal CalcularTotal(List<DetallePedido> carrito)
+        {
+            decimal total = 0;
+
+            foreach (DetallePedido item in carrito)
+            {
+                total += item.Subtotal;
+            }
+
+            return total;
         }
     }
 }
