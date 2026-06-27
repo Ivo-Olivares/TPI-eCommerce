@@ -18,8 +18,19 @@ namespace eCommerce.Web
             if (!IsPostBack)
             {
                 CargarEstados();
-                CargarPedidos();
             }
+
+            if (ProcesarCambioEstadoPorUrl())
+                return;
+
+            CargarPedidos();
+
+            int idPedido;
+            if (int.TryParse(Request.QueryString["id"], out idPedido))
+                CargarDetallePedido(idPedido);
+
+            if (Request.QueryString["actualizado"] == "1")
+                MostrarMensaje("El estado del pedido se actualizo correctamente.", "alert-success");
         }
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
@@ -29,32 +40,29 @@ namespace eCommerce.Web
             CargarPedidos();
         }
 
-        protected void dgvPedidos_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int idPedido = (int)dgvPedidos.SelectedDataKey.Value;
-            CargarDetallePedido(idPedido);
-        }
-
-        protected void btnActualizarEstado_Click(object sender, EventArgs e)
+        private bool ProcesarCambioEstadoPorUrl()
         {
             try
             {
-                if (ViewState["IdPedidoSeleccionado"] == null)
-                    throw new Exception("Debe seleccionar un pedido.");
+                int idPedido;
+                if (!int.TryParse(Request.QueryString["id"], out idPedido))
+                    return false;
 
-                int idPedido = (int)ViewState["IdPedidoSeleccionado"];
-                int idEstadoPedido = int.Parse(ddlEstadoNuevo.SelectedValue);
+                int idEstadoPedido;
+                if (!int.TryParse(Request.QueryString["estado"], out idEstadoPedido))
+                    return false;
 
                 PedidoNegocio negocio = new PedidoNegocio();
                 negocio.ActualizarEstado(idPedido, idEstadoPedido);
 
-                MostrarMensaje("El estado del pedido se actualizo correctamente.", "alert-success");
-                CargarPedidos();
-                CargarDetallePedido(idPedido);
+                Response.Redirect("~/Pedidos.aspx?id=" + idPedido + "&actualizado=1", false);
+                Context.ApplicationInstance.CompleteRequest();
+                return true;
             }
             catch (Exception ex)
             {
                 MostrarMensaje(ex.Message, "alert-danger");
+                return false;
             }
         }
 
@@ -72,10 +80,8 @@ namespace eCommerce.Web
             ddlEstado.DataBind();
             ddlEstado.Items.Insert(0, new ListItem("Todos", ""));
 
-            ddlEstadoNuevo.DataSource = estados;
-            ddlEstadoNuevo.DataTextField = "Descripcion";
-            ddlEstadoNuevo.DataValueField = "Id";
-            ddlEstadoNuevo.DataBind();
+            rptEstadosCambio.DataSource = estados;
+            rptEstadosCambio.DataBind();
         }
 
         private void CargarPedidos()
@@ -130,7 +136,6 @@ namespace eCommerce.Web
 
             ViewState["IdPedidoSeleccionado"] = idPedido;
             lblPedidoSeleccionado.Text = "Pedido #" + pedido.Id + " - " + pedido.Usuario.Email;
-            ddlEstadoNuevo.SelectedValue = pedido.EstadoPedido.Id.ToString();
 
             DetallePedidoNegocio detalleNegocio = new DetallePedidoNegocio();
             List<DetallePedido> detalle = detalleNegocio.ListarPorPedido(idPedido);

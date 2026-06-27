@@ -55,14 +55,9 @@ namespace eCommerce.Web
         protected global::System.Web.UI.WebControls.Label lblPedidoSeleccionado;
 
         /// <summary>
-        /// Control ddlEstadoNuevo.
+        /// Control rptEstadosCambio.
         /// </summary>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEstadoNuevo;
-
-        /// <summary>
-        /// Control btnActualizarEstado.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Button btnActualizarEstado;
+        protected global::System.Web.UI.WebControls.Repeater rptEstadosCambio;
 
         /// <summary>
         /// Control dgvDetalle.

@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <asp:GridView runat="server" ID="dgvPedidos" AutoGenerateColumns="false" CssClass="table table-bordered table-striped" DataKeyNames="Id" OnSelectedIndexChanged="dgvPedidos_SelectedIndexChanged" EmptyDataText="No hay pedidos para mostrar.">
+        <asp:GridView runat="server" ID="dgvPedidos" AutoGenerateColumns="false" CssClass="table table-bordered table-striped" DataKeyNames="Id" EmptyDataText="No hay pedidos para mostrar.">
             <Columns>
                 <asp:BoundField HeaderText="Pedido" DataField="Id" />
                 <asp:BoundField HeaderText="Fecha" DataField="FechaCreacion" DataFormatString="{0:dd/MM/yyyy}" />
@@ -33,7 +33,11 @@
                 <asp:BoundField HeaderText="Forma de pago" DataField="FormaPago.Descripcion" />
                 <asp:BoundField HeaderText="Forma de entrega" DataField="FormaEntrega.Descripcion" />
                 <asp:BoundField HeaderText="Total" DataField="Total" DataFormatString="{0:C}" />
-                <asp:CommandField HeaderText="Detalle" ShowSelectButton="true" SelectText="Ver detalle" />
+                <asp:TemplateField HeaderText="Detalle">
+                    <ItemTemplate>
+                        <asp:HyperLink runat="server" ID="lnkVerDetalle" NavigateUrl='<%# "Pedidos.aspx?id=" + Eval("Id") %>' Text="Ver detalle" CssClass="btn btn-sm btn-outline-primary" />
+                    </ItemTemplate>
+                </asp:TemplateField>
             </Columns>
         </asp:GridView>
 
@@ -45,10 +49,15 @@
                 </div>
                 <div class="d-flex gap-2 align-items-end">
                     <div>
-                        <asp:Label runat="server" AssociatedControlID="ddlEstadoNuevo" CssClass="form-label" Text="Cambiar estado" />
-                        <asp:DropDownList runat="server" ID="ddlEstadoNuevo" CssClass="form-select" />
+                        <span class="form-label d-block">Cambiar estado</span>
+                        <div class="d-flex flex-wrap gap-2">
+                            <asp:Repeater runat="server" ID="rptEstadosCambio">
+                                <ItemTemplate>
+                                    <a class="btn btn-sm btn-outline-primary" href='<%# "Pedidos.aspx?id=" + Request.QueryString["id"] + "&estado=" + Eval("Id") %>'><%# Eval("Descripcion") %></a>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
                     </div>
-                    <asp:Button runat="server" ID="btnActualizarEstado" CssClass="btn btn-primary" Text="Actualizar" OnClick="btnActualizarEstado_Click" />
                 </div>
             </div>
 
