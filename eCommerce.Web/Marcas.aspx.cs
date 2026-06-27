@@ -14,6 +14,9 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!AutorizacionPagina.RequerirAdmin(Session, Response))
+                return;
+
             if (!IsPostBack)
             {
                 MarcaNegocio negocio = new MarcaNegocio();

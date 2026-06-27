@@ -10,6 +10,9 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!AutorizacionPagina.RequerirGestionProductos(Session, Response))
+                return;
+
             if (!IsPostBack)
             {
                 CargarProductos();

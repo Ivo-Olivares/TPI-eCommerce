@@ -64,9 +64,8 @@ namespace eCommerce.Datos
 
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
                 throw;
             }
             finally

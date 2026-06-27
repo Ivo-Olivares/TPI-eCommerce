@@ -71,6 +71,12 @@ namespace eCommerce.Negocio
 
             foreach (EstadoPedido estado in lista)
             {
+                if (estado.Activo && string.Equals(estado.Descripcion, "Pendiente", StringComparison.InvariantCultureIgnoreCase))
+                    return estado;
+            }
+
+            foreach (EstadoPedido estado in lista)
+            {
                 if (estado.Activo && string.Equals(estado.Descripcion, "Pendiente de pago", StringComparison.InvariantCultureIgnoreCase))
                     return estado;
             }

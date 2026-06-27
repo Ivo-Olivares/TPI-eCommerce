@@ -5,32 +5,38 @@
     <h2 class="mb-4">Panel de Administración</h2>
 
     <div class="row mb-3">
-        <div class="col-md-6">
+        <div runat="server" id="pnlCategorias" class="col-md-6">
             <a href="Categorias.aspx" class="btn btn-primary w-100">Categorias</a>
         </div>
 
-        <div class="col-md-6">
+        <div runat="server" id="pnlMarcas" class="col-md-6">
             <a href="Marcas.aspx" class="btn btn-primary w-100">Marcas</a>
         </div>
     </div>
 
     <div class="row mb-3">
-        <div class="col-md-6">
+        <div runat="server" id="pnlFormasPago" class="col-md-6">
             <a href="FormasPago.aspx" class="btn btn-primary w-100">Formas de Pago</a>
         </div>
 
-        <div class="col-md-6">
+        <div runat="server" id="pnlFormasEntrega" class="col-md-6">
             <a href="FormasEntrega.aspx" class="btn btn-primary w-100">Formas de Entrega</a>
         </div>
     </div>
 
 
     <div class="row mb-3">
-        <div class="col-md-6">
+        <div runat="server" id="pnlProductos" class="col-md-6">
             <a href="Productos.aspx" class="btn btn-primary w-100">Productos</a>
         </div>
-        <div class="col-md-6">
+        <div runat="server" id="pnlEstadosPedido" class="col-md-6">
             <a href="EstadosPedido.aspx" class="btn btn-primary w-100">Estados de Pedido</a>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div runat="server" id="pnlPedidos" class="col-md-6">
+            <a href="Pedidos.aspx" class="btn btn-primary w-100">Pedidos</a>
         </div>
     </div>
 

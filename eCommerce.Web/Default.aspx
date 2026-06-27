@@ -9,7 +9,7 @@
                 <p class="lead">Aplicacion Web Forms para administrar catalogo, clientes, pedidos y seguimiento de compras.</p>
             </div>
             <div class="col-md-4 text-md-end">
-                <a runat="server" href="~/Categorias" class="btn btn-primary btn-md">Ver Categorias</a>
+                <a runat="server" href="~/Catalogo" class="btn btn-primary btn-md">Ver Catalogo</a>
             </div>
         </section>
 
