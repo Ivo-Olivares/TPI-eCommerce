@@ -17,6 +17,24 @@ namespace eCommerce.Negocio
             return datos.ListarPorUsuario(idUsuario);
         }
 
+        public List<Pedido> ListarTodos()
+        {
+            PedidoDatos datos = new PedidoDatos();
+            return datos.ListarTodos();
+        }
+
+        public void ActualizarEstado(int idPedido, int idEstadoPedido)
+        {
+            if (idPedido <= 0)
+                throw new Exception("Debe seleccionar un pedido valido.");
+
+            if (idEstadoPedido <= 0)
+                throw new Exception("Debe seleccionar un estado valido.");
+
+            PedidoDatos datos = new PedidoDatos();
+            datos.ActualizarEstado(idPedido, idEstadoPedido);
+        }
+
         public int AgregarPedido(Pedido pedido)
         {
             if (pedido == null)

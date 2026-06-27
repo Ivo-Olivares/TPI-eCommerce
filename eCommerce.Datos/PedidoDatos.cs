@@ -62,6 +62,84 @@ namespace eCommerce.Datos
 
         }
 
+        public List<Pedido> ListarTodos()
+        {
+            List<Pedido> lista = new List<Pedido>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"SELECT P.IdPedido, P.IdUsuario, U.Nombre, U.Apellido, U.Email, P.FechaCreacion, P.FechaEntrega, P.Total,
+                    FP.IdFormaPago, FP.Descripcion FormaPago,
+                    FE.IdFormaEntrega, FE.Descripcion FormaEntrega,
+                    EP.IdEstadoPedido, EP.Descripcion EstadoPedido
+                    FROM PEDIDOS P
+                    INNER JOIN USUARIOS U ON P.IdUsuario = U.IdUsuario
+                    INNER JOIN FORMASPAGO FP ON P.IdFormaPago = FP.IdFormaPago
+                    INNER JOIN FORMASENTREGA FE ON P.IdFormaEntrega = FE.IdFormaEntrega
+                    INNER JOIN ESTADOSPEDIDO EP ON P.IdEstadoPedido = EP.IdEstadoPedido
+                    ORDER BY P.FechaCreacion DESC");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Pedido pedido = new Pedido();
+
+                    pedido.Id = (int)datos.Lector["IdPedido"];
+                    pedido.FechaCreacion = (DateTime)datos.Lector["FechaCreacion"];
+                    pedido.FechaEntrega = datos.Lector["FechaEntrega"] is DBNull ? (DateTime?)null : (DateTime)datos.Lector["FechaEntrega"];
+                    pedido.Total = (decimal)datos.Lector["Total"];
+
+                    pedido.Usuario = new Usuario();
+                    pedido.Usuario.Id = (int)datos.Lector["IdUsuario"];
+                    pedido.Usuario.Nombre = datos.Lector["Nombre"] is DBNull ? "" : (string)datos.Lector["Nombre"];
+                    pedido.Usuario.Apellido = datos.Lector["Apellido"] is DBNull ? "" : (string)datos.Lector["Apellido"];
+                    pedido.Usuario.Email = datos.Lector["Email"] is DBNull ? "" : (string)datos.Lector["Email"];
+
+                    pedido.FormaPago = new FormaPago();
+                    pedido.FormaPago.Id = (int)datos.Lector["IdFormaPago"];
+                    pedido.FormaPago.Descripcion = datos.Lector["FormaPago"] is DBNull ? "" : (string)datos.Lector["FormaPago"];
+
+                    pedido.FormaEntrega = new FormaEntrega();
+                    pedido.FormaEntrega.Id = (int)datos.Lector["IdFormaEntrega"];
+                    pedido.FormaEntrega.Descripcion = datos.Lector["FormaEntrega"] is DBNull ? "" : (string)datos.Lector["FormaEntrega"];
+
+                    pedido.EstadoPedido = new EstadoPedido();
+                    pedido.EstadoPedido.Id = (int)datos.Lector["IdEstadoPedido"];
+                    pedido.EstadoPedido.Descripcion = datos.Lector["EstadoPedido"] is DBNull ? "" : (string)datos.Lector["EstadoPedido"];
+
+                    lista.Add(pedido);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return lista;
+        }
+
+        public void ActualizarEstado(int idPedido, int idEstadoPedido)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE PEDIDOS SET IdEstadoPedido = @IdEstadoPedido WHERE IdPedido = @IdPedido");
+                datos.setearParametros("@IdEstadoPedido", idEstadoPedido);
+                datos.setearParametros("@IdPedido", idPedido);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public int AgregarPedido(Pedido pedido)
         {
             AccesoDatos datos = new AccesoDatos();
