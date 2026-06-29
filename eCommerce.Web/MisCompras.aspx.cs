@@ -13,22 +13,12 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                CargarEstados();
-                CargarCompras();
-            }
-
-
-        }
-
-        protected void btnFiltrar_Click(object sender, EventArgs e)
-        {
+            string estadoSeleccionado = IsPostBack ? Request.Form[ddlEstado.UniqueID] : null;
+            CargarEstados(estadoSeleccionado);
             CargarCompras();
-
         }
 
-        private void CargarEstados()
+        private void CargarEstados(string estadoSeleccionado)
         {
             EstadoPedidoNegocio negocio = new EstadoPedidoNegocio();
             List<EstadoPedido> estados = negocio.Listar()
@@ -41,6 +31,11 @@ namespace eCommerce.Web
             ddlEstado.DataValueField = "Id";
             ddlEstado.DataBind();
             ddlEstado.Items.Insert(0, new ListItem("Todos", ""));
+
+            if (!string.IsNullOrWhiteSpace(estadoSeleccionado) && ddlEstado.Items.FindByValue(estadoSeleccionado) != null)
+            {
+                ddlEstado.SelectedValue = estadoSeleccionado;
+            }
         }
 
         private void CargarCompras() {
