@@ -15,6 +15,15 @@ namespace eCommerce.Web
         {
             string estadoSeleccionado = IsPostBack ? Request.Form[ddlEstado.UniqueID] : null;
             CargarEstados(estadoSeleccionado);
+
+            if (!IsPostBack)
+            {
+                CargarCompras();
+            }
+        }
+
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
             CargarCompras();
         }
 
