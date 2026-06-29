@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace eCommerce.Web
 {
@@ -14,6 +15,7 @@ namespace eCommerce.Web
         {
             if (!IsPostBack)
             {
+                CargarEstados();
                 CargarCompras();
             }
 
@@ -24,6 +26,21 @@ namespace eCommerce.Web
         {
             CargarCompras();
 
+        }
+
+        private void CargarEstados()
+        {
+            EstadoPedidoNegocio negocio = new EstadoPedidoNegocio();
+            List<EstadoPedido> estados = negocio.Listar()
+                .Where(x => x.Activo)
+                .OrderBy(x => x.Id)
+                .ToList();
+
+            ddlEstado.DataSource = estados;
+            ddlEstado.DataTextField = "Descripcion";
+            ddlEstado.DataValueField = "Id";
+            ddlEstado.DataBind();
+            ddlEstado.Items.Insert(0, new ListItem("Todos", ""));
         }
 
         private void CargarCompras() {
@@ -40,9 +57,9 @@ namespace eCommerce.Web
                 List<Pedido> compras = negocio.ListarPorUsuario(usuario.Id);
 
 
-                if(!string.IsNullOrWhiteSpace(ddlEstado.SelectedValue))
+                if(int.TryParse(ddlEstado.SelectedValue, out int idEstado))
                 {
-                    compras = compras.Where(x => x.EstadoPedido.Descripcion == ddlEstado.SelectedValue).ToList();
+                    compras = compras.Where(x => x.EstadoPedido.Id == idEstado).ToList();
                 }
 
                 if (!string.IsNullOrWhiteSpace(txtFechaDesde.Text))
