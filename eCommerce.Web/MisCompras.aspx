@@ -8,11 +8,6 @@
             <div class="col-md-3">
                 <asp:Label runat="server" AssociatedControlID="ddlEstado" CssClass="form-label" Text="Estado" />
                 <asp:DropDownList runat="server" ID="ddlEstado" CssClass="form-select">
-                    <asp:ListItem Text="Todos" Value="" />
-                    <asp:ListItem Text="Pendiente" Value="Pendiente" />
-                    <asp:ListItem Text="Pagado" Value="Pagado" />
-                    <asp:ListItem Text="Enviado" Value="Enviado" />
-                    <asp:ListItem Text="Entregado" Value="Entregado" />
                 </asp:DropDownList>
             </div>
             <div class="col-md-3">
