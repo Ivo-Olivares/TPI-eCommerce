@@ -3,6 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <main class="py-4">
         <h1 class="h3 mb-3">Mi perfil</h1>
+        <asp:Label runat="server" ID="lblMensaje" Visible="false" CssClass="alert d-block" />
+
+        <h2 class="h5 mb-3">Datos personales</h2>
         <div class="row g-3">
             <div class="col-md-6">
                 <asp:Label runat="server" AssociatedControlID="txtNombre" CssClass="form-label" Text="Nombre" />
@@ -14,11 +17,19 @@
             </div>
             <div class="col-md-6">
                 <asp:Label runat="server" AssociatedControlID="txtEmail" CssClass="form-label" Text="Email" />
-                <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" TextMode="Email" />
+                <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" TextMode="Email" ReadOnly="true" />
             </div>
             <div class="col-md-6">
                 <asp:Label runat="server" AssociatedControlID="txtTelefono" CssClass="form-label" Text="Telefono" />
                 <asp:TextBox runat="server" ID="txtTelefono" CssClass="form-control" />
+            </div>
+            <div class="col-md-6">
+                <asp:Label runat="server" AssociatedControlID="txtDni" CssClass="form-label" Text="DNI" />
+                <asp:TextBox runat="server" ID="txtDni" CssClass="form-control" ReadOnly="true" />
+            </div>
+            <div class="col-md-6">
+                <asp:Label runat="server" AssociatedControlID="txtFechaNacimiento" CssClass="form-label" Text="Fecha de nacimiento" />
+                <asp:TextBox runat="server" ID="txtFechaNacimiento" CssClass="form-control" ReadOnly="true" />
             </div>
         </div>
 
