@@ -127,6 +127,25 @@ namespace eCommerce.Datos
             }
         }
 
+        public void ActualizarDatosBasicos(Usuario usuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE USUARIOS SET Nombre = @Nombre, Apellido = @Apellido, Telefono = @Telefono WHERE IdUsuario = @IdUsuario");
+                datos.setearParametros("@Nombre", usuario.Nombre);
+                datos.setearParametros("@Apellido", usuario.Apellido);
+                datos.setearParametros("@Telefono", usuario.Telefono);
+                datos.setearParametros("@IdUsuario", usuario.Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         private List<Rol> ListarRoles(int idUsuario)
         {
             List<Rol> roles = new List<Rol>();

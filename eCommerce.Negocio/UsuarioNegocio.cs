@@ -73,6 +73,33 @@ namespace eCommerce.Negocio
             return usuario.Roles.Any(x => string.Equals(x.Nombre, nombreRol, StringComparison.InvariantCultureIgnoreCase));
         }
 
+        public void ActualizarDatosBasicos(Usuario usuario)
+        {
+            ValidarDatosBasicos(usuario);
+
+            UsuarioDatos datos = new UsuarioDatos();
+            datos.ActualizarDatosBasicos(usuario);
+        }
+
+        private void ValidarDatosBasicos(Usuario usuario)
+        {
+            if (usuario == null || usuario.Id <= 0)
+                throw new Exception("No se pudo identificar el usuario.");
+
+            if (string.IsNullOrWhiteSpace(usuario.Nombre))
+                throw new Exception("El nombre no puede estar vacio.");
+
+            if (string.IsNullOrWhiteSpace(usuario.Apellido))
+                throw new Exception("El apellido no puede estar vacio.");
+
+            if (string.IsNullOrWhiteSpace(usuario.Telefono))
+                throw new Exception("El telefono no puede estar vacio.");
+
+            usuario.Nombre = usuario.Nombre.Trim();
+            usuario.Apellido = usuario.Apellido.Trim();
+            usuario.Telefono = usuario.Telefono.Trim();
+        }
+
         private void ValidarRegistro(Usuario usuario, Direccion direccion, string confirmarClave)
         {
             if (usuario == null)
