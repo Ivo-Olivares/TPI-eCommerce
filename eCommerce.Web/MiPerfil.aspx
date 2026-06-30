@@ -35,15 +35,14 @@
 
         <div class="d-flex justify-content-between align-items-center mt-4 mb-2">
             <h2 class="h5 mb-0">Direcciones</h2>
-            <asp:Button runat="server" ID="btnNuevaDireccion" CssClass="btn btn-outline-primary btn-sm" Text="Nueva direccion" />
         </div>
-        <asp:GridView runat="server" ID="dgvDirecciones" AutoGenerateColumns="false" CssClass="table table-bordered table-striped">
+        <asp:GridView runat="server" ID="dgvDirecciones" AutoGenerateColumns="false" CssClass="table table-bordered table-striped" EmptyDataText="No tenes direcciones cargadas.">
             <Columns>
-                <asp:BoundField HeaderText="Descripcion" />
-                <asp:BoundField HeaderText="Calle" />
-                <asp:BoundField HeaderText="Numero" />
-                <asp:BoundField HeaderText="Localidad" />
-                <asp:BoundField HeaderText="Codigo postal" />
+                <asp:BoundField HeaderText="Descripcion" DataField="Descripcion" />
+                <asp:BoundField HeaderText="Calle" DataField="Calle" />
+                <asp:BoundField HeaderText="Numero" DataField="Altura" />
+                <asp:BoundField HeaderText="Localidad" DataField="Localidad" />
+                <asp:BoundField HeaderText="Codigo postal" DataField="Cp" />
             </Columns>
         </asp:GridView>
 

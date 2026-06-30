@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Web.UI;
 using eCommerce.Dominio;
 using eCommerce.Negocio;
@@ -20,6 +21,7 @@ namespace eCommerce.Web
             if (!IsPostBack)
             {
                 CargarDatosPersonales(usuario);
+                CargarDirecciones(usuario.Id);
             }
         }
 
@@ -31,6 +33,15 @@ namespace eCommerce.Web
             txtTelefono.Text = usuario.Telefono;
             txtDni.Text = usuario.Dni;
             txtFechaNacimiento.Text = usuario.FechaNacimiento.ToString("dd/MM/yyyy");
+        }
+
+        private void CargarDirecciones(int idUsuario)
+        {
+            DireccionNegocio negocio = new DireccionNegocio();
+            List<Direccion> direcciones = negocio.Listar(idUsuario);
+
+            dgvDirecciones.DataSource = direcciones;
+            dgvDirecciones.DataBind();
         }
 
         protected void btnGuardarPerfil_Click(object sender, EventArgs e)

@@ -9,7 +9,6 @@ namespace eCommerce.Web
         protected global::System.Web.UI.WebControls.TextBox txtTelefono;
         protected global::System.Web.UI.WebControls.TextBox txtDni;
         protected global::System.Web.UI.WebControls.TextBox txtFechaNacimiento;
-        protected global::System.Web.UI.WebControls.Button btnNuevaDireccion;
         protected global::System.Web.UI.WebControls.GridView dgvDirecciones;
         protected global::System.Web.UI.WebControls.Button btnGuardarPerfil;
     }
