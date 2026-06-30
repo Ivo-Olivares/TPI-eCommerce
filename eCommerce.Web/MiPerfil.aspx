@@ -48,7 +48,7 @@
         </asp:GridView>
 
         <div class="mt-3">
-            <asp:Button runat="server" ID="btnGuardarPerfil" CssClass="btn btn-primary" Text="Guardar cambios" />
+            <asp:Button runat="server" ID="btnGuardarPerfil" CssClass="btn btn-primary" Text="Guardar cambios" OnClick="btnGuardarPerfil_Click" />
         </div>
     </main>
 </asp:Content>
