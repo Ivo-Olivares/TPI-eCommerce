@@ -13,6 +13,8 @@ namespace eCommerce.Datos
         {
             List<Producto> lista = new List<Producto>();
             AccesoDatos datos = new AccesoDatos();
+            ImagenDatos imagenDatos = new ImagenDatos();   
+
 
             try
             {
@@ -33,6 +35,7 @@ namespace eCommerce.Datos
                     producto.Precio = (decimal)datos.Lector["Precio"];
                     producto.Stock = (int)datos.Lector["Stock"];
                     producto.Activo = (bool)datos.Lector["Activo"];
+                    producto.ListaImagenes = imagenDatos.ListarPorProducto(producto.Id);
 
 
                     lista.Add(producto);
@@ -53,6 +56,7 @@ namespace eCommerce.Datos
         public Producto ObtenerPorId(int id)
         {
             AccesoDatos datos = new AccesoDatos();
+            ImagenDatos imagenDatos = new ImagenDatos();
 
             try
             {
@@ -74,6 +78,7 @@ namespace eCommerce.Datos
                     producto.Precio = (decimal)datos.Lector["Precio"];
                     producto.Stock = (int)datos.Lector["Stock"];
                     producto.Activo = (bool)datos.Lector["Activo"];
+                    producto.ListaImagenes = imagenDatos.ListarPorProducto(producto.Id);
 
                     return producto;
                 }

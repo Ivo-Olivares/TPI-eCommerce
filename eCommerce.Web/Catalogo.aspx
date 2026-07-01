@@ -49,9 +49,24 @@
             <ItemTemplate>
                 <div class="col-md-4">
                     <article class="border rounded h-100 p-3 d-flex flex-column">
+
                         <div class="bg-light border rounded mb-3 d-flex align-items-center justify-content-center catalogo-imagen">
-                            <span class="text-muted">Sin imagen</span>
+                            <asp:Image
+                                runat="server"
+                                ImageUrl='<%# ObtenerImagen(Eval("ListaImagenes")) %>'
+                                CssClass="img-fluid catalogo-img"
+                                AlternateText='<%# Eval("Nombre") %>'
+                                Visible='<%# TieneImagen(Eval("ListaImagenes")) %>' />
+
+                            <asp:Label
+                                runat="server"
+                                CssClass="text-muted"
+                                Text="Sin imagen"
+                                Visible='<%# !TieneImagen(Eval("ListaImagenes")) %>' />
                         </div>
+                       
+             
+                        
                         <h2 class="h5 mb-1"><%#: Eval("Nombre") %></h2>
                         <p class="text-muted mb-2"><%#: Eval("Marca.Nombre") %> | <%#: Eval("Categoria.Nombre") %></p>
                         <p class="mb-2 catalogo-descripcion"><%#: Eval("Descripcion") %></p>

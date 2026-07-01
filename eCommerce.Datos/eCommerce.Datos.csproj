@@ -49,6 +49,7 @@
     <Compile Include="EstadoPedidoDatos.cs" />
     <Compile Include="FormaEntregaDatos.cs" />
     <Compile Include="FormaPagoDatos.cs" />
+    <Compile Include="ImagenDatos.cs" />
     <Compile Include="MarcaDatos.cs" />
     <Compile Include="PedidoDatos.cs" />
     <Compile Include="ProductoDatos.cs" />
