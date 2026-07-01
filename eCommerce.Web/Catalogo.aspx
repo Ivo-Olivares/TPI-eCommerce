@@ -42,7 +42,7 @@
             No hay productos disponibles con esos filtros.
         </asp:Panel>
 
-        <asp:Repeater runat="server" ID="rptProductos">
+        <asp:Repeater runat="server" ID="rptProductos" OnItemCommand="rptProductos_ItemCommand">
             <HeaderTemplate>
                 <div class="row g-3">
             </HeaderTemplate>
@@ -59,7 +59,17 @@
                             <p class="fw-bold mb-1"><%# FormatearPrecio(Eval("Precio")) %></p>
                             <p class="text-muted mb-3">Stock disponible: <%# Eval("Stock") %></p>
                             <div class="d-flex gap-2">
-                                <a href='<%# ResolveUrl("~/DetalleProducto?id=" + Eval("Id")) %>' class="btn btn-outline-primary btn-sm">Ver detalle</a>
+                                <div class="d-flex gap-2">
+                                    <a href='<%# ResolveUrl("~/DetalleProducto.aspx?id=" + Eval("Id")) %>' class="btn btn-outline-primary btn-sm">Ver detalle
+                                    </a>
+
+                                    <asp:Button
+                                        runat="server"
+                                        Text="Agregar al carrito"
+                                        CssClass="btn btn-primary btn-sm"
+                                        CommandName="AgregarCarrito"
+                                        CommandArgument='<%# Eval("Id") %>' />
+                                </div>
                             </div>
                         </div>
                     </article>

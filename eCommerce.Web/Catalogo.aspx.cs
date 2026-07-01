@@ -143,5 +143,24 @@ namespace eCommerce.Web
             return texto.IndexOf(busqueda, StringComparison.InvariantCultureIgnoreCase) >= 0;
         }
 
+        protected void rptProductos_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "AgregarCarrito")
+            {
+                int idProducto = int.Parse(e.CommandArgument.ToString());
+
+                ProductoNegocio productoNegocio = new ProductoNegocio();
+                Producto producto = productoNegocio.Listar()
+                    .Find(x => x.Id == idProducto);
+
+                if (producto == null)
+                    return;
+
+                CarritoSesion.AgregarProducto(Session, producto, 1);
+
+                Response.Redirect("~/Carrito.aspx");
+            }
+        }
+
     }
 }
