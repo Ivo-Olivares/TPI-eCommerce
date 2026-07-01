@@ -17,7 +17,7 @@
             El carrito esta vacio.
         </asp:Panel>
 
-        <asp:Panel runat="server" ID="pnlCarrito" Visible="false">
+        <asp:Panel runat="server" ID="pnlCarrito" Visible="false" DefaultButton="btnActualizar">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped align-middle">
                     <thead>
@@ -55,25 +55,27 @@
 
             <div class="row justify-content-end">
                 <div class="col-md-4">
-                <div class="border rounded p-3">
-                    <div class="d-flex justify-content-between">
-                        <span>Subtotal</span>
-                        <strong><asp:Label runat="server" ID="lblSubtotal" /></strong>
+                    <div class="border rounded p-3">
+                        <div class="d-flex justify-content-between">
+                            <span>Subtotal</span>
+                            <strong>
+                                <asp:Label runat="server" ID="lblSubtotal" /></strong>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Envio</span>
+                            <span>A definir</span>
+                        </div>
+                        <hr />
+                        <div class="d-flex justify-content-between fs-5">
+                            <span>Total</span>
+                            <strong>
+                                <asp:Label runat="server" ID="lblTotal" /></strong>
+                        </div>
+                        <div class="d-grid gap-2 mt-3">
+                            <asp:Button runat="server" ID="btnCheckout" CssClass="btn btn-primary" Text="Continuar al checkout" OnClick="btnCheckout_Click" />
+                            <asp:Button runat="server" ID="btnActualizar" CssClass="btn btn-outline-secondary" Text="Actualizar cantidades" OnClick="btnActualizar_Click" />
+                        </div>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <span>Envio</span>
-                        <span>A definir</span>
-                    </div>
-                    <hr />
-                    <div class="d-flex justify-content-between fs-5">
-                        <span>Total</span>
-                        <strong><asp:Label runat="server" ID="lblTotal" /></strong>
-                    </div>
-                    <div class="d-grid gap-2 mt-3">
-                        <asp:HyperLink runat="server" ID="lnkCheckout" NavigateUrl="~/Checkout" CssClass="btn btn-primary">Continuar al checkout</asp:HyperLink>
-                        <asp:Button runat="server" ID="btnActualizar" CssClass="btn btn-outline-secondary" Text="Actualizar cantidades" OnClick="btnActualizar_Click" />
-                    </div>
-                </div>
                 </div>
             </div>
         </asp:Panel>

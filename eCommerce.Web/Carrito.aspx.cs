@@ -20,6 +20,16 @@ namespace eCommerce.Web
 
         protected void btnActualizar_Click(object sender, EventArgs e)
         {
+            if (ActualizarCantidadesCarrito())
+            {
+                lblExito.Text = "Cantidades actualizadas.";
+                lblExito.Visible = true;
+                CargarCarrito();
+            }
+        }
+
+        private bool ActualizarCantidadesCarrito()
+        {
             try
             {
                 OcultarMensajes();
@@ -48,14 +58,21 @@ namespace eCommerce.Web
                     CarritoSesion.ActualizarProducto(Session, actualizacion.Item1, actualizacion.Item2);
                 }
 
-                lblExito.Text = "Cantidades actualizadas.";
-                lblExito.Visible = true;
-                CargarCarrito();
+                return true;
             }
             catch (Exception ex)
             {
                 lblError.Text = ex.Message;
                 lblError.Visible = true;
+                return false;
+            }
+        }
+
+        protected void btnCheckout_Click(object sender, EventArgs e)
+        {
+            if (ActualizarCantidadesCarrito())
+            {
+                Response.Redirect("~/Checkout.aspx");
             }
         }
 
