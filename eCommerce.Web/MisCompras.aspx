@@ -22,9 +22,10 @@
                 <asp:Button runat="server" ID="btnFiltrar" CssClass="btn btn-outline-primary w-100" Text="Filtrar" OnClick="btnFiltrar_Click" />
             </div>
         </div>
-  
 
-        <asp:GridView runat="server" ID="dgvCompras" AutoGenerateColumns="false" CssClass="table table-bordered table-striped" DataKeyNames="Id" OnSelectedIndexChanged="dgvCompras_SelectedIndexChanged">
+        <asp:Label runat="server" ID="lblError" CssClass="text-danger d-block mb-3" Visible="false" />
+
+        <asp:GridView runat="server" ID="dgvCompras" AutoGenerateColumns="false" CssClass="table table-bordered table-striped" DataKeyNames="Id" OnSelectedIndexChanged="dgvCompras_SelectedIndexChanged" EmptyDataText="No se encontraron compras.">
             <Columns>
                 <asp:BoundField HeaderText="Pedido" DataField="Id" />
                 <asp:BoundField HeaderText="Fecha" DataField="FechaCreacion" DataFormatString="{0:dd/MM/yyyy}" />

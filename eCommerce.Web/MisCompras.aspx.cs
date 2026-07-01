@@ -1,6 +1,5 @@
 using eCommerce.Dominio;
 using eCommerce.Negocio;
-using eCommerce.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +10,8 @@ namespace eCommerce.Web
 {
     public partial class MisCompras : Page
     {
+        protected global::System.Web.UI.WebControls.Label lblError;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             string estadoSeleccionado = IsPostBack ? Request.Form[ddlEstado.UniqueID] : null;
@@ -24,7 +25,17 @@ namespace eCommerce.Web
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
         {
-            CargarCompras();
+            try
+            {
+                lblError.Visible = false;
+                CargarCompras();
+                pnlDetalle.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = ex.Message;
+                lblError.Visible = true;
+            }
         }
 
         private void CargarEstados(string estadoSeleccionado)
@@ -47,44 +58,51 @@ namespace eCommerce.Web
             }
         }
 
-        private void CargarCompras() {
+        private void CargarCompras()
+        {
+            Usuario usuario = AutenticacionSesion.ObtenerUsuario(Session);
+
+            if (usuario == null || AutenticacionSesion.EsInvitado(Session))
             {
-                Usuario usuario = AutenticacionSesion.ObtenerUsuario(Session);
-
-                if (usuario == null || AutenticacionSesion.EsInvitado(Session))
-                {
-                    Response.Redirect("~/Login.aspx", false);
-                    return;
-                }
-
-                PedidoNegocio negocio = new PedidoNegocio();
-                List<Pedido> compras = negocio.ListarPorUsuario(usuario.Id);
-
-
-                if(int.TryParse(ddlEstado.SelectedValue, out int idEstado))
-                {
-                    compras = compras.Where(x => x.EstadoPedido.Id == idEstado).ToList();
-                }
-
-                if (!string.IsNullOrWhiteSpace(txtFechaDesde.Text))
-                {
-                    DateTime fechaDesde = DateTime.Parse(txtFechaDesde.Text);
-                    compras = compras
-                        .Where(x => x.FechaCreacion.Date >= fechaDesde.Date)
-                        .ToList();
-                }
-
-                if (!string.IsNullOrWhiteSpace(txtFechaHasta.Text))
-                {
-                    DateTime fechaHasta = DateTime.Parse(txtFechaHasta.Text);
-                    compras = compras
-                        .Where(x => x.FechaCreacion.Date <= fechaHasta.Date)
-                        .ToList();
-                }
-
-                dgvCompras.DataSource = compras;
-                dgvCompras.DataBind();
+                Response.Redirect("~/Login.aspx", false);
+                return;
             }
+
+            PedidoNegocio negocio = new PedidoNegocio();
+            List<Pedido> compras = negocio.ListarPorUsuario(usuario.Id);
+
+            if (int.TryParse(ddlEstado.SelectedValue, out int idEstado))
+            {
+                compras = compras.Where(x => x.EstadoPedido.Id == idEstado).ToList();
+            }
+
+            DateTime fechaDesde;
+            DateTime fechaHasta;
+
+            bool tieneFechaDesde = DateTime.TryParse(txtFechaDesde.Text, out fechaDesde);
+            bool tieneFechaHasta = DateTime.TryParse(txtFechaHasta.Text, out fechaHasta);
+
+            if (tieneFechaDesde && tieneFechaHasta && fechaDesde.Date > fechaHasta.Date)
+            {
+                throw new Exception("La fecha desde no puede ser mayor que la fecha hasta.");
+            }
+
+            if (tieneFechaDesde)
+            {
+                compras = compras
+                    .Where(x => x.FechaCreacion.Date >= fechaDesde.Date)
+                    .ToList();
+            }
+
+            if (tieneFechaHasta)
+            {
+                compras = compras
+                    .Where(x => x.FechaCreacion.Date <= fechaHasta.Date)
+                    .ToList();
+            }
+
+            dgvCompras.DataSource = compras;
+            dgvCompras.DataBind();
         }
 
         protected void dgvCompras_SelectedIndexChanged(object sender, EventArgs e)
@@ -98,10 +116,6 @@ namespace eCommerce.Web
             dgvDetalle.DataBind();
 
             pnlDetalle.Visible = true;
-
-
-
-
         }
     }
 }
