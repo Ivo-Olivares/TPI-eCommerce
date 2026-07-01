@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -162,29 +162,21 @@ namespace eCommerce.Web
             }
         }
 
-
         protected bool TieneImagen(object imagen)
         {
             List<Imagen> lista = imagen as List<Imagen>;
             return lista != null && lista.Count > 0 && !string.IsNullOrWhiteSpace(lista[0].UrlImagen);
-
-
         }
 
         protected string ObtenerImagen(object imagen)
         {
             List<Imagen> lista = imagen as List<Imagen>;
 
-            if (lista != null || lista.Count == 0)
-            {
+            if (lista == null || lista.Count == 0)
                 return "";
-            }
-            else
-            {
-                return lista[0].UrlImagen;
-            }
+
+            return lista[0].UrlImagen;
         }
 
-
-    } 
+    }
 }
