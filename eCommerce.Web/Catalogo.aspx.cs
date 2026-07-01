@@ -17,6 +17,7 @@ namespace eCommerce.Web
             {
                 CargarCategorias();
                 CargarMarcas();
+                AplicarCategoriaDesdeUrl();
                 CargarCatalogo();
             }
         }
@@ -64,6 +65,21 @@ namespace eCommerce.Web
             ddlMarca.Items.Insert(0, new ListItem("Todas", ""));
         }
 
+        private void AplicarCategoriaDesdeUrl()
+        {
+            string idCategoriaUrl = Request.QueryString["idCategoria"];
+
+            if (string.IsNullOrWhiteSpace(idCategoriaUrl))
+                return;
+
+            ListItem item = ddlCategoria.Items.FindByValue(idCategoriaUrl);
+
+            if (item != null)
+            {
+                ddlCategoria.ClearSelection();
+                item.Selected = true;
+            }
+        }
         private void CargarCatalogo()
         {
             ProductoNegocio negocio = new ProductoNegocio();

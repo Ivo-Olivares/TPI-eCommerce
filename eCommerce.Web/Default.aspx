@@ -1,38 +1,92 @@
-<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="eCommerce.Web._Default" %>
+﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="eCommerce.Web._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <main class="py-4">
-        <section class="row align-items-center mb-4" aria-labelledby="tituloInicio">
-            <div class="col-md-8">
-                <h1 id="tituloInicio">Gestion de ventas eCommerce</h1>
-                <p class="lead">Aplicacion Web Forms para administrar catalogo, clientes, pedidos y seguimiento de compras.</p>
-            </div>
-            <div class="col-md-4 text-md-end">
-                <a runat="server" href="~/Catalogo" class="btn btn-primary btn-md">Ver Catalogo</a>
+    <main class="app-container app-section">
+
+        <section class="app-hero mb-4" aria-labelledby="tituloInicio">
+            <div class="row align-items-center g-3">
+                <div class="col-md-8">
+                    <span class="app-badge app-badge-primary mb-2">Bienvenido</span>
+
+                    <h1 id="tituloInicio" class="app-title mb-2 fs-2">UTN eCommerce
+                    </h1>
+
+                    <p class="app-subtitle mb-0 fs-6">
+                        Encontrá productos de distintas categorías y realizá tus compras de forma simple y organizada.
+                    </p>
+                </div>
+
+                <div class="col-md-4 text-md-end text-start">
+                    <a runat="server" href="~/Catalogo.aspx" class="app-btn-primary">Ver catálogo →
+                    </a>
+                </div>
             </div>
         </section>
 
-        <div class="row g-3">
-            <section class="col-md-4" aria-labelledby="catalogoTitle">
-                <div class="border rounded p-3 h-100">
-                    <h2 id="catalogoTitle" class="h4">Catalogo</h2>
-                    <p>Productos organizados por categorias, con precio, stock y estado activo o inactivo.</p>
-                </div>
-            </section>
-            <section class="col-md-4" aria-labelledby="comprasTitle">
-                <div class="border rounded p-3 h-100">
-                    <h2 id="comprasTitle" class="h4">Compras</h2>
-                    <p>Flujo previsto para carrito, checkout, forma de entrega, forma de pago y confirmacion.</p>
-                </div>
-            </section>
-            <section class="col-md-4" aria-labelledby="gestionTitle">
-                <div class="border rounded p-3 h-100">
-                    <h2 id="gestionTitle" class="h4">Administracion</h2>
-                    <p>Panel previsto para gestion de productos, categorias, formas de pago, entregas y pedidos.</p>
-                </div>
-            </section>
-        </div>
+        <section class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="app-title fs-3 mb-0">Productos</h2>
+                <a runat="server" href="~/Catalogo.aspx" class="app-btn-link">Ver todos →</a>
+            </div>
+
+            <div class="row g-4">
+                <asp:Repeater ID="rptProductos" runat="server">
+                    <ItemTemplate>
+                        <div class="col-sm-6 col-lg-3">
+                            <article class="app-card app-card-interactive h-100">
+                                <div class="app-icon-box app-icon-box-primary w-100 mb-3" style="height: 140px;">
+                                    <span>🛍️</span>
+                                </div>
+
+                                <span class="app-badge app-badge-primary mb-2">
+                                    <%# Eval("Categoria.Nombre") %>
+                                </span>
+
+                                <h3 class="app-card-title fs-6">
+                                    <%# Eval("Nombre") %>
+                                </h3>
+
+                                <p class="app-text-muted mb-3">
+                                    Producto disponible para agregar al carrito.
+                                </p>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong><%# Eval("Precio", "{0:C}") %></strong>
+                                    <a href='<%# "DetalleProducto.aspx?id=" + Eval("Id") %>' class="app-btn-secondary py-1 px-3">Ver detalle
+                                    </a>
+                                </div>
+                            </article>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
+        </section>
+
+        <section class="mb-4">
+            <h2 class="app-title fs-3 mb-3">Categorías</h2>
+
+            <div class="row g-4">
+                <asp:Repeater ID="rptCategorias" runat="server">
+                    <ItemTemplate>
+                        <div class="col-6 col-lg-3">
+                            <a href='<%# "Catalogo.aspx?idCategoria=" + Eval("Id") %>' class="text-decoration-none">
+                                <div class="app-card app-card-interactive text-center py-4">
+                                    <div class="app-icon-box app-icon-box-primary mb-3">
+                                        <span>🛍️</span>
+                                    </div>
+
+                                    <h3 class="app-card-title fs-6 mb-0">
+                                        <%# Eval("Nombre") %>
+                                    </h3>
+                                </div>
+                            </a>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
+        </section>
+
     </main>
 
 </asp:Content>

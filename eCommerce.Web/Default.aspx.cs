@@ -1,9 +1,9 @@
-﻿using System;
+﻿using eCommerce.Dominio;
+using eCommerce.Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace eCommerce.Web
 {
@@ -11,7 +11,37 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                CargarProductos();
+                CargarCategorias();
+            }
+        }
 
+        private void CargarProductos()
+        {
+            ProductoNegocio negocio = new ProductoNegocio();
+
+            List<Producto> productos = negocio.Listar()
+                .Where(x => x.Activo && x.Stock > 0)
+                .Take(4)
+                .ToList();
+
+            rptProductos.DataSource = productos;
+            rptProductos.DataBind();
+        }
+
+        private void CargarCategorias()
+        {
+            CategoriaNegocio negocio = new CategoriaNegocio();
+
+            List<Categoria> categorias = negocio.Listar()
+                .Where(x => x.Activo)
+                .Take(4)
+                .ToList();
+
+            rptCategorias.DataSource = categorias;
+            rptCategorias.DataBind();
         }
     }
 }
