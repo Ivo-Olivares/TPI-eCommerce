@@ -31,7 +31,7 @@
             </div>
 
             <div class="row g-4">
-                <asp:Repeater ID="rptProductos" runat="server">
+                <asp:Repeater ID="rptProductos" runat="server" OnItemCommand="rptProductos_ItemCommand">
                     <ItemTemplate>
                         <div class="col-sm-6 col-lg-3">
                             <article class="app-card app-card-interactive h-100">
@@ -51,10 +51,20 @@
                                     Producto disponible para agregar al carrito.
                                 </p>
 
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <strong><%# Eval("Precio", "{0:C}") %></strong>
-                                    <a href='<%# "DetalleProducto.aspx?id=" + Eval("Id") %>' class="app-btn-secondary py-1 px-3">Ver detalle
-                                    </a>
+                                <div class="mt-3">
+                                    <strong class="d-block mb-3"><%# Eval("Precio", "{0:C}") %></strong>
+
+                                    <div class="d-grid gap-2">
+                                        <a href='<%# "DetalleProducto.aspx?id=" + Eval("Id") %>' class="app-btn-secondary py-1 px-3 text-center">Ver detalle
+                                        </a>
+
+                                        <asp:Button
+                                            runat="server"
+                                            Text="Agregar al carrito"
+                                            CssClass="app-btn-primary py-1 px-3 w-100"
+                                            CommandName="AgregarCarrito"
+                                            CommandArgument='<%# Eval("Id") %>' />
+                                    </div>
                                 </div>
                             </article>
                         </div>

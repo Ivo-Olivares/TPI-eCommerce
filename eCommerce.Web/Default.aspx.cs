@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace eCommerce.Web
 {
@@ -42,6 +43,25 @@ namespace eCommerce.Web
 
             rptCategorias.DataSource = categorias;
             rptCategorias.DataBind();
+        }
+
+        protected void rptProductos_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "AgregarCarrito")
+            {
+                int idProducto = int.Parse(e.CommandArgument.ToString());
+
+                ProductoNegocio productoNegocio = new ProductoNegocio();
+                Producto producto = productoNegocio.Listar()
+                    .Find(x => x.Id == idProducto);
+
+                if (producto == null)
+                    return;
+
+                CarritoSesion.AgregarProducto(Session, producto, 1);
+
+                Response.Redirect("~/Carrito.aspx");
+            }
         }
     }
 }
