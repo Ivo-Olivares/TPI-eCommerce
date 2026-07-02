@@ -98,16 +98,37 @@
                     </div>
 
                     <div class="col-lg-7">
-                        <asp:Label runat="server" AssociatedControlID="ddlEstadoCambio" CssClass="app-form-label" Text="Cambiar estado" />
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <asp:Label runat="server" AssociatedControlID="ddlEstadoCambio" CssClass="app-form-label" Text="Cambiar estado" />
 
-                        <div class="d-flex flex-column flex-sm-row gap-2">
-                            <asp:DropDownList runat="server" ID="ddlEstadoCambio" CssClass="app-select" />
-                            <asp:Button
-                                runat="server"
-                                ID="btnCambiarEstado"
-                                CssClass="app-btn-primary py-1 px-3"
-                                Text="Actualizar estado"
-                                OnClick="btnCambiarEstado_Click" />
+                                <div class="d-flex flex-column flex-sm-row gap-2">
+                                    <asp:DropDownList runat="server" ID="ddlEstadoCambio" CssClass="app-select" />
+                                    <asp:Button
+                                        runat="server"
+                                        ID="btnCambiarEstado"
+                                        CssClass="app-btn-primary py-1 px-3"
+                                        Text="Actualizar estado"
+                                        OnClick="btnCambiarEstado_Click" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <asp:Label runat="server" AssociatedControlID="txtObservacionesInternas" CssClass="app-form-label" Text="Observaciones internas" />
+                                <asp:TextBox
+                                    runat="server"
+                                    ID="txtObservacionesInternas"
+                                    CssClass="app-input mb-2"
+                                    TextMode="MultiLine"
+                                    Rows="3"
+                                    MaxLength="500" />
+                                <asp:Button
+                                    runat="server"
+                                    ID="btnGuardarObservaciones"
+                                    CssClass="app-btn-secondary py-1 px-3 w-100"
+                                    Text="Guardar observaciones"
+                                    OnClick="btnGuardarObservaciones_Click" />
+                            </div>
                         </div>
                     </div>
                 </div>

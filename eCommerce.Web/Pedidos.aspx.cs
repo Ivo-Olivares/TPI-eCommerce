@@ -59,6 +59,28 @@ namespace eCommerce.Web
             }
         }
 
+        protected void btnGuardarObservaciones_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!AutorizacionPagina.RequerirGestionPedidos(Session, Response))
+                    return;
+
+                int idPedido = ObtenerIdPedidoSeleccionado();
+
+                PedidoNegocio negocio = new PedidoNegocio();
+                negocio.ActualizarObservacionesInternas(idPedido, txtObservacionesInternas.Text);
+
+                CargarPedidos();
+                CargarDetallePedido(idPedido);
+                MostrarMensaje("Las observaciones internas se guardaron correctamente.", "alert-success");
+            }
+            catch (Exception ex)
+            {
+                MostrarMensaje(ex.Message, "alert-danger");
+            }
+        }
+
         private int ObtenerIdPedidoSeleccionado()
         {
             int idPedido;
@@ -138,6 +160,7 @@ namespace eCommerce.Web
 
             ViewState["IdPedidoSeleccionado"] = idPedido;
             lblPedidoSeleccionado.Text = "Pedido #" + pedido.Id + " - " + pedido.Usuario.Email;
+            txtObservacionesInternas.Text = pedido.ObservacionesInternas;
             CargarEstadosCambio();
             ListItem estadoActual = ddlEstadoCambio.Items.FindByValue(pedido.EstadoPedido.Id.ToString());
             if (estadoActual != null)
