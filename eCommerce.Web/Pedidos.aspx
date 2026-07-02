@@ -102,11 +102,14 @@
                         </span>
 
                         <div class="d-flex flex-wrap gap-2">
-                            <asp:Repeater runat="server" ID="rptEstadosCambio">
+                            <asp:Repeater runat="server" ID="rptEstadosCambio" OnItemCommand="rptEstadosCambio_ItemCommand">
                                 <ItemTemplate>
-                                    <a class="app-btn-primary py-1 px-3" href='<%# "Pedidos.aspx?id=" + Request.QueryString["id"] + "&estado=" + Eval("Id") %>'>
-                                        <%# Eval("Descripcion") %>
-                                    </a>
+                                    <asp:Button
+                                        runat="server"
+                                        CssClass="app-btn-primary py-1 px-3"
+                                        Text='<%# Eval("Descripcion") %>'
+                                        CommandName="CambiarEstado"
+                                        CommandArgument='<%# Eval("Id") %>' />
                                 </ItemTemplate>
                             </asp:Repeater>
                         </div>

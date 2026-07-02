@@ -31,8 +31,17 @@ namespace eCommerce.Negocio
             if (idEstadoPedido <= 0)
                 throw new Exception("Debe seleccionar un estado valido.");
 
+            EstadoPedidoNegocio estadoNegocio = new EstadoPedidoNegocio();
+            EstadoPedido estado = estadoNegocio.Listar().Find(x => x.Id == idEstadoPedido && x.Activo);
+
+            if (estado == null)
+                throw new Exception("Debe seleccionar un estado activo.");
+
             PedidoDatos datos = new PedidoDatos();
-            datos.ActualizarEstado(idPedido, idEstadoPedido);
+            int filasAfectadas = datos.ActualizarEstado(idPedido, idEstadoPedido);
+
+            if (filasAfectadas != 1)
+                throw new Exception("No se encontro el pedido seleccionado.");
         }
 
         public int AgregarPedido(Pedido pedido)

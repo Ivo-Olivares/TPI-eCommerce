@@ -123,7 +123,7 @@ namespace eCommerce.Datos
             return lista;
         }
 
-        public void ActualizarEstado(int idPedido, int idEstadoPedido)
+        public int ActualizarEstado(int idPedido, int idEstadoPedido)
         {
             AccesoDatos datos = new AccesoDatos();
 
@@ -132,7 +132,7 @@ namespace eCommerce.Datos
                 datos.setearConsulta("UPDATE PEDIDOS SET IdEstadoPedido = @IdEstadoPedido WHERE IdPedido = @IdPedido");
                 datos.setearParametros("@IdEstadoPedido", idEstadoPedido);
                 datos.setearParametros("@IdPedido", idPedido);
-                datos.ejecutarAccion();
+                return datos.ejecutarAccion();
             }
             catch (Exception ex)
             {

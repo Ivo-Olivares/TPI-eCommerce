@@ -21,17 +21,11 @@ namespace eCommerce.Web
                 CargarEstados();
             }
 
-            if (ProcesarCambioEstadoPorUrl())
-                return;
-
             CargarPedidos();
 
             int idPedido;
             if (int.TryParse(Request.QueryString["id"], out idPedido))
                 CargarDetallePedido(idPedido);
-
-            if (Request.QueryString["actualizado"] == "1")
-                MostrarMensaje("El estado del pedido se actualizo correctamente.", "alert-success");
         }
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
@@ -41,29 +35,35 @@ namespace eCommerce.Web
             CargarPedidos();
         }
 
-        private bool ProcesarCambioEstadoPorUrl()
+        protected void rptEstadosCambio_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
             try
             {
-                int idPedido;
-                if (!int.TryParse(Request.QueryString["id"], out idPedido))
-                    return false;
+                if (e.CommandName != "CambiarEstado")
+                    return;
+
+                if (!AutorizacionPagina.RequerirGestionPedidos(Session, Response))
+                    return;
+
+                if (ViewState["IdPedidoSeleccionado"] == null)
+                    throw new Exception("Debe seleccionar un pedido.");
+
+                int idPedido = (int)ViewState["IdPedidoSeleccionado"];
 
                 int idEstadoPedido;
-                if (!int.TryParse(Request.QueryString["estado"], out idEstadoPedido))
-                    return false;
+                if (!int.TryParse(e.CommandArgument.ToString(), out idEstadoPedido))
+                    throw new Exception("Debe seleccionar un estado valido.");
 
                 PedidoNegocio negocio = new PedidoNegocio();
                 negocio.ActualizarEstado(idPedido, idEstadoPedido);
 
-                Response.Redirect("~/Pedidos.aspx?id=" + idPedido + "&actualizado=1", false);
-                Context.ApplicationInstance.CompleteRequest();
-                return true;
+                CargarPedidos();
+                CargarDetallePedido(idPedido);
+                MostrarMensaje("El estado del pedido se actualizo correctamente.", "alert-success");
             }
             catch (Exception ex)
             {
                 MostrarMensaje(ex.Message, "alert-danger");
-                return false;
             }
         }
 
@@ -137,6 +137,7 @@ namespace eCommerce.Web
 
             ViewState["IdPedidoSeleccionado"] = idPedido;
             lblPedidoSeleccionado.Text = "Pedido #" + pedido.Id + " - " + pedido.Usuario.Email;
+            CargarEstadosCambio();
 
             DetallePedidoNegocio detalleNegocio = new DetallePedidoNegocio();
             List<DetallePedido> detalle = detalleNegocio.ListarPorPedido(idPedido);
@@ -145,6 +146,18 @@ namespace eCommerce.Web
             dgvDetalle.DataBind();
 
             pnlDetalle.Visible = true;
+        }
+
+        private void CargarEstadosCambio()
+        {
+            EstadoPedidoNegocio negocio = new EstadoPedidoNegocio();
+            List<EstadoPedido> estados = negocio.Listar()
+                .Where(x => x.Activo)
+                .OrderBy(x => x.Descripcion)
+                .ToList();
+
+            rptEstadosCambio.DataSource = estados;
+            rptEstadosCambio.DataBind();
         }
 
         private void MostrarMensaje(string mensaje, string cssClass)
