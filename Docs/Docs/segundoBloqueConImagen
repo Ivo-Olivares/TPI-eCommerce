@@ -1,3 +1,4 @@
+
 -- Imagenes demo
 IF NOT EXISTS (
     SELECT 1 FROM IMAGENES I
@@ -196,4 +197,13 @@ GO
 
 IF NOT EXISTS (
     SELECT 1 FROM IMAGENES I
-    INNER JOIN PRODUCTOS P ON P.IdProducto =
+    INNER JOIN PRODUCTOS P ON P.IdProducto = I.IdProducto
+    WHERE P.Sku = 'ROP-LEV-JEA'
+)
+BEGIN
+    INSERT INTO IMAGENES (IdProducto, Nombre, UrlImagen)
+    SELECT IdProducto, 'Imagen principal', 'https://photos6.spartoo.de/photos/168/16805152/16805152_500_A.jpg'
+    FROM PRODUCTOS
+    WHERE Sku = 'ROP-LEV-JEA';
+END
+GO
