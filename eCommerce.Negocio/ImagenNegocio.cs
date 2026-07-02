@@ -24,8 +24,16 @@ namespace eCommerce.Negocio
             if (string.IsNullOrWhiteSpace(urlImagen))
                 return;
 
+            urlImagen = urlImagen.Trim();
+
+            if (!Uri.TryCreate(urlImagen, UriKind.Absolute, out Uri urlValida) ||
+                (urlValida.Scheme != Uri.UriSchemeHttp && urlValida.Scheme != Uri.UriSchemeHttps))
+            {
+                throw new Exception("La URL de imagen debe comenzar con http:// o https://.");
+            }
+
             ImagenDatos datos = new ImagenDatos();
-            datos.GuardarImagenPrincipal(idProducto, urlImagen.Trim());
+            datos.GuardarImagenPrincipal(idProducto, urlImagen);
         }
 
 

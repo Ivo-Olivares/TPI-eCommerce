@@ -109,6 +109,20 @@ namespace eCommerce.Web
         {
             int idPedido = (int)dgvCompras.SelectedDataKey.Value;
 
+            Usuario usuario = AutenticacionSesion.ObtenerUsuario(Session);
+            PedidoNegocio pedidoNegocio = new PedidoNegocio();
+            Pedido pedido = pedidoNegocio.ListarPorUsuario(usuario.Id).Find(x => x.Id == idPedido);
+
+            if (pedido == null)
+            {
+                lblError.Text = "No se encontró el pedido seleccionado.";
+                lblError.Visible = true;
+                pnlDetalle.Visible = false;
+                return;
+            }
+
+            CargarResumenPedido(pedido);
+
             DetallePedidoNegocio negocio = new DetallePedidoNegocio();
             List<DetallePedido> detalle = negocio.ListarPorPedido(idPedido);
 
@@ -116,6 +130,31 @@ namespace eCommerce.Web
             dgvDetalle.DataBind();
 
             pnlDetalle.Visible = true;
+        }
+
+        private void CargarResumenPedido(Pedido pedido)
+        {
+            lblPedidoSeleccionado.Text = pedido.Id.ToString();
+            lblFechaPedido.Text = pedido.FechaCreacion.ToString("dd/MM/yyyy HH:mm");
+            lblEstadoPedido.Text = pedido.EstadoPedido.Descripcion;
+            lblTotalPedido.Text = pedido.Total.ToString("C");
+            lblFormaPago.Text = pedido.FormaPago.Descripcion;
+            lblFormaEntrega.Text = pedido.FormaEntrega.Descripcion;
+            lblFechaEntrega.Text = pedido.FechaEntrega.HasValue ? pedido.FechaEntrega.Value.ToString("dd/MM/yyyy") : "Pendiente";
+            lblDireccionPedido.Text = FormatearDireccion(pedido.Direccion);
+        }
+
+        private string FormatearDireccion(Direccion direccion)
+        {
+            if (direccion == null || direccion.Id <= 0)
+                return "Sin dirección registrada.";
+
+            string direccionTexto = direccion.Calle + " " + direccion.Altura + ", " + direccion.Localidad + ", " + direccion.Provincia + " (" + direccion.Cp + ")";
+
+            if (!string.IsNullOrWhiteSpace(direccion.Observaciones))
+                direccionTexto += " - " + direccion.Observaciones;
+
+            return direccionTexto;
         }
     }
 }

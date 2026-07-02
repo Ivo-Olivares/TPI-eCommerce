@@ -98,6 +98,48 @@
                 <p class="app-text-muted mb-0">
                     Productos incluidos en la compra seleccionada.
                 </p>
+
+                <div class="row g-3 mt-3">
+                    <div class="col-md-3">
+                        <span class="app-text-muted d-block">Pedido</span>
+                        <asp:Label runat="server" ID="lblPedidoSeleccionado" CssClass="fw-semibold" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <span class="app-text-muted d-block">Fecha</span>
+                        <asp:Label runat="server" ID="lblFechaPedido" CssClass="fw-semibold" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <span class="app-text-muted d-block">Estado</span>
+                        <asp:Label runat="server" ID="lblEstadoPedido" CssClass="fw-semibold" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <span class="app-text-muted d-block">Total</span>
+                        <asp:Label runat="server" ID="lblTotalPedido" CssClass="fw-semibold" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <span class="app-text-muted d-block">Forma de pago</span>
+                        <asp:Label runat="server" ID="lblFormaPago" CssClass="fw-semibold" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <span class="app-text-muted d-block">Forma de entrega</span>
+                        <asp:Label runat="server" ID="lblFormaEntrega" CssClass="fw-semibold" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <span class="app-text-muted d-block">Fecha de entrega</span>
+                        <asp:Label runat="server" ID="lblFechaEntrega" CssClass="fw-semibold" />
+                    </div>
+
+                    <div class="col-md-12">
+                        <span class="app-text-muted d-block">Dirección</span>
+                        <asp:Label runat="server" ID="lblDireccionPedido" CssClass="fw-semibold" />
+                    </div>
+                </div>
             </div>
 
             <div class="table-responsive">

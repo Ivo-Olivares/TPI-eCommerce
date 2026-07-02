@@ -16,7 +16,18 @@ namespace eCommerce.Datos
 
             try
             {
-                datos.setearConsulta("SELECT P.IdPedido, P.FechaCreacion, P.FechaEntrega, P.Total, FP.IdFormaPago, FP.Descripcion FormaPago, FE.IdFormaEntrega, FE.Descripcion FormaEntrega, EP.IdEstadoPedido, EP.Descripcion EstadoPedido FROM PEDIDOS P INNER JOIN FORMASPAGO FP ON P.IdFormaPago = FP.IdFormaPago INNER JOIN FORMASENTREGA FE ON P.IdFormaEntrega = FE.IdFormaEntrega INNER JOIN ESTADOSPEDIDO EP ON P.IdEstadoPedido = EP.IdEstadoPedido WHERE P.IdUsuario = @IdUsuario ORDER BY P.FechaCreacion DESC");
+                datos.setearConsulta(@"SELECT P.IdPedido, P.IdDireccion, P.FechaCreacion, P.FechaEntrega, P.Total,
+                    FP.IdFormaPago, FP.Descripcion FormaPago,
+                    FE.IdFormaEntrega, FE.Descripcion FormaEntrega,
+                    EP.IdEstadoPedido, EP.Descripcion EstadoPedido,
+                    D.Descripcion DireccionDescripcion, D.Calle, D.Altura, D.Localidad, D.Provincia, D.Cp, D.Observaciones
+                    FROM PEDIDOS P
+                    INNER JOIN FORMASPAGO FP ON P.IdFormaPago = FP.IdFormaPago
+                    INNER JOIN FORMASENTREGA FE ON P.IdFormaEntrega = FE.IdFormaEntrega
+                    INNER JOIN ESTADOSPEDIDO EP ON P.IdEstadoPedido = EP.IdEstadoPedido
+                    LEFT JOIN DIRECCIONES D ON P.IdDireccion = D.IdDireccion
+                    WHERE P.IdUsuario = @IdUsuario
+                    ORDER BY P.FechaCreacion DESC");
                 datos.setearParametros("@IdUsuario", idUsuario);
                 datos.ejecutarLectura();
 
@@ -42,6 +53,20 @@ namespace eCommerce.Datos
                     pedido.EstadoPedido = new EstadoPedido();
                     pedido.EstadoPedido.Id = (int)datos.Lector["IdEstadoPedido"];
                     pedido.EstadoPedido.Descripcion = datos.Lector["EstadoPedido"] is DBNull ? "" : (string)datos.Lector["EstadoPedido"];
+
+                    pedido.Direccion = new Direccion();
+
+                    if (!(datos.Lector["IdDireccion"] is DBNull))
+                    {
+                        pedido.Direccion.Id = (int)datos.Lector["IdDireccion"];
+                        pedido.Direccion.Descripcion = datos.Lector["DireccionDescripcion"] is DBNull ? "" : (string)datos.Lector["DireccionDescripcion"];
+                        pedido.Direccion.Calle = datos.Lector["Calle"] is DBNull ? "" : (string)datos.Lector["Calle"];
+                        pedido.Direccion.Altura = datos.Lector["Altura"] is DBNull ? 0 : (int)datos.Lector["Altura"];
+                        pedido.Direccion.Localidad = datos.Lector["Localidad"] is DBNull ? "" : (string)datos.Lector["Localidad"];
+                        pedido.Direccion.Provincia = datos.Lector["Provincia"] is DBNull ? "" : (string)datos.Lector["Provincia"];
+                        pedido.Direccion.Cp = datos.Lector["Cp"] is DBNull ? "" : (string)datos.Lector["Cp"];
+                        pedido.Direccion.Observaciones = datos.Lector["Observaciones"] is DBNull ? "" : (string)datos.Lector["Observaciones"];
+                    }
 
                     lista.Add(pedido);
                 }
