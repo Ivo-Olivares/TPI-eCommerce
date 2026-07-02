@@ -54,5 +54,31 @@ namespace eCommerce.Negocio
             direccion.Localidad = direccion.Localidad.Trim();
             direccion.Provincia = direccion.Provincia.Trim();
         }
+
+        public void ModificarDireccion(Direccion direccion, int idUsuario)
+        {
+            if (direccion.Id <= 0)
+                throw new Exception("La direccion seleccionada no es valida.");
+
+            if (!PerteneceAlUsuario(direccion.Id, idUsuario))
+                throw new Exception("No se puede modificar la direccion seleccionada.");
+
+            ValidarDireccion(direccion);
+
+            DireccionDatos datos = new DireccionDatos();
+            datos.ModificarDireccion(direccion, idUsuario);
+        }
+
+        public void DesactivarDireccion(int idDireccion, int idUsuario)
+        {
+            if (idDireccion <= 0)
+                throw new Exception("La direccion seleccionada no es valida.");
+
+            if (!PerteneceAlUsuario(idDireccion, idUsuario))
+                throw new Exception("No se puede eliminar la direccion seleccionada.");
+
+            DireccionDatos datos = new DireccionDatos();
+            datos.DesactivarDireccion(idDireccion, idUsuario);
+        }
     }
 }

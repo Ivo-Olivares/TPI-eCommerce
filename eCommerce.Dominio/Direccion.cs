@@ -16,5 +16,7 @@ namespace eCommerce.Dominio
         public string Provincia { get; set; }
         public string Cp { get; set; }
         public string Observaciones { get; set; }
+
+        public bool Activo { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace eCommerce.Datos
 
             try
             {
-                datos.setearConsulta("SELECT IdDireccion, Descripcion, Calle, Altura, Localidad, Provincia, Cp, Observaciones FROM DIRECCIONES WHERE IdUsuario = @IdUsuario");
+                datos.setearConsulta("SELECT IdDireccion, Descripcion, Calle, Altura, Localidad, Provincia, Cp, Observaciones, Activo FROM DIRECCIONES WHERE IdUsuario = @IdUsuario AND Activo = 1");
                 datos.setearParametros("@IdUsuario", idUsuario);
                 datos.ejecutarLectura();
 
@@ -31,6 +31,7 @@ namespace eCommerce.Datos
                     direccion.Provincia = (string)datos.Lector["Provincia"];
                     direccion.Cp = (string)datos.Lector["Cp"];
                     direccion.Observaciones = datos.Lector["Observaciones"] as string;
+                    direccion.Activo = (bool)datos.Lector["Activo"];
 
                     lista.Add(direccion);
                 }
@@ -52,7 +53,7 @@ namespace eCommerce.Datos
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("insert into DIRECCIONES (IdUsuario, Descripcion, Calle, Altura, Localidad, Provincia, Cp, Observaciones) values (@IdUsuario, @Descripcion, @Calle, @Altura, @Localidad, @Provincia, @Cp, @Observaciones)");
+                datos.setearConsulta("INSERT INTO DIRECCIONES (IdUsuario, Descripcion, Calle, Altura, Localidad, Provincia, Cp, Observaciones, Activo) VALUES (@IdUsuario, @Descripcion, @Calle, @Altura, @Localidad, @Provincia, @Cp, @Observaciones, 1)");
                 datos.setearParametros("@IdUsuario", idUsuario);
                 datos.setearParametros("@Descripcion", direccion.Descripcion);
                 datos.setearParametros("@Calle", direccion.Calle);
@@ -75,7 +76,7 @@ namespace eCommerce.Datos
 
             try
             {
-                datos.setearConsulta("SELECT COUNT(*) FROM DIRECCIONES WHERE IdDireccion = @IdDireccion AND IdUsuario = @IdUsuario");
+                datos.setearConsulta("SELECT COUNT(*) FROM DIRECCIONES WHERE IdDireccion = @IdDireccion AND IdUsuario = @IdUsuario AND Activo = 1");
                 datos.setearParametros("@IdDireccion", idDireccion);
                 datos.setearParametros("@IdUsuario", idUsuario);
 
@@ -86,5 +87,47 @@ namespace eCommerce.Datos
                 throw ex;
             }
         }
+
+        public void ModificarDireccion(Direccion direccion, int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE DIRECCIONES SET Descripcion = @Descripcion, Calle = @Calle, Altura = @Altura, Localidad = @Localidad, Provincia = @Provincia, Cp = @Cp, Observaciones = @Observaciones WHERE IdDireccion = @IdDireccion AND IdUsuario = @IdUsuario AND Activo = 1");
+                datos.setearParametros("@IdDireccion", direccion.Id);
+                datos.setearParametros("@IdUsuario", idUsuario);
+                datos.setearParametros("@Descripcion", direccion.Descripcion);
+                datos.setearParametros("@Calle", direccion.Calle);
+                datos.setearParametros("@Altura", direccion.Altura);
+                datos.setearParametros("@Localidad", direccion.Localidad);
+                datos.setearParametros("@Provincia", direccion.Provincia);
+                datos.setearParametros("@Cp", direccion.Cp);
+                datos.setearParametros("@Observaciones", direccion.Observaciones);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void DesactivarDireccion(int idDireccion, int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE DIRECCIONES SET Activo = 0 WHERE IdDireccion = @IdDireccion AND IdUsuario = @IdUsuario AND Activo = 1");
+                datos.setearParametros("@IdDireccion", idDireccion);
+                datos.setearParametros("@IdUsuario", idUsuario);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }
