@@ -34,10 +34,13 @@ namespace eCommerce.Web
 
         private void CargarCategorias()
         {
-            CategoriaNegocio negocio = new CategoriaNegocio();
+            ProductoNegocio productoNegocio = new ProductoNegocio();
 
-            List<Categoria> categorias = negocio.Listar()
-                .Where(x => x.Activo)
+            List<Categoria> categorias = productoNegocio.Listar()
+                .Where(x => x.Activo && x.Stock > 0 && x.Categoria != null)
+                .GroupBy(x => x.Categoria.Id)
+                .Select(x => x.First().Categoria)
+                .OrderBy(x => x.Nombre)
                 .Take(4)
                 .ToList();
 
