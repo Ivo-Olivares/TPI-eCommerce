@@ -1,16 +1,16 @@
-using eCommerce.Dominio;
+﻿using eCommerce.Dominio;
 using eCommerce.Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace eCommerce.Web
 {
-    public partial class MisCompras : Page
+    public partial class MisCompras : System.Web.UI.Page
     {
-        protected global::System.Web.UI.WebControls.Label lblError;
 
         protected void Page_Load(object sender, EventArgs e)
         {

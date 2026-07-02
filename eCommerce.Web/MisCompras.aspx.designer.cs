@@ -1,10 +1,10 @@
-//------------------------------------------------------------------------------
-// <generado autom·ticamente>
-//     Este cÛdigo fue generado por una herramienta.
+Ôªø//------------------------------------------------------------------------------
+// <generado autom√°ticamente>
+//     Este c√≥digo fue generado por una herramienta.
 //
-//     Los cambios en este archivo podrÌan causar un comportamiento incorrecto y se perder·n si
-//     se vuelve a generar el cÛdigo. 
-// </generado autom·ticamente>
+//     Los cambios en este archivo podr√≠an causar un comportamiento incorrecto y se perder√°n si
+//     se vuelve a generar el c√≥digo. 
+// </generado autom√°ticamente>
 //------------------------------------------------------------------------------
 
 namespace eCommerce.Web
@@ -18,8 +18,8 @@ namespace eCommerce.Web
         /// Control ddlEstado.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom·ticamente.
-        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
+        /// Campo generado autom√°ticamente.
+        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlEstado;
 
@@ -27,8 +27,8 @@ namespace eCommerce.Web
         /// Control txtFechaDesde.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom·ticamente.
-        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
+        /// Campo generado autom√°ticamente.
+        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFechaDesde;
 
@@ -36,8 +36,8 @@ namespace eCommerce.Web
         /// Control txtFechaHasta.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom·ticamente.
-        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
+        /// Campo generado autom√°ticamente.
+        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFechaHasta;
 
@@ -45,17 +45,26 @@ namespace eCommerce.Web
         /// Control btnFiltrar.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom·ticamente.
-        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
+        /// Campo generado autom√°ticamente.
+        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnFiltrar;
+
+        /// <summary>
+        /// Control lblError.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado autom√°ticamente.
+        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblError;
 
         /// <summary>
         /// Control dgvCompras.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom·ticamente.
-        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
+        /// Campo generado autom√°ticamente.
+        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView dgvCompras;
 
@@ -63,8 +72,8 @@ namespace eCommerce.Web
         /// Control pnlDetalle.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom·ticamente.
-        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
+        /// Campo generado autom√°ticamente.
+        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlDetalle;
 
@@ -72,8 +81,8 @@ namespace eCommerce.Web
         /// Control dgvDetalle.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom·ticamente.
-        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
+        /// Campo generado autom√°ticamente.
+        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView dgvDetalle;
     }
