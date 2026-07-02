@@ -16,12 +16,12 @@ namespace eCommerce.Negocio
             return datos.ListarPorUsuario(idUsuario);
         }
 
-        public void AgregarDireccion(Direccion direccion, int idUsuario)
+        public int AgregarDireccion(Direccion direccion, int idUsuario)
         {
             ValidarDireccion(direccion);
 
             DireccionDatos datos = new DireccionDatos();
-            datos.AgregarDireccion(direccion, idUsuario);
+            return datos.AgregarDireccion(direccion, idUsuario);
         }
 
         public bool PerteneceAlUsuario(int idDireccion, int idUsuario)
