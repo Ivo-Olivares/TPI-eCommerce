@@ -223,7 +223,11 @@ namespace eCommerce.Datos
             datos.setearParametros("@IdFormaPago", pedido.FormaPago.Id);
             datos.setearParametros("@IdFormaEntrega", pedido.FormaEntrega.Id);
             datos.setearParametros("@IdEstadoPedido", pedido.EstadoPedido.Id);
-            datos.setearParametros("@IdDireccion", pedido.Direccion.Id);
+            object idDireccion = pedido.Direccion == null || pedido.Direccion.Id <= 0
+                ? (object)DBNull.Value
+                : pedido.Direccion.Id;
+
+            datos.setearParametros("@IdDireccion", idDireccion);
             datos.setearParametros("@FechaCreacion", pedido.FechaCreacion);
             datos.setearParametros("@FechaEntrega", DBNull.Value);
             datos.setearParametros("@Total", pedido.Total);

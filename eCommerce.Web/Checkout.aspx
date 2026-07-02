@@ -48,11 +48,16 @@
                         <asp:DropDownList
                             ID="ddlEntrega"
                             runat="server"
-                            CssClass="app-select">
+                            CssClass="app-select"
+                            AutoPostBack="true"
+                            OnSelectedIndexChanged="ddlEntrega_SelectedIndexChanged">
                         </asp:DropDownList>
                     </div>
 
-                    <div class="app-form-group">
+                    <asp:Panel
+                        ID="pnlDireccion"
+                        runat="server"
+                        CssClass="app-form-group">
                         <asp:Label
                             runat="server"
                             AssociatedControlID="ddlDireccion"
@@ -64,7 +69,7 @@
                             runat="server"
                             CssClass="app-select">
                         </asp:DropDownList>
-                    </div>
+                    </asp:Panel>
 
                     <div class="app-form-group mb-0">
                         <asp:Label

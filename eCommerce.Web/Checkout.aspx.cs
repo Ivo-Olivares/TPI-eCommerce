@@ -40,6 +40,7 @@ namespace eCommerce.Web
                 CargarDirecciones(usuario.Id);
                 CargarFormasEntrega();
                 CargarFormasPago();
+                ActualizarVisibilidadDireccion();
                 CargarResumenPedido();
             }
         }
@@ -101,25 +102,30 @@ namespace eCommerce.Web
                     throw new Exception("el carrito esta vacio");
                 }
 
-
-                if (string.IsNullOrWhiteSpace(ddlDireccion.SelectedValue))
-                    throw new Exception("Debe seleccionar una dirección.");
-
-                int idDireccion = int.Parse(ddlDireccion.SelectedValue);
-                DireccionNegocio direccionNegocio = new DireccionNegocio();
-
-                if (!direccionNegocio.PerteneceAlUsuario(idDireccion, usuario.Id))
-                    throw new Exception("La dirección seleccionada no pertenece al usuario logueado.");
-
                 if (string.IsNullOrWhiteSpace(ddlEntrega.SelectedValue))
                     throw new Exception("Debe seleccionar una forma de entrega.");
+
+                bool requiereDireccion = EntregaSeleccionadaRequiereDireccion();
+                int? idDireccion = null;
+
+                if (requiereDireccion)
+                {
+                    if (string.IsNullOrWhiteSpace(ddlDireccion.SelectedValue))
+                        throw new Exception("Debe seleccionar una dirección.");
+
+                    idDireccion = int.Parse(ddlDireccion.SelectedValue);
+                    DireccionNegocio direccionNegocio = new DireccionNegocio();
+
+                    if (!direccionNegocio.PerteneceAlUsuario(idDireccion.Value, usuario.Id))
+                        throw new Exception("La dirección seleccionada no pertenece al usuario logueado.");
+                }
 
                 if (string.IsNullOrWhiteSpace(ddlFormaPago.SelectedValue))
                     throw new Exception("Debe seleccionar una forma de pago.");
 
                 decimal total = CalcularTotal(carrito);
 
-                Pedido pedido = CrearPedidoDesdeCheckout(usuario, total);
+                Pedido pedido = CrearPedidoDesdeCheckout(usuario, total, idDireccion);
 
                 PedidoNegocio pedidoNegocio = new PedidoNegocio();
                 pedidoNegocio.ConfirmarCompra(pedido, carrito);
@@ -138,6 +144,12 @@ namespace eCommerce.Web
                 lblError.Text = ex.Message;
                 lblError.Visible = true;
             }
+        }
+
+        protected void ddlEntrega_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblError.Visible = false;
+            ActualizarVisibilidadDireccion();
         }
 
         private void CargarResumenPedido()
@@ -166,12 +178,12 @@ namespace eCommerce.Web
             lblTotal.Text = total.ToString("$ #,##0.00");
         }
 
-        private Pedido CrearPedidoDesdeCheckout(Usuario usuario, decimal total)
+        private Pedido CrearPedidoDesdeCheckout(Usuario usuario, decimal total, int? idDireccion)
         {
             Pedido pedido = new Pedido();
 
             pedido.Usuario.Id = usuario.Id;
-            pedido.Direccion.Id = int.Parse(ddlDireccion.SelectedValue);
+            pedido.Direccion = idDireccion.HasValue ? new Direccion { Id = idDireccion.Value } : null;
             pedido.FormaEntrega.Id = int.Parse(ddlEntrega.SelectedValue);
             pedido.FormaPago.Id = int.Parse(ddlFormaPago.SelectedValue);
             pedido.FechaCreacion = DateTime.Now;
@@ -194,6 +206,32 @@ namespace eCommerce.Web
             }
 
             return total;
+        }
+
+        private bool EntregaSeleccionadaRequiereDireccion()
+        {
+            if (string.IsNullOrWhiteSpace(ddlEntrega.SelectedValue))
+                return false;
+
+            FormaEntregaNegocio negocio = new FormaEntregaNegocio();
+            return negocio.RequiereDireccion(int.Parse(ddlEntrega.SelectedValue));
+        }
+
+        private void ActualizarVisibilidadDireccion()
+        {
+            bool requiereDireccion = EntregaSeleccionadaRequiereDireccion();
+
+            pnlDireccion.Visible = requiereDireccion;
+            ddlDireccion.Enabled = requiereDireccion;
+
+            if (!requiereDireccion)
+                LimpiarDireccionSeleccionada();
+        }
+
+        private void LimpiarDireccionSeleccionada()
+        {
+            if (ddlDireccion.Items.Count > 0)
+                ddlDireccion.SelectedIndex = 0;
         }
 
         private void RedirigirALogin()

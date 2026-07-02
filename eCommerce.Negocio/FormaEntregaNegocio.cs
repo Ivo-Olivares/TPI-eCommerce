@@ -16,6 +16,28 @@ namespace eCommerce.Negocio
             return datos.ListarFormasEntrega();
         }
 
+        public bool RequiereDireccion(int idFormaEntrega)
+        {
+            if (idFormaEntrega <= 0)
+                throw new Exception("Debe seleccionar una forma de entrega valida.");
+
+            FormaEntrega formaEntrega = Listar().Find(x => x.Id == idFormaEntrega && x.Activo);
+
+            if (formaEntrega == null)
+                throw new Exception("Debe seleccionar una forma de entrega activa.");
+
+            return RequiereDireccion(formaEntrega);
+        }
+
+        public bool RequiereDireccion(FormaEntrega formaEntrega)
+        {
+            if (formaEntrega == null)
+                throw new Exception("Debe seleccionar una forma de entrega valida.");
+
+            string descripcionNormalizada = NormalizarTexto(formaEntrega.Descripcion);
+            return descripcionNormalizada.Contains("ENVIO");
+        }
+
         public void AgregarFormaEntrega(FormaEntrega formaEntrega)
         {
             ValidarFormaEntrega(formaEntrega);
@@ -63,6 +85,18 @@ namespace eCommerce.Negocio
         {
             string textoSinEspacios = new string(texto.Where(x => !char.IsWhiteSpace(x)).ToArray());
             return textoSinEspacios.All(char.IsDigit);
+        }
+
+        private string NormalizarTexto(string texto)
+        {
+            return (texto ?? "")
+                .Trim()
+                .ToUpperInvariant()
+                .Replace("Á", "A")
+                .Replace("É", "E")
+                .Replace("Í", "I")
+                .Replace("Ó", "O")
+                .Replace("Ú", "U");
         }
 
 
