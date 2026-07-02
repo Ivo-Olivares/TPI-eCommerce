@@ -16,6 +16,18 @@ namespace eCommerce.Negocio
             return datos.ListarPorProducto(idProducto);
         }
 
+        public void GuardarImagenPrincipal(int idProducto, string urlImagen)
+        {
+            if (idProducto <= 0)
+                throw new Exception("El producto no es válido.");
+
+            if (string.IsNullOrWhiteSpace(urlImagen))
+                return;
+
+            ImagenDatos datos = new ImagenDatos();
+            datos.GuardarImagenPrincipal(idProducto, urlImagen.Trim());
+        }
+
 
     }
 }

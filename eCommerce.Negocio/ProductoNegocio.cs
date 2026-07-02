@@ -38,12 +38,13 @@ namespace eCommerce.Negocio
             return producto;
         }
 
-        public void AgregarProducto(Producto producto)
+        public int AgregarProducto(Producto producto)
         {
             ValidarProducto(producto);
 
             ProductoDatos datos = new ProductoDatos();
-            datos.AgregarProducto(producto);
+
+            return datos.AgregarProducto(producto);
         }
 
         public void ModificarProducto(Producto producto)

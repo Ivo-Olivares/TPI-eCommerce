@@ -24,7 +24,28 @@ namespace eCommerce.Web
         private void CargarProductos()
         {
             ProductoNegocio negocio = new ProductoNegocio();
-            dgvProductos.DataSource = negocio.Listar();
+            var productos = negocio.Listar();
+
+            if (!string.IsNullOrWhiteSpace(txtFiltroProducto.Text))
+            {
+                string filtro = txtFiltroProducto.Text.Trim().ToUpper();
+
+                productos = productos
+                    .Where(x =>
+                        x.Nombre.ToUpper().Contains(filtro) ||
+                        x.Sku.ToUpper().Contains(filtro) ||
+                        x.Marca.Nombre.ToUpper().Contains(filtro) ||
+                        x.Categoria.Nombre.ToUpper().Contains(filtro))
+                    .ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(ddlFiltroEstado.SelectedValue))
+            {
+                bool activo = ddlFiltroEstado.SelectedValue == "1";
+                productos = productos.Where(x => x.Activo == activo).ToList();
+            }
+
+            dgvProductos.DataSource = productos;
             dgvProductos.DataBind();
         }
 
@@ -69,15 +90,18 @@ namespace eCommerce.Web
                 producto.Stock = stock;
 
                 ProductoNegocio negocio = new ProductoNegocio();
+                ImagenNegocio imagenNegocio = new ImagenNegocio();
 
                 if (ViewState["IdProducto"] != null)
                 {
                     producto.Id = (int)ViewState["IdProducto"];
                     negocio.ModificarProducto(producto);
+                    imagenNegocio.GuardarImagenPrincipal(producto.Id, txtUrlImagen.Text);
                 }
                 else
                 {
-                    negocio.AgregarProducto(producto);
+                    int idProducto = negocio.AgregarProducto(producto);
+                    imagenNegocio.GuardarImagenPrincipal(idProducto, txtUrlImagen.Text);
                 }
 
                 CargarProductos();
@@ -95,6 +119,19 @@ namespace eCommerce.Web
             LimpiarFormulario();
         }
 
+
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            CargarProductos();
+        }
+
+        protected void btnLimpiarFiltro_Click(object sender, EventArgs e)
+        {
+            txtFiltroProducto.Text = "";
+            ddlFiltroEstado.SelectedValue = "";
+            CargarProductos();
+        }
+
         private void LimpiarFormulario()
         {
             ViewState["IdProducto"] = null;
@@ -105,6 +142,7 @@ namespace eCommerce.Web
             ddlMarca.SelectedValue = "0";
             txtPrecio.Text = "";
             txtStock.Text = "";
+            txtUrlImagen.Text = "";
             lblError.Text = "";
             btnAgregarProducto.Text = "Agregar Producto";
             btnCancelar.Visible = false;
@@ -137,6 +175,7 @@ namespace eCommerce.Web
                 SeleccionarItemActual(ddlMarca, producto.Marca.Id, producto.Marca.Nombre);
                 txtPrecio.Text = producto.Precio.ToString();
                 txtStock.Text = producto.Stock.ToString();
+                txtUrlImagen.Text = producto.ListaImagenes != null && producto.ListaImagenes.Count > 0 ? producto.ListaImagenes[0].UrlImagen : "";
 
                 ViewState["IdProducto"] = producto.Id;
 

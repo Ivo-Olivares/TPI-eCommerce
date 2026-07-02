@@ -95,13 +95,13 @@ namespace eCommerce.Datos
             }
         }
 
-        public void AgregarProducto(Producto producto)
+        public int AgregarProducto(Producto producto)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("insert into PRODUCTOS (IdCategoria, IdMarca, Sku, Nombre, Descripcion, Precio, Stock, Activo) values (@IdCategoria, @IdMarca, @Sku, @Nombre, @Descripcion, @Precio, @Stock, 1)");
+                datos.setearConsulta("insert into PRODUCTOS (IdCategoria, IdMarca, Sku, Nombre, Descripcion, Precio, Stock, Activo) values (@IdCategoria, @IdMarca, @Sku, @Nombre, @Descripcion, @Precio, @Stock, 1); SELECT SCOPE_IDENTITY() AS IdProducto;");
                 datos.setearParametros("@IdCategoria", producto.Categoria.Id);
                 datos.setearParametros("@IdMarca", producto.Marca.Id);
                 datos.setearParametros("@Sku", producto.Sku);
@@ -109,11 +109,24 @@ namespace eCommerce.Datos
                 datos.setearParametros("@Descripcion", producto.Descripcion);
                 datos.setearParametros("@Precio", producto.Precio);
                 datos.setearParametros("@Stock", producto.Stock);
-                datos.ejecutarAccion();
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return Convert.ToInt32(datos.Lector["IdProducto"]);
+
+                }
+
+                return 0;
+
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
         }
 

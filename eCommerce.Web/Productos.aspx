@@ -1,6 +1,30 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Productos.aspx.cs" Inherits="eCommerce.Web.Productos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label>Buscar producto</label>
+            <asp:TextBox runat="server" ID="txtFiltroProducto" CssClass="form-control" />
+        </div>
+
+        <div class="col-md-2">
+            <label>Estado</label>
+            <asp:DropDownList runat="server" ID="ddlFiltroEstado" CssClass="form-control">
+                <asp:ListItem Text="Todos" Value="" />
+                <asp:ListItem Text="Activos" Value="1" />
+                <asp:ListItem Text="Inactivos" Value="0" />
+            </asp:DropDownList>
+        </div>
+
+        <div class="col-md-3 d-flex align-items-end">
+            <asp:Button runat="server" ID="btnFiltrar" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrar_Click" />
+        </div>
+
+        <div class="col-md-3 d-flex align-items-end">
+            <asp:Button runat="server" ID="btnLimpiarFiltro" Text="Limpiar" CssClass="btn btn-outline-secondary w-100" OnClick="btnLimpiarFiltro_Click" />
+        </div>
+    </div>
+
     <div class="row">
         <div class="col">
             <div class="table-responsive">
@@ -71,6 +95,10 @@
     <br />
 
     <asp:TextBox runat="server" ID="txtStock" CssClass="form-control" Placeholder="Stock" />
+
+    <br />
+
+    <asp:TextBox runat="server" ID="txtUrlImagen" CssClass="form-control" Placeholder="URL de imagen" />
 
     <br />
 
