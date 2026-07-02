@@ -253,6 +253,29 @@
                     </div>
 
                     <div class="p-4 border-top">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <span class="app-text-muted d-block">Forma de entrega</span>
+                                <strong style="color: var(--color-slate-900);">
+                                    <asp:Label ID="lblResumenEntrega" runat="server" Text="Pendiente" />
+                                </strong>
+                            </div>
+
+                            <div class="col-md-4">
+                                <span class="app-text-muted d-block">Dirección</span>
+                                <strong style="color: var(--color-slate-900);">
+                                    <asp:Label ID="lblResumenDireccion" runat="server" Text="Pendiente" />
+                                </strong>
+                            </div>
+
+                            <div class="col-md-4">
+                                <span class="app-text-muted d-block">Forma de pago</span>
+                                <strong style="color: var(--color-slate-900);">
+                                    <asp:Label ID="lblResumenPago" runat="server" Text="Pendiente" />
+                                </strong>
+                            </div>
+                        </div>
+
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <span class="app-card-title mb-0">Total</span>
 

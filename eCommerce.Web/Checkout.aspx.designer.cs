@@ -168,6 +168,33 @@ namespace eCommerce.Web
         protected global::System.Web.UI.WebControls.GridView dgvResumen;
 
         /// <summary>
+        /// Control lblResumenEntrega.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblResumenEntrega;
+
+        /// <summary>
+        /// Control lblResumenDireccion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblResumenDireccion;
+
+        /// <summary>
+        /// Control lblResumenPago.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblResumenPago;
+
+        /// <summary>
         /// Control lblTotal.
         /// </summary>
         /// <remarks>
