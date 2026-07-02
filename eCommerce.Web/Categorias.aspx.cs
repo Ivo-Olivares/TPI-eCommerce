@@ -1,5 +1,4 @@
-﻿using eCommerce.Datos;
-using eCommerce.Dominio;
+﻿using eCommerce.Dominio;
 using eCommerce.Negocio;
 using System;
 using System.Collections.Generic;
@@ -46,7 +45,9 @@ namespace eCommerce.Web
                     txtNombreCategoria.Text = "";
                     lblError.Text = "";
 
-                    btnAgregarCategoria.Text = "Agregar Categoría";
+                    lblTituloFormulario.Text = "Agregar categoria";
+                    btnAgregarCategoria.Text = "Agregar categoria";
+                    btnCancelar.Visible = false;
                 }
                 else
                 {
@@ -60,6 +61,10 @@ namespace eCommerce.Web
 
                     txtNombreCategoria.Text = "";
                     lblError.Text = "";
+
+                    lblTituloFormulario.Text = "Agregar categoria";
+                    btnAgregarCategoria.Text = "Agregar categoria";
+                    btnCancelar.Visible = false;
                 }
             }
             catch (Exception ex)
@@ -74,7 +79,8 @@ namespace eCommerce.Web
             ViewState["IdCategoria"] = null;
             txtNombreCategoria.Text = "";
             lblError.Text = "";
-            btnAgregarCategoria.Text = "Agregar Categoría";
+            lblTituloFormulario.Text = "Agregar categoria";
+            btnAgregarCategoria.Text = "Agregar categoria";
             btnCancelar.Visible = false;
         }
 
@@ -92,7 +98,8 @@ namespace eCommerce.Web
 
                 ViewState["IdCategoria"] = categoria.Id;
 
-                btnAgregarCategoria.Text = "Modificar Categoria";
+                lblTituloFormulario.Text = "Modificar categoria";
+                btnAgregarCategoria.Text = "Modificar categoria";
                 btnCancelar.Visible = true;
             }
 
@@ -108,7 +115,9 @@ namespace eCommerce.Web
 
                 ViewState["IdCategoria"] = null;
                 txtNombreCategoria.Text = "";
-                btnAgregarCategoria.Text = "Agregar Categoría";
+                lblError.Text = "";
+                lblTituloFormulario.Text = "Agregar categoria";
+                btnAgregarCategoria.Text = "Agregar categoria";
                 btnCancelar.Visible = false;
             }
 
@@ -124,7 +133,9 @@ namespace eCommerce.Web
 
                 ViewState["IdCategoria"] = null;
                 txtNombreCategoria.Text = "";
-                btnAgregarCategoria.Text = "Agregar Categoría";
+                lblError.Text = "";
+                lblTituloFormulario.Text = "Agregar categoria";
+                btnAgregarCategoria.Text = "Agregar categoria";
                 btnCancelar.Visible = false;
             }
 
