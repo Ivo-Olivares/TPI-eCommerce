@@ -46,7 +46,7 @@
                             Text="Entrar como invitado"
                             OnClick="btnInvitado_Click" />
 
-                        <a runat="server" href="~/Registro.aspx" class="app-btn-secondary text-center" style="display: block; width: 100%; box-sizing: border-box;">Crear cuenta
+                        <a runat="server" ID="lnkRegistro" href="~/Registro.aspx" class="app-btn-secondary text-center" style="display: block; width: 100%; box-sizing: border-box;">Crear cuenta
                         </a>
                     </div>
                 </section>

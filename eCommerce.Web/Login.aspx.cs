@@ -13,6 +13,8 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            btnInvitado.Visible = !RedireccionSegura.EsRetornoCheckout(Request);
+            lnkRegistro.HRef = RedireccionSegura.CrearUrlConRetorno("~/Registro.aspx", Request);
         }
 
         protected void btnIngresar_Click(object sender, EventArgs e)
@@ -24,7 +26,7 @@ namespace eCommerce.Web
 
                 AutenticacionSesion.IniciarSesion(Session, usuario);
 
-                Response.Redirect("~/Default.aspx", false);
+                Response.Redirect(RedireccionSegura.ObtenerDestino(Request, "~/Default.aspx"), false);
             }
             catch (Exception ex)
             {
