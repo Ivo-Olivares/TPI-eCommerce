@@ -4,7 +4,6 @@
 
     <main class="app-container app-section">
 
-        <!-- Encabezado -->
         <section class="app-hero mb-4" aria-labelledby="tituloCarrito">
             <div class="row align-items-center g-3">
                 <div class="col-md-8">
@@ -27,11 +26,9 @@
             </div>
         </section>
 
-        <!-- Mensajes -->
         <asp:Label runat="server" ID="lblError" CssClass="app-alert app-alert-danger d-block mb-4" Visible="false" />
         <asp:Label runat="server" ID="lblExito" CssClass="app-alert app-alert-success d-block mb-4" Visible="false" />
 
-        <!-- Carrito vacío -->
         <asp:Panel runat="server" ID="pnlVacio" CssClass="app-empty-state mb-4" Visible="false">
             <div class="app-empty-icon">🛒</div>
 
@@ -48,12 +45,10 @@
             </a>
         </asp:Panel>
 
-        <!-- Carrito con productos -->
         <asp:Panel runat="server" ID="pnlCarrito" Visible="false" DefaultButton="btnActualizar">
 
             <div class="row g-4 align-items-start">
 
-                <!-- Tabla de productos -->
                 <div class="col-lg-8">
                     <section class="app-card p-0">
                         <div class="table-responsive">
@@ -121,7 +116,6 @@
                     </section>
                 </div>
 
-                <!-- Resumen -->
                 <div class="col-lg-4">
                     <section class="app-card">
                         <span class="app-badge app-badge-primary mb-3">Resumen</span>

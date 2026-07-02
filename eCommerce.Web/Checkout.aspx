@@ -1,64 +1,158 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master"
-    AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="eCommerce.Web.Checkout" %>
+﻿<%@ Page Title="Checkout" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="eCommerce.Web.Checkout" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container mt-4">
-        <h2>Checkout</h2>
-        <p>Completa los datos para finalizar la compra.</p>
+    <main class="app-container app-section">
 
-        <hr />
+        <section class="app-hero mb-4" aria-labelledby="tituloCheckout">
+            <div class="row align-items-center g-3">
+                <div class="col-md-8">
+                    <span class="app-badge app-badge-primary mb-2">Checkout</span>
 
-        <h4>Datos de entrega</h4>
+                    <h1 id="tituloCheckout" class="app-title mb-2 fs-2">Finalizar compra</h1>
 
-        <div class="mb-3">
-            <label>Tipo de entrega</label>
-            <asp:DropDownList ID="ddlEntrega" runat="server" CssClass="form-control">
-            </asp:DropDownList>
-        </div>
+                    <p class="app-subtitle mb-0 fs-6">
+                        Completá los datos de entrega y pago para confirmar tu pedido.
+                    </p>
+                </div>
 
-        <div class="mb-3">
-            <label>Dirección</label>
-            <asp:DropDownList ID="ddlDireccion" runat="server" CssClass="form-control">
-            </asp:DropDownList>
-        </div>
-
-        <div class="mb-3">
-            <label>Forma de pago</label>
-            <asp:DropDownList ID="ddlFormaPago" runat="server" CssClass="form-control">
-            </asp:DropDownList>
-        </div>
-
-        <hr />
-
-        <h4>Resumen del pedido</h4>
-
-        <div class="card p-3 mb-3">
-            <asp:GridView ID="dgvResumen" runat="server" AutoGenerateColumns="False" CssClass="table table-striped">
-                <Columns>
-                    <asp:TemplateField HeaderText="Producto">
-                        <ItemTemplate>
-                            <%# Eval("Producto.Nombre") %>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
-
-                    <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio unitario" DataFormatString="{0:C}" />
-
-                    <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" />
-                </Columns>
-            </asp:GridView>
-
-            <div class="text-end mt-3">
-                <strong>Total:</strong>
-                <asp:Label ID="lblTotal" runat="server" Text="$ 0,00" />
+                <div class="col-md-4 text-md-end text-start">
+                    <a runat="server" href="~/Carrito.aspx" class="app-btn-secondary">&larr; Volver al carrito
+                    </a>
+                </div>
             </div>
+        </section>
+
+        <asp:Label
+            ID="lblError"
+            runat="server"
+            CssClass="app-alert app-alert-danger d-block mb-4"
+            Visible="false" />
+
+        <div class="row g-4 align-items-start">
+
+            <div class="col-lg-5">
+                <section class="app-card">
+                    <span class="app-badge app-badge-primary mb-3">Datos del pedido</span>
+
+                    <h2 class="app-card-title mb-3">Entrega y pago
+                    </h2>
+
+                    <div class="app-form-group">
+                        <asp:Label
+                            runat="server"
+                            AssociatedControlID="ddlEntrega"
+                            CssClass="app-form-label"
+                            Text="Tipo de entrega" />
+
+                        <asp:DropDownList
+                            ID="ddlEntrega"
+                            runat="server"
+                            CssClass="app-select">
+                        </asp:DropDownList>
+                    </div>
+
+                    <div class="app-form-group">
+                        <asp:Label
+                            runat="server"
+                            AssociatedControlID="ddlDireccion"
+                            CssClass="app-form-label"
+                            Text="Dirección" />
+
+                        <asp:DropDownList
+                            ID="ddlDireccion"
+                            runat="server"
+                            CssClass="app-select">
+                        </asp:DropDownList>
+                    </div>
+
+                    <div class="app-form-group mb-0">
+                        <asp:Label
+                            runat="server"
+                            AssociatedControlID="ddlFormaPago"
+                            CssClass="app-form-label"
+                            Text="Forma de pago" />
+
+                        <asp:DropDownList
+                            ID="ddlFormaPago"
+                            runat="server"
+                            CssClass="app-select">
+                        </asp:DropDownList>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-lg-7">
+                <section class="app-card p-0">
+                    <div class="p-4 border-bottom">
+                        <span class="app-badge app-badge-primary mb-3">Resumen</span>
+
+                        <h2 class="app-card-title mb-1">Resumen del pedido
+                        </h2>
+
+                        <p class="app-text-muted mb-0">
+                            Revisá los productos antes de confirmar la compra.
+                        </p>
+                    </div>
+
+                    <div class="table-responsive">
+                        <asp:GridView
+                            ID="dgvResumen"
+                            runat="server"
+                            AutoGenerateColumns="False"
+                            CssClass="app-table"
+                            GridLines="None"
+                            BorderStyle="None">
+                            <Columns>
+                                <asp:TemplateField HeaderText="Producto">
+                                    <ItemTemplate>
+                                        <strong style="color: var(--color-slate-900);">
+                                            <%# Eval("Producto.Nombre") %>
+                                        </strong>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+
+                                <asp:BoundField
+                                    DataField="PrecioUnitario"
+                                    HeaderText="Precio unitario"
+                                    DataFormatString="{0:C}" />
+
+                                <asp:BoundField
+                                    DataField="Subtotal"
+                                    HeaderText="Subtotal"
+                                    DataFormatString="{0:C}" />
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+
+                    <div class="p-4 border-top">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="app-card-title mb-0">Total</span>
+
+                            <strong style="color: var(--color-slate-900); font-size: 1.25rem;">
+                                <asp:Label ID="lblTotal" runat="server" Text="$ 0,00" />
+                            </strong>
+                        </div>
+
+                        <div class="d-flex flex-column gap-2">
+                            <asp:LinkButton
+                                ID="btnConfirmar"
+                                runat="server"
+                                Text="Confirmar compra"
+                                CssClass="app-btn-primary text-center"
+                                Style="display: block; width: 100%; box-sizing: border-box;"
+                                OnClick="btnConfirmar_Click" />
+
+                            <a runat="server" href="~/Catalogo.aspx" class="app-btn-secondary text-center" style="display: block; width: 100%; box-sizing: border-box; padding: 0.75rem 1.5rem;">Seguir comprando</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
         </div>
 
-        <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-3" Visible="false" />
-
-        <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar compra" CssClass="btn btn-primary" OnClick="btnConfirmar_Click" />
-    </div>
+    </main>
 
 </asp:Content>
