@@ -185,40 +185,5 @@ namespace eCommerce.Datos
             }
         }
 
-        public bool DescontarStock(int idProducto, int cantidad)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConsulta("UPDATE PRODUCTOS SET Stock = Stock - @Cantidad WHERE IdProducto = @IdProducto AND Activo = 1 AND Stock >= @Cantidad; SELECT @@ROWCOUNT AS FilasAfectadas;");
-                datos.setearParametros("@IdProducto", idProducto);
-                datos.setearParametros("@Cantidad", cantidad);
-
-
-                datos.ejecutarLectura();
-
-                if (datos.Lector.Read())
-                {
-                    return (int)datos.Lector["FilasAfectadas"] == 1;
-                }
-
-                return false;
-
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-
-            }
-            finally
-            {
-                datos.cerrarConexion();
-
-            }
-
-
-
-        }
     }
 }

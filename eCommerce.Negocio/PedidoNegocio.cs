@@ -44,14 +44,6 @@ namespace eCommerce.Negocio
                 throw new Exception("No se encontro el pedido seleccionado.");
         }
 
-        public int AgregarPedido(Pedido pedido)
-        {
-            ValidarPedido(pedido);
-
-            PedidoDatos datos = new PedidoDatos();
-            return datos.AgregarPedido(pedido);
-        }
-
         public int ConfirmarCompra(Pedido pedido, List<DetallePedido> detalles)
         {
             ValidarPedido(pedido);
