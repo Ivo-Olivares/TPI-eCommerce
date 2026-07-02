@@ -4,14 +4,11 @@
 
     <main class="app-container app-section">
 
-        <div class="mb-4 text-center">
-            <h1 id="tituloLogin" class="app-title mb-2 fs-2">Ingresar
-            </h1>
+        <section class="app-card mb-4 text-center">
+            <h1 id="tituloLogin" class="app-title mb-2 fs-2">Ingresar</h1>
 
-            <p class="app-subtitle mb-0 fs-6">
-                Accede a tu cuenta para continuar.
-            </p>
-        </div>
+            <p class="app-subtitle mb-0 fs-6">Accede a tu cuenta para continuar.</p>
+        </section>
 
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-7">
