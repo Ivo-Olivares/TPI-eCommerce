@@ -7,6 +7,11 @@ SET XACT_ABORT ON;
 BEGIN TRY
     BEGIN TRAN;
 
+    IF COL_LENGTH('PEDIDOS', 'ObservacionesInternas') IS NULL
+    BEGIN
+        ALTER TABLE PEDIDOS ADD ObservacionesInternas VARCHAR(500) NULL;
+    END
+
     DECLARE @Roles TABLE (Nombre VARCHAR(50) NOT NULL);
     INSERT INTO @Roles (Nombre)
     VALUES ('Cliente'), ('Vendedor'), ('Admin');

@@ -40,7 +40,7 @@ El script `Docs\DatosIniciales.sql` crea o actualiza estos usuarios:
 - Clave: `admin`
 - Rol: `Vendedor`
 
-El script tambien carga roles, categorias, marcas, formas de pago, formas de entrega, estados de pedido, productos demo e imagenes. Es idempotente: se puede ejecutar mas de una vez sin duplicar datos.
+El script tambien carga roles, categorias, marcas, formas de pago, formas de entrega, estados de pedido, productos demo e imagenes. Es idempotente: se puede ejecutar mas de una vez sin duplicar datos. Si la base local ya existia, tambien agrega la columna `ObservacionesInternas` en `PEDIDOS` cuando falta.
 
 ## Validar base local
 

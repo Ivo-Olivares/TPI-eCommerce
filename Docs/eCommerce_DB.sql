@@ -124,6 +124,7 @@ CREATE TABLE PEDIDOS(
     FechaCreacion DATETIME NOT NULL,
     FechaEntrega DATETIME NULL,
     Total DECIMAL(10,2) NOT NULL,
+    ObservacionesInternas VARCHAR(500) NULL,
 
     FOREIGN KEY(IdUsuario) REFERENCES USUARIOS(IdUsuario),
     FOREIGN KEY(IdDireccion) REFERENCES DIRECCIONES(IdDireccion),
