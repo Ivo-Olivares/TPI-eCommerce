@@ -122,20 +122,7 @@ namespace eCommerce.Web
                 Pedido pedido = CrearPedidoDesdeCheckout(usuario, total);
 
                 PedidoNegocio pedidoNegocio = new PedidoNegocio();
-                int idPedido = pedidoNegocio.AgregarPedido(pedido);
-
-                DetallePedidoNegocio detalleNegocio = new DetallePedidoNegocio();
-
-                foreach (DetallePedido item in carrito)
-                {
-                    item.Pedido = new Pedido();
-                    item.Pedido.Id = idPedido;
-
-                    detalleNegocio.AgregarDetallePedido(item);
-                }
-
-                ProductoNegocio productoNegocio = new ProductoNegocio();
-                productoNegocio.DescontarStockPedido(carrito);
+                pedidoNegocio.ConfirmarCompra(pedido, carrito);
 
                 Session.Remove(CarritoSesion.ClaveCarrito);
 

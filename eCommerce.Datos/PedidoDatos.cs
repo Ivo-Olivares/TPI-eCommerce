@@ -180,5 +180,80 @@ namespace eCommerce.Datos
                 datos.cerrarConexion();
             }
         }
+
+        public int ConfirmarCompra(Pedido pedido, List<DetallePedido> detalles)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.iniciarTransaccion();
+
+                int idPedido = InsertarPedido(datos, pedido);
+
+                foreach (DetallePedido detalle in detalles)
+                {
+                    InsertarDetalle(datos, idPedido, detalle);
+                    DescontarStock(datos, detalle);
+                }
+
+                datos.confirmarTransaccion();
+                return idPedido;
+            }
+            catch (Exception ex)
+            {
+                datos.cancelarTransaccion();
+                throw ex;
+            }
+        }
+
+        private int InsertarPedido(AccesoDatos datos, Pedido pedido)
+        {
+            datos.setearConsulta(@"
+                INSERT INTO PEDIDOS
+                (IdUsuario, IdFormaPago, IdFormaEntrega, IdEstadoPedido, IdDireccion, FechaCreacion, FechaEntrega, Total)
+                OUTPUT INSERTED.IdPedido
+                VALUES
+                (@IdUsuario, @IdFormaPago, @IdFormaEntrega, @IdEstadoPedido, @IdDireccion, @FechaCreacion, @FechaEntrega, @Total)");
+
+            datos.setearParametros("@IdUsuario", pedido.Usuario.Id);
+            datos.setearParametros("@IdFormaPago", pedido.FormaPago.Id);
+            datos.setearParametros("@IdFormaEntrega", pedido.FormaEntrega.Id);
+            datos.setearParametros("@IdEstadoPedido", pedido.EstadoPedido.Id);
+            datos.setearParametros("@IdDireccion", pedido.Direccion.Id);
+            datos.setearParametros("@FechaCreacion", pedido.FechaCreacion);
+            datos.setearParametros("@FechaEntrega", DBNull.Value);
+            datos.setearParametros("@Total", pedido.Total);
+
+            object resultado = datos.ejecutarEscalar();
+
+            if (resultado == null || resultado is DBNull)
+                throw new Exception("No se pudo obtener el Id del pedido generado.");
+
+            return Convert.ToInt32(resultado);
+        }
+
+        private void InsertarDetalle(AccesoDatos datos, int idPedido, DetallePedido detalle)
+        {
+            datos.setearConsulta("INSERT INTO DETALLESPEDIDO (IdPedido, IdProducto, Cantidad, PrecioUnitario, Subtotal) VALUES (@IdPedido, @IdProducto, @Cantidad, @PrecioUnitario, @Subtotal)");
+            datos.setearParametros("@IdPedido", idPedido);
+            datos.setearParametros("@IdProducto", detalle.Producto.Id);
+            datos.setearParametros("@Cantidad", detalle.Cantidad);
+            datos.setearParametros("@PrecioUnitario", detalle.PrecioUnitario);
+            datos.setearParametros("@Subtotal", detalle.Subtotal);
+            datos.ejecutarAccion();
+        }
+
+        private void DescontarStock(AccesoDatos datos, DetallePedido detalle)
+        {
+            datos.setearConsulta("UPDATE PRODUCTOS SET Stock = Stock - @Cantidad WHERE IdProducto = @IdProducto AND Activo = 1 AND Stock >= @Cantidad");
+            datos.setearParametros("@IdProducto", detalle.Producto.Id);
+            datos.setearParametros("@Cantidad", detalle.Cantidad);
+
+            int filasAfectadas = datos.ejecutarAccion();
+
+            if (filasAfectadas != 1)
+                throw new Exception("No hay stock suficiente para el producto: " + detalle.Producto.Nombre);
+        }
     }
 }

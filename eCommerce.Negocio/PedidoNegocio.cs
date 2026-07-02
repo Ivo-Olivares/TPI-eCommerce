@@ -37,6 +37,25 @@ namespace eCommerce.Negocio
 
         public int AgregarPedido(Pedido pedido)
         {
+            ValidarPedido(pedido);
+
+            PedidoDatos datos = new PedidoDatos();
+            return datos.AgregarPedido(pedido);
+        }
+
+        public int ConfirmarCompra(Pedido pedido, List<DetallePedido> detalles)
+        {
+            ValidarPedido(pedido);
+            ValidarDetalles(detalles);
+
+            pedido.Total = detalles.Sum(x => x.Subtotal);
+
+            PedidoDatos datos = new PedidoDatos();
+            return datos.ConfirmarCompra(pedido, detalles);
+        }
+
+        private void ValidarPedido(Pedido pedido)
+        {
             if (pedido == null)
                 throw new Exception("No se pudo generar el pedido.");
 
@@ -57,9 +76,26 @@ namespace eCommerce.Negocio
 
             if (pedido.Total < 0)
                 throw new Exception("El total del pedido no puede ser negativo.");
+        }
 
-            PedidoDatos datos = new PedidoDatos();
-            return datos.AgregarPedido(pedido);
+        private void ValidarDetalles(List<DetallePedido> detalles)
+        {
+            if (detalles == null || detalles.Count == 0)
+                throw new Exception("El pedido debe tener al menos un producto.");
+
+            foreach (DetallePedido detalle in detalles)
+            {
+                if (detalle.Producto == null || detalle.Producto.Id <= 0)
+                    throw new Exception("Uno de los productos no es valido.");
+
+                if (detalle.Cantidad <= 0)
+                    throw new Exception("La cantidad debe ser mayor a cero.");
+
+                if (detalle.PrecioUnitario <= 0)
+                    throw new Exception("El precio unitario debe ser mayor a cero.");
+
+                detalle.Subtotal = detalle.Cantidad * detalle.PrecioUnitario;
+            }
         }
     }
 }
