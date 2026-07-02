@@ -1,14 +1,15 @@
-using eCommerce.Dominio;
+﻿using eCommerce.Dominio;
 using eCommerce.Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace eCommerce.Web
 {
-    public partial class Pedidos : Page
+    public partial class Pedidos : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -149,7 +150,12 @@ namespace eCommerce.Web
         private void MostrarMensaje(string mensaje, string cssClass)
         {
             lblMensaje.Text = mensaje;
-            lblMensaje.CssClass = "alert d-block " + cssClass;
+
+            if (cssClass == "alert-success")
+                lblMensaje.CssClass = "app-alert app-alert-success d-block mb-4";
+            else
+                lblMensaje.CssClass = "app-alert app-alert-danger d-block mb-4";
+
             lblMensaje.Visible = true;
         }
 

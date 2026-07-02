@@ -1,59 +1,112 @@
-<%@ Page Title="Pedidos" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Pedidos.aspx.cs" Inherits="eCommerce.Web.Pedidos" %>
+﻿<%@ Page Title="Pedidos" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Pedidos.aspx.cs" Inherits="eCommerce.Web.Pedidos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <main class="py-4">
-        <h1 class="h3 mb-3">Administracion de pedidos</h1>
 
-        <asp:Label runat="server" ID="lblMensaje" Visible="false" CssClass="alert d-block" />
+    <main class="app-container app-section">
 
-        <div class="row g-3 align-items-end mb-3">
-            <div class="col-md-3">
-                <asp:Label runat="server" AssociatedControlID="ddlEstado" CssClass="form-label" Text="Estado" />
-                <asp:DropDownList runat="server" ID="ddlEstado" CssClass="form-select" />
-            </div>
-            <div class="col-md-3">
-                <asp:Label runat="server" AssociatedControlID="txtFechaDesde" CssClass="form-label" Text="Desde" />
-                <asp:TextBox runat="server" ID="txtFechaDesde" CssClass="form-control" TextMode="Date" />
-            </div>
-            <div class="col-md-3">
-                <asp:Label runat="server" AssociatedControlID="txtFechaHasta" CssClass="form-label" Text="Hasta" />
-                <asp:TextBox runat="server" ID="txtFechaHasta" CssClass="form-control" TextMode="Date" />
-            </div>
-            <div class="col-md-3">
-                <asp:Button runat="server" ID="btnFiltrar" CssClass="btn btn-outline-primary w-100" Text="Filtrar" OnClick="btnFiltrar_Click" />
-            </div>
-        </div>
+        <section class="app-hero mb-4" aria-labelledby="tituloPedidos">
+            <div class="row align-items-center g-3">
+                <div class="col-md-8">
+                    <h1 id="tituloPedidos" class="app-title mb-2 fs-2">Pedidos
+                    </h1>
 
-        <asp:GridView runat="server" ID="dgvPedidos" AutoGenerateColumns="false" CssClass="table table-bordered table-striped" DataKeyNames="Id" EmptyDataText="No hay pedidos para mostrar.">
-            <Columns>
-                <asp:BoundField HeaderText="Pedido" DataField="Id" />
-                <asp:BoundField HeaderText="Fecha" DataField="FechaCreacion" DataFormatString="{0:dd/MM/yyyy}" />
-                <asp:BoundField HeaderText="Cliente" DataField="Usuario.Email" />
-                <asp:BoundField HeaderText="Estado" DataField="EstadoPedido.Descripcion" />
-                <asp:BoundField HeaderText="Forma de pago" DataField="FormaPago.Descripcion" />
-                <asp:BoundField HeaderText="Forma de entrega" DataField="FormaEntrega.Descripcion" />
-                <asp:BoundField HeaderText="Total" DataField="Total" DataFormatString="{0:C}" />
-                <asp:TemplateField HeaderText="Detalle">
-                    <ItemTemplate>
-                        <asp:HyperLink runat="server" ID="lnkVerDetalle" NavigateUrl='<%# "Pedidos.aspx?id=" + Eval("Id") %>' Text="Ver detalle" CssClass="btn btn-sm btn-outline-primary" />
-                    </ItemTemplate>
-                </asp:TemplateField>
-            </Columns>
-        </asp:GridView>
-
-        <asp:Panel runat="server" ID="pnlDetalle" Visible="false" CssClass="mt-4">
-            <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-3">
-                <div>
-                    <h2 class="h5 mb-1">Detalle del pedido</h2>
-                    <asp:Label runat="server" ID="lblPedidoSeleccionado" CssClass="text-muted" />
+                    <p class="app-subtitle mb-0 fs-6">
+                        Revisa las compras realizadas y actualiza el estado de cada pedido.
+                    </p>
                 </div>
-                <div class="d-flex gap-2 align-items-end">
-                    <div>
-                        <span class="form-label d-block">Cambiar estado</span>
+
+                <div class="col-md-4 text-md-end text-start">
+                    <a runat="server" href="~/Admin.aspx" class="app-btn-secondary">&larr; Volver al panel
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <asp:Label runat="server" ID="lblMensaje" Visible="false" CssClass="app-alert d-block mb-4" />
+
+        <section class="app-card mb-4">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <asp:Label runat="server" AssociatedControlID="ddlEstado" CssClass="app-form-label" Text="Estado" />
+                    <asp:DropDownList runat="server" ID="ddlEstado" CssClass="app-select" />
+                </div>
+
+                <div class="col-md-3">
+                    <asp:Label runat="server" AssociatedControlID="txtFechaDesde" CssClass="app-form-label" Text="Desde" />
+                    <asp:TextBox runat="server" ID="txtFechaDesde" CssClass="app-input" TextMode="Date" />
+                </div>
+
+                <div class="col-md-3">
+                    <asp:Label runat="server" AssociatedControlID="txtFechaHasta" CssClass="app-form-label" Text="Hasta" />
+                    <asp:TextBox runat="server" ID="txtFechaHasta" CssClass="app-input" TextMode="Date" />
+                </div>
+
+                <div class="col-md-3">
+                    <asp:Button runat="server" ID="btnFiltrar" CssClass="app-btn-primary w-100" Text="Filtrar" OnClick="btnFiltrar_Click" />
+                </div>
+            </div>
+        </section>
+
+        <section class="app-card p-0 mb-4">
+            <div class="p-4 border-bottom">
+                <h2 class="app-card-title mb-0">Pedidos registrados
+                </h2>
+            </div>
+
+            <div class="table-responsive">
+                <asp:GridView
+                    runat="server"
+                    ID="dgvPedidos"
+                    AutoGenerateColumns="false"
+                    CssClass="app-table"
+                    GridLines="None"
+                    BorderStyle="None"
+                    DataKeyNames="Id"
+                    EmptyDataText="No hay pedidos para mostrar.">
+                    <Columns>
+                        <asp:BoundField HeaderText="Pedido" DataField="Id" />
+                        <asp:BoundField HeaderText="Fecha" DataField="FechaCreacion" DataFormatString="{0:dd/MM/yyyy}" />
+                        <asp:BoundField HeaderText="Cliente" DataField="Usuario.Email" />
+                        <asp:BoundField HeaderText="Estado" DataField="EstadoPedido.Descripcion" />
+                        <asp:BoundField HeaderText="Forma de pago" DataField="FormaPago.Descripcion" />
+                        <asp:BoundField HeaderText="Forma de entrega" DataField="FormaEntrega.Descripcion" />
+                        <asp:BoundField HeaderText="Total" DataField="Total" DataFormatString="{0:C}" />
+
+                        <asp:TemplateField HeaderText="Detalle">
+                            <ItemTemplate>
+                                <asp:HyperLink
+                                    runat="server"
+                                    ID="lnkVerDetalle"
+                                    NavigateUrl='<%# "Pedidos.aspx?id=" + Eval("Id") %>'
+                                    Text="Ver detalle"
+                                    CssClass="app-btn-link" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </div>
+        </section>
+
+        <asp:Panel runat="server" ID="pnlDetalle" Visible="false" CssClass="app-card p-0 mb-4">
+            <div class="p-4 border-bottom">
+                <div class="row g-3 align-items-start">
+                    <div class="col-lg-5">
+                        <h2 class="app-card-title mb-1">Detalle del pedido
+                        </h2>
+
+                        <asp:Label runat="server" ID="lblPedidoSeleccionado" CssClass="app-text-muted" />
+                    </div>
+
+                    <div class="col-lg-7">
+                        <span class="app-form-label">Cambiar estado
+                        </span>
+
                         <div class="d-flex flex-wrap gap-2">
                             <asp:Repeater runat="server" ID="rptEstadosCambio">
                                 <ItemTemplate>
-                                    <a class="btn btn-sm btn-outline-primary" href='<%# "Pedidos.aspx?id=" + Request.QueryString["id"] + "&estado=" + Eval("Id") %>'><%# Eval("Descripcion") %></a>
+                                    <a class="app-btn-primary py-1 px-3" href='<%# "Pedidos.aspx?id=" + Request.QueryString["id"] + "&estado=" + Eval("Id") %>'>
+                                        <%# Eval("Descripcion") %>
+                                    </a>
                                 </ItemTemplate>
                             </asp:Repeater>
                         </div>
@@ -61,14 +114,25 @@
                 </div>
             </div>
 
-            <asp:GridView runat="server" ID="dgvDetalle" AutoGenerateColumns="false" CssClass="table table-bordered table-striped" EmptyDataText="El pedido no tiene productos cargados.">
-                <Columns>
-                    <asp:BoundField HeaderText="Producto" DataField="Producto.Nombre" />
-                    <asp:BoundField HeaderText="Cantidad" DataField="Cantidad" />
-                    <asp:BoundField HeaderText="Precio unitario" DataField="PrecioUnitario" DataFormatString="{0:C}" />
-                    <asp:BoundField HeaderText="Subtotal" DataField="Subtotal" DataFormatString="{0:C}" />
-                </Columns>
-            </asp:GridView>
+            <div class="table-responsive">
+                <asp:GridView
+                    runat="server"
+                    ID="dgvDetalle"
+                    AutoGenerateColumns="false"
+                    CssClass="app-table"
+                    GridLines="None"
+                    BorderStyle="None"
+                    EmptyDataText="El pedido no tiene productos cargados.">
+                    <Columns>
+                        <asp:BoundField HeaderText="Producto" DataField="Producto.Nombre" />
+                        <asp:BoundField HeaderText="Cantidad" DataField="Cantidad" />
+                        <asp:BoundField HeaderText="Precio unitario" DataField="PrecioUnitario" DataFormatString="{0:C}" />
+                        <asp:BoundField HeaderText="Subtotal" DataField="Subtotal" DataFormatString="{0:C}" />
+                    </Columns>
+                </asp:GridView>
+            </div>
         </asp:Panel>
+
     </main>
+
 </asp:Content>
