@@ -1,10 +1,6 @@
 ﻿using eCommerce.Dominio;
 using eCommerce.Negocio;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace eCommerce.Web
@@ -44,8 +40,9 @@ namespace eCommerce.Web
                     ViewState["IdEstadoPedido"] = null;
                     txtNombreEstadosPedido.Text = "";
                     lblError.Text = "";
-
-                    btnAgregarEstadoPedido.Text = "Agregar Estado de Pedido";
+                    lblTituloFormulario.Text = "Agregar estado de pedido";
+                    btnAgregarEstadoPedido.Text = "Agregar estado de pedido";
+                    btnCancelar.Visible = false;
                 }
                 else
                 {
@@ -59,13 +56,15 @@ namespace eCommerce.Web
 
                     txtNombreEstadosPedido.Text = "";
                     lblError.Text = "";
+                    lblTituloFormulario.Text = "Agregar estado de pedido";
+                    btnAgregarEstadoPedido.Text = "Agregar estado de pedido";
+                    btnCancelar.Visible = false;
                 }
             }
             catch (Exception ex)
             {
                 lblError.Text = ex.Message;
             }
-
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -73,7 +72,8 @@ namespace eCommerce.Web
             ViewState["IdEstadoPedido"] = null;
             txtNombreEstadosPedido.Text = "";
             lblError.Text = "";
-            btnAgregarEstadoPedido.Text = "Agregar Estado de pedido";
+            lblTituloFormulario.Text = "Agregar estado de pedido";
+            btnAgregarEstadoPedido.Text = "Agregar estado de pedido";
             btnCancelar.Visible = false;
         }
 
@@ -88,10 +88,10 @@ namespace eCommerce.Web
                 EstadoPedido estadoPedido = negocio.Listar().Find(x => x.Id == id);
 
                 txtNombreEstadosPedido.Text = estadoPedido.Descripcion;
-
                 ViewState["IdEstadoPedido"] = estadoPedido.Id;
 
-                btnAgregarEstadoPedido.Text = "Modificar Estado de pedido";
+                lblTituloFormulario.Text = "Modificar estado de pedido";
+                btnAgregarEstadoPedido.Text = "Modificar estado de pedido";
                 btnCancelar.Visible = true;
             }
 
@@ -107,6 +107,8 @@ namespace eCommerce.Web
 
                 ViewState["IdEstadoPedido"] = null;
                 txtNombreEstadosPedido.Text = "";
+                lblError.Text = "";
+                lblTituloFormulario.Text = "Agregar estado de pedido";
                 btnAgregarEstadoPedido.Text = "Agregar estado de pedido";
                 btnCancelar.Visible = false;
             }
@@ -123,6 +125,8 @@ namespace eCommerce.Web
 
                 ViewState["IdEstadoPedido"] = null;
                 txtNombreEstadosPedido.Text = "";
+                lblError.Text = "";
+                lblTituloFormulario.Text = "Agregar estado de pedido";
                 btnAgregarEstadoPedido.Text = "Agregar estado de pedido";
                 btnCancelar.Visible = false;
             }
