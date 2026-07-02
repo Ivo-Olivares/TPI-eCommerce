@@ -146,6 +146,28 @@ namespace eCommerce.Datos
             }
         }
 
+        public int RegistrarClienteConRolYDireccion(Usuario usuario, Direccion direccion, string nombreRol)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.iniciarTransaccion();
+
+                int idUsuario = InsertarUsuario(datos, usuario);
+                InsertarRolUsuario(datos, idUsuario, nombreRol);
+                InsertarDireccion(datos, idUsuario, direccion);
+
+                datos.confirmarTransaccion();
+                return idUsuario;
+            }
+            catch (Exception ex)
+            {
+                datos.cancelarTransaccion();
+                throw ex;
+            }
+        }
+
         private List<Rol> ListarRoles(int idUsuario)
         {
             List<Rol> roles = new List<Rol>();
@@ -193,6 +215,55 @@ namespace eCommerce.Datos
             usuario.Roles = new List<Rol>();
 
             return usuario;
+        }
+
+        private int InsertarUsuario(AccesoDatos datos, Usuario usuario)
+        {
+            datos.setearConsulta("INSERT INTO USUARIOS (Nombre, Apellido, Dni, FechaNacimiento, Email, Telefono, Clave, Activo) OUTPUT INSERTED.IdUsuario VALUES (@Nombre, @Apellido, @Dni, @FechaNacimiento, @Email, @Telefono, @Clave, 1)");
+            datos.setearParametros("@Nombre", usuario.Nombre);
+            datos.setearParametros("@Apellido", usuario.Apellido);
+            datos.setearParametros("@Dni", usuario.Dni);
+            datos.setearParametros("@FechaNacimiento", usuario.FechaNacimiento);
+            datos.setearParametros("@Email", usuario.Email);
+            datos.setearParametros("@Telefono", usuario.Telefono);
+            datos.setearParametros("@Clave", usuario.Clave);
+
+            object resultado = datos.ejecutarEscalar();
+
+            if (resultado == null || resultado is DBNull)
+                throw new Exception("No se pudo registrar el usuario.");
+
+            return Convert.ToInt32(resultado);
+        }
+
+        private void InsertarRolUsuario(AccesoDatos datos, int idUsuario, string nombreRol)
+        {
+            datos.setearConsulta("INSERT INTO USUARIOS_ROLES (IdUsuario, IdRol) SELECT @IdUsuario, IdRol FROM ROLES WHERE Nombre = @NombreRol AND NOT EXISTS (SELECT 1 FROM USUARIOS_ROLES WHERE IdUsuario = @IdUsuario AND IdRol = ROLES.IdRol)");
+            datos.setearParametros("@IdUsuario", idUsuario);
+            datos.setearParametros("@NombreRol", nombreRol);
+
+            int filasAfectadas = datos.ejecutarAccion();
+
+            if (filasAfectadas != 1)
+                throw new Exception("No se pudo asignar el rol del usuario.");
+        }
+
+        private void InsertarDireccion(AccesoDatos datos, int idUsuario, Direccion direccion)
+        {
+            datos.setearConsulta("INSERT INTO DIRECCIONES (IdUsuario, Descripcion, Calle, Altura, Localidad, Provincia, Cp, Observaciones) VALUES (@IdUsuario, @Descripcion, @Calle, @Altura, @Localidad, @Provincia, @Cp, @Observaciones)");
+            datos.setearParametros("@IdUsuario", idUsuario);
+            datos.setearParametros("@Descripcion", direccion.Descripcion);
+            datos.setearParametros("@Calle", direccion.Calle);
+            datos.setearParametros("@Altura", direccion.Altura);
+            datos.setearParametros("@Localidad", direccion.Localidad);
+            datos.setearParametros("@Provincia", direccion.Provincia);
+            datos.setearParametros("@Cp", direccion.Cp);
+            datos.setearParametros("@Observaciones", direccion.Observaciones);
+
+            int filasAfectadas = datos.ejecutarAccion();
+
+            if (filasAfectadas != 1)
+                throw new Exception("No se pudo registrar la direccion del usuario.");
         }
     }
 }

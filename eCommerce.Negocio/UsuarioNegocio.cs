@@ -27,9 +27,7 @@ namespace eCommerce.Negocio
             usuario.Activo = true;
             usuario.Clave = HashearClave(usuario.Clave);
 
-            int idUsuario = datos.AgregarUsuario(usuario);
-            datos.AsignarRol(idUsuario, RolCliente);
-            datos.AgregarDireccion(idUsuario, direccion);
+            datos.RegistrarClienteConRolYDireccion(usuario, direccion, RolCliente);
 
             return datos.BuscarPorEmail(usuario.Email);
         }
