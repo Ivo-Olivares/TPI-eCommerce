@@ -1,10 +1,6 @@
 ﻿using eCommerce.Dominio;
 using eCommerce.Negocio;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace eCommerce.Web
@@ -38,14 +34,14 @@ namespace eCommerce.Web
                     FormaEntregaNegocio negocio = new FormaEntregaNegocio();
 
                     negocio.ModificarFormaEntrega(formaEntrega);
-                    dgvFormasEntrega.DataSource = negocio.Listar();
-                    dgvFormasEntrega.DataBind();
+                    AplicarFiltro();
 
                     ViewState["IdFormaEntrega"] = null;
                     txtNombreFormaEntrega.Text = "";
                     lblError.Text = "";
-
-                    btnAgregarFormaEntrega.Text = "Agregar Forma de entrega";
+                    lblTituloFormulario.Text = "Agregar forma de entrega";
+                    btnAgregarFormaEntrega.Text = "Agregar forma de entrega";
+                    btnCancelar.Visible = false;
                 }
                 else
                 {
@@ -54,18 +50,19 @@ namespace eCommerce.Web
 
                     FormaEntregaNegocio negocio = new FormaEntregaNegocio();
                     negocio.AgregarFormaEntrega(formaEntrega);
-                    dgvFormasEntrega.DataSource = negocio.Listar();
-                    dgvFormasEntrega.DataBind();
+                    AplicarFiltro();
 
                     txtNombreFormaEntrega.Text = "";
                     lblError.Text = "";
+                    lblTituloFormulario.Text = "Agregar forma de entrega";
+                    btnAgregarFormaEntrega.Text = "Agregar forma de entrega";
+                    btnCancelar.Visible = false;
                 }
             }
             catch (Exception ex)
             {
                 lblError.Text = ex.Message;
             }
-
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -73,7 +70,8 @@ namespace eCommerce.Web
             ViewState["IdFormaEntrega"] = null;
             txtNombreFormaEntrega.Text = "";
             lblError.Text = "";
-            btnAgregarFormaEntrega.Text = "Agregar Forma de entrega";
+            lblTituloFormulario.Text = "Agregar forma de entrega";
+            btnAgregarFormaEntrega.Text = "Agregar forma de entrega";
             btnCancelar.Visible = false;
         }
 
@@ -88,10 +86,10 @@ namespace eCommerce.Web
                 FormaEntrega formaEntrega = negocio.Listar().Find(x => x.Id == id);
 
                 txtNombreFormaEntrega.Text = formaEntrega.Descripcion;
-
                 ViewState["IdFormaEntrega"] = formaEntrega.Id;
 
-                btnAgregarFormaEntrega.Text = "Modificar Forma de entrega";
+                lblTituloFormulario.Text = "Modificar forma de entrega";
+                btnAgregarFormaEntrega.Text = "Modificar forma de entrega";
                 btnCancelar.Visible = true;
             }
 
@@ -102,12 +100,13 @@ namespace eCommerce.Web
 
                 negocio.DesactivarFormaEntrega(formaEntrega);
 
-                dgvFormasEntrega.DataSource = negocio.Listar();
-                dgvFormasEntrega.DataBind();
+                AplicarFiltro();
 
                 ViewState["IdFormaEntrega"] = null;
                 txtNombreFormaEntrega.Text = "";
-                btnAgregarFormaEntrega.Text = "Agregar Forma de entrega";
+                lblError.Text = "";
+                lblTituloFormulario.Text = "Agregar forma de entrega";
+                btnAgregarFormaEntrega.Text = "Agregar forma de entrega";
                 btnCancelar.Visible = false;
             }
 
@@ -118,38 +117,33 @@ namespace eCommerce.Web
 
                 negocio.ActivarFormaEntrega(formaEntrega);
 
-                dgvFormasEntrega.DataSource = negocio.Listar();
-                dgvFormasEntrega.DataBind();
+                AplicarFiltro();
 
                 ViewState["IdFormaEntrega"] = null;
                 txtNombreFormaEntrega.Text = "";
-                btnAgregarFormaEntrega.Text = "Agregar Forma de entrega";
+                lblError.Text = "";
+                lblTituloFormulario.Text = "Agregar forma de entrega";
+                btnAgregarFormaEntrega.Text = "Agregar forma de entrega";
                 btnCancelar.Visible = false;
             }
         }
 
-        private void FiltrarArticulo ()
+        private void AplicarFiltro()
         {
             FormaEntregaNegocio negocio = new FormaEntregaNegocio();
 
-            dgvFormasEntrega.DataSource= negocio.filtrarentrega(txtFiltrodescripcion.Text, ddlFiltroEstado.SelectedValue);
-
+            dgvFormasEntrega.DataSource = negocio.filtrarentrega(txtFiltrodescripcion.Text, ddlFiltroEstado.SelectedValue);
             dgvFormasEntrega.DataBind();
-
-
-
         }
 
         protected void txtFiltrodescripcion_TextChanged(object sender, EventArgs e)
         {
-
-
-            FiltrarArticulo();
+            AplicarFiltro();
         }
 
         protected void ddlFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FiltrarArticulo();
+            AplicarFiltro();
         }
     }
 }
