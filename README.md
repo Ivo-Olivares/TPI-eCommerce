@@ -31,11 +31,13 @@ El proyecto es una aplicacion eCommerce construida con ASP.NET Web Forms y .NET 
 
 ## Setup local
 
-La guia completa para levantar la base local, crear el usuario admin y validar el entorno esta en [Docs/SetupLocal.md](Docs/SetupLocal.md).
+La guia completa para levantar la base local, cargar datos iniciales y validar el entorno esta en [Docs/SetupLocal.md](Docs/SetupLocal.md).
 
 Credenciales locales de prueba:
 
 - Email: `admin@admin.com`
+- Clave: `admin`
+- Email: `vendedor@vendedor.com`
 - Clave: `admin`
 
 Validacion rapida de base local:
@@ -55,8 +57,8 @@ Compilacion recomendada:
 - [Setup local](Docs/SetupLocal.md)
 - [Etapas del TPI](Docs/EtapasTPI.md)
 - [Modelo de dominio](Docs/ModeloDominio.md)
-- [Script de base completa](Docs/eCommerce_DB.sql)
-- [Script de usuario admin local](Docs/CrearUsuarioAdminLocal.md)
+- [Script de creacion de base](Docs/eCommerce_DB.sql)
+- [Script de carga de datos iniciales](Docs/DatosIniciales.sql)
 
 ## Equipo 11A
 

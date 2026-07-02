@@ -3,8 +3,9 @@
     <File Path="Docs/DER eCommerce.drawio" />
     <File Path="Docs/DER eCommerce.png" />
     <File Path="Docs/eCommerce_DB.sql" />
-    <File Path="Docs/CrearUsuarioVendedorLocal.sql" />
-    <File Path="Docs/LimpiezaRoles_ActualizarDB.sql" />
+    <File Path="Docs/DatosIniciales.sql" />
+    <File Path="Docs/VerificarSetupLocal.sql" />
+    <File Path="Docs/SetupLocal.md" />
     <File Path="Docs/ModeloDominio.md" />
     <File Path="Docs/EtapasTPI.md" />
   </Folder>

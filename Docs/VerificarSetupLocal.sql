@@ -14,7 +14,11 @@ VALUES
     ('USUARIOS_ROLES'),
     ('CATEGORIAS'),
     ('MARCAS'),
+    ('FORMASPAGO'),
+    ('FORMASENTREGA'),
+    ('ESTADOSPEDIDO'),
     ('PRODUCTOS'),
+    ('IMAGENES'),
     ('PEDIDOS'),
     ('DETALLESPEDIDO');
 
@@ -94,6 +98,67 @@ BEGIN
 END
 ELSE
 BEGIN
-    PRINT 'Setup local verificado correctamente.';
+    PRINT 'Usuario admin local verificado correctamente.';
 END
+
+PRINT 'Verificando usuario vendedor local...';
+
+SELECT
+    U.Email,
+    U.Activo,
+    CASE WHEN R.Nombre = 'Vendedor' THEN 'OK' ELSE 'FALTA ROL VENDEDOR' END AS EstadoRol
+FROM USUARIOS U
+LEFT JOIN USUARIOS_ROLES UR ON U.IdUsuario = UR.IdUsuario
+LEFT JOIN ROLES R ON UR.IdRol = R.IdRol AND R.Nombre = 'Vendedor'
+WHERE U.Email = 'vendedor@vendedor.com';
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM USUARIOS U
+    INNER JOIN USUARIOS_ROLES UR ON U.IdUsuario = UR.IdUsuario
+    INNER JOIN ROLES R ON UR.IdRol = R.IdRol
+    WHERE U.Email = 'vendedor@vendedor.com'
+      AND U.Activo = 1
+      AND R.Nombre = 'Vendedor'
+)
+BEGIN
+    RAISERROR('El usuario vendedor@vendedor.com no existe, no esta activo o no tiene rol Vendedor.', 16, 1);
+    RETURN;
+END
+
+PRINT 'Verificando datos iniciales...';
+
+SELECT 'Categorias' AS Dato, COUNT(*) AS Cantidad FROM CATEGORIAS
+UNION ALL
+SELECT 'Marcas', COUNT(*) FROM MARCAS
+UNION ALL
+SELECT 'FormasPago', COUNT(*) FROM FORMASPAGO
+UNION ALL
+SELECT 'FormasEntrega', COUNT(*) FROM FORMASENTREGA
+UNION ALL
+SELECT 'EstadosPedido', COUNT(*) FROM ESTADOSPEDIDO
+UNION ALL
+SELECT 'Productos', COUNT(*) FROM PRODUCTOS
+UNION ALL
+SELECT 'Imagenes', COUNT(*) FROM IMAGENES;
+
+IF NOT EXISTS (SELECT 1 FROM ESTADOSPEDIDO WHERE Descripcion = 'Pendiente' AND Activo = 1)
+BEGIN
+    RAISERROR('Falta el estado inicial Pendiente activo.', 16, 1);
+    RETURN;
+END
+
+IF (SELECT COUNT(*) FROM PRODUCTOS WHERE Activo = 1 AND Stock > 0) < 16
+BEGIN
+    RAISERROR('Faltan productos demo activos con stock.', 16, 1);
+    RETURN;
+END
+
+IF (SELECT COUNT(*) FROM IMAGENES) < 16
+BEGIN
+    RAISERROR('Faltan imagenes demo para los productos.', 16, 1);
+    RETURN;
+END
+
+PRINT 'Setup local verificado correctamente.';
 GO

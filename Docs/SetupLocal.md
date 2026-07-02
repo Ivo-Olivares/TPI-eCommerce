@@ -21,28 +21,26 @@ Si todavia no existe la base `eCommerce_DB`, ejecutar desde la raiz del repo:
 
 ```powershell
 sqlcmd -S .\SQLEXPRESS -E -i Docs\eCommerce_DB.sql
-sqlcmd -S .\SQLEXPRESS -E -i Docs\CrearUsuarioAdminLocal.sql
+sqlcmd -S .\SQLEXPRESS -E -i Docs\DatosIniciales.sql
 ```
 
 ## Base existente
 
-Si la base ya existia antes de los cambios de autenticacion, ejecutar:
+Para evitar inconsistencias entre versiones viejas de la base y el codigo actual, lo recomendado para una prueba local limpia es recrear la base y ejecutar los dos scripts anteriores.
 
-```powershell
-sqlcmd -S .\SQLEXPRESS -E -i Docs\AutenticacionUsuarios_ActualizarDB.sql
-sqlcmd -S .\SQLEXPRESS -E -i Docs\LimpiezaRoles_ActualizarDB.sql
-sqlcmd -S .\SQLEXPRESS -E -i Docs\CrearUsuarioAdminLocal.sql
-```
+## Usuarios locales
 
-## Usuario admin local
-
-El script `Docs\CrearUsuarioAdminLocal.sql` crea o actualiza este usuario:
+El script `Docs\DatosIniciales.sql` crea o actualiza estos usuarios:
 
 - Email: `admin@admin.com`
 - Clave: `admin`
 - Rol: `Admin`
 
-El script es idempotente. Se puede ejecutar mas de una vez sin duplicar el usuario ni el rol.
+- Email: `vendedor@vendedor.com`
+- Clave: `admin`
+- Rol: `Vendedor`
+
+El script tambien carga roles, categorias, marcas, formas de pago, formas de entrega, estados de pedido, productos demo e imagenes. Es idempotente: se puede ejecutar mas de una vez sin duplicar datos.
 
 ## Validar base local
 
@@ -52,7 +50,7 @@ Despues de ejecutar los scripts, validar el setup con:
 sqlcmd -S .\SQLEXPRESS -E -i Docs\VerificarSetupLocal.sql
 ```
 
-La verificacion debe confirmar las tablas principales, los roles base y el usuario admin activo.
+La verificacion debe confirmar las tablas principales, los roles base, usuarios locales, datos administrables, productos e imagenes.
 
 ## Compilar el proyecto
 
