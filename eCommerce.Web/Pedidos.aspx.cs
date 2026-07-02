@@ -19,19 +19,12 @@ namespace eCommerce.Web
             if (!IsPostBack)
             {
                 CargarEstados();
+                CargarPedidos();
+
+                int idPedido;
+                if (int.TryParse(Request.QueryString["id"], out idPedido))
+                    CargarDetallePedido(idPedido);
             }
-
-            if (ProcesarCambioEstadoPorUrl())
-                return;
-
-            CargarPedidos();
-
-            int idPedido;
-            if (int.TryParse(Request.QueryString["id"], out idPedido))
-                CargarDetallePedido(idPedido);
-
-            if (Request.QueryString["actualizado"] == "1")
-                MostrarMensaje("El estado del pedido se actualizo correctamente.", "alert-success");
         }
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
@@ -41,30 +34,41 @@ namespace eCommerce.Web
             CargarPedidos();
         }
 
-        private bool ProcesarCambioEstadoPorUrl()
+        protected void btnCambiarEstado_Click(object sender, EventArgs e)
         {
             try
             {
-                int idPedido;
-                if (!int.TryParse(Request.QueryString["id"], out idPedido))
-                    return false;
+                if (!AutorizacionPagina.RequerirGestionPedidos(Session, Response))
+                    return;
 
+                int idPedido = ObtenerIdPedidoSeleccionado();
                 int idEstadoPedido;
-                if (!int.TryParse(Request.QueryString["estado"], out idEstadoPedido))
-                    return false;
+                if (!int.TryParse(ddlEstadoCambio.SelectedValue, out idEstadoPedido))
+                    throw new Exception("Debe seleccionar un estado valido.");
 
                 PedidoNegocio negocio = new PedidoNegocio();
                 negocio.ActualizarEstado(idPedido, idEstadoPedido);
 
-                Response.Redirect("~/Pedidos.aspx?id=" + idPedido + "&actualizado=1", false);
-                Context.ApplicationInstance.CompleteRequest();
-                return true;
+                CargarPedidos();
+                CargarDetallePedido(idPedido);
+                MostrarMensaje("El estado del pedido se actualizo correctamente.", "alert-success");
             }
             catch (Exception ex)
             {
                 MostrarMensaje(ex.Message, "alert-danger");
-                return false;
             }
+        }
+
+        private int ObtenerIdPedidoSeleccionado()
+        {
+            int idPedido;
+            if (int.TryParse(Request.QueryString["id"], out idPedido) && idPedido > 0)
+                return idPedido;
+
+            if (ViewState["IdPedidoSeleccionado"] != null)
+                return (int)ViewState["IdPedidoSeleccionado"];
+
+            throw new Exception("Debe seleccionar un pedido.");
         }
 
         private void CargarEstados()
@@ -80,9 +84,6 @@ namespace eCommerce.Web
             ddlEstado.DataValueField = "Id";
             ddlEstado.DataBind();
             ddlEstado.Items.Insert(0, new ListItem("Todos", ""));
-
-            rptEstadosCambio.DataSource = estados;
-            rptEstadosCambio.DataBind();
         }
 
         private void CargarPedidos()
@@ -137,6 +138,10 @@ namespace eCommerce.Web
 
             ViewState["IdPedidoSeleccionado"] = idPedido;
             lblPedidoSeleccionado.Text = "Pedido #" + pedido.Id + " - " + pedido.Usuario.Email;
+            CargarEstadosCambio();
+            ListItem estadoActual = ddlEstadoCambio.Items.FindByValue(pedido.EstadoPedido.Id.ToString());
+            if (estadoActual != null)
+                ddlEstadoCambio.SelectedValue = estadoActual.Value;
 
             DetallePedidoNegocio detalleNegocio = new DetallePedidoNegocio();
             List<DetallePedido> detalle = detalleNegocio.ListarPorPedido(idPedido);
@@ -145,6 +150,20 @@ namespace eCommerce.Web
             dgvDetalle.DataBind();
 
             pnlDetalle.Visible = true;
+        }
+
+        private void CargarEstadosCambio()
+        {
+            EstadoPedidoNegocio negocio = new EstadoPedidoNegocio();
+            List<EstadoPedido> estados = negocio.Listar()
+                .Where(x => x.Activo)
+                .OrderBy(x => x.Descripcion)
+                .ToList();
+
+            ddlEstadoCambio.DataSource = estados;
+            ddlEstadoCambio.DataTextField = "Descripcion";
+            ddlEstadoCambio.DataValueField = "Id";
+            ddlEstadoCambio.DataBind();
         }
 
         private void MostrarMensaje(string mensaje, string cssClass)

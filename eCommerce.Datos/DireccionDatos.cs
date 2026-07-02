@@ -68,5 +68,23 @@ namespace eCommerce.Datos
                 throw ex;
             }
         }
+
+        public bool PerteneceAlUsuario(int idDireccion, int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM DIRECCIONES WHERE IdDireccion = @IdDireccion AND IdUsuario = @IdUsuario");
+                datos.setearParametros("@IdDireccion", idDireccion);
+                datos.setearParametros("@IdUsuario", idUsuario);
+
+                return Convert.ToInt32(datos.ejecutarEscalar()) > 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

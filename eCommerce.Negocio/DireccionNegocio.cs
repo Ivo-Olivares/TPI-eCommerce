@@ -24,6 +24,15 @@ namespace eCommerce.Negocio
             datos.AgregarDireccion(direccion, idUsuario);
         }
 
+        public bool PerteneceAlUsuario(int idDireccion, int idUsuario)
+        {
+            if (idDireccion <= 0 || idUsuario <= 0)
+                return false;
+
+            DireccionDatos datos = new DireccionDatos();
+            return datos.PerteneceAlUsuario(idDireccion, idUsuario);
+        }
+
         private void ValidarDireccion(Direccion direccion)
         {
             if (string.IsNullOrWhiteSpace(direccion.Calle))

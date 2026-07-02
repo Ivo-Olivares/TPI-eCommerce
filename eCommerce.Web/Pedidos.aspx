@@ -98,17 +98,16 @@
                     </div>
 
                     <div class="col-lg-7">
-                        <span class="app-form-label">Cambiar estado
-                        </span>
+                        <asp:Label runat="server" AssociatedControlID="ddlEstadoCambio" CssClass="app-form-label" Text="Cambiar estado" />
 
-                        <div class="d-flex flex-wrap gap-2">
-                            <asp:Repeater runat="server" ID="rptEstadosCambio">
-                                <ItemTemplate>
-                                    <a class="app-btn-primary py-1 px-3" href='<%# "Pedidos.aspx?id=" + Request.QueryString["id"] + "&estado=" + Eval("Id") %>'>
-                                        <%# Eval("Descripcion") %>
-                                    </a>
-                                </ItemTemplate>
-                            </asp:Repeater>
+                        <div class="d-flex flex-column flex-sm-row gap-2">
+                            <asp:DropDownList runat="server" ID="ddlEstadoCambio" CssClass="app-select" />
+                            <asp:Button
+                                runat="server"
+                                ID="btnCambiarEstado"
+                                CssClass="app-btn-primary py-1 px-3"
+                                Text="Actualizar estado"
+                                OnClick="btnCambiarEstado_Click" />
                         </div>
                     </div>
                 </div>
