@@ -26,6 +26,7 @@ namespace eCommerce.Dominio
         public FormaEntrega FormaEntrega { get; set; }
         public EstadoPedido EstadoPedido { get; set; }
         public Direccion Direccion { get; set; }
+        public string ObservacionesInternas { get; set; }
         public List<DetallePedido> ListaDetalles { get; set; }
     }
 }

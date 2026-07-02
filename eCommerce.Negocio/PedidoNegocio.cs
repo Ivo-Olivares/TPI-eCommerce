@@ -44,6 +44,23 @@ namespace eCommerce.Negocio
                 throw new Exception("No se encontro el pedido seleccionado.");
         }
 
+        public void ActualizarObservacionesInternas(int idPedido, string observaciones)
+        {
+            if (idPedido <= 0)
+                throw new Exception("Debe seleccionar un pedido valido.");
+
+            observaciones = (observaciones ?? "").Trim();
+
+            if (observaciones.Length > 500)
+                throw new Exception("Las observaciones internas no pueden superar los 500 caracteres.");
+
+            PedidoDatos datos = new PedidoDatos();
+            int filasAfectadas = datos.ActualizarObservacionesInternas(idPedido, observaciones);
+
+            if (filasAfectadas != 1)
+                throw new Exception("No se encontro el pedido seleccionado.");
+        }
+
         public int ConfirmarCompra(Pedido pedido, List<DetallePedido> detalles)
         {
             ValidarPedido(pedido);
