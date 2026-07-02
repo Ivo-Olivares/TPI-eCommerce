@@ -12,6 +12,11 @@ BEGIN TRY
         ALTER TABLE PEDIDOS ADD ObservacionesInternas VARCHAR(500) NULL;
     END
 
+    IF COL_LENGTH('DIRECCIONES', 'Activo') IS NULL
+    BEGIN
+        ALTER TABLE DIRECCIONES ADD Activo BIT NOT NULL DEFAULT 1;
+    END
+
     DECLARE @Roles TABLE (Nombre VARCHAR(50) NOT NULL);
     INSERT INTO @Roles (Nombre)
     VALUES ('Cliente'), ('Vendedor'), ('Admin');

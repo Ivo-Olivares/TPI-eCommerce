@@ -17,6 +17,7 @@ VALUES
     ('FORMASPAGO'),
     ('FORMASENTREGA'),
     ('ESTADOSPEDIDO'),
+    ('DIRECCIONES'),
     ('PRODUCTOS'),
     ('IMAGENES'),
     ('PEDIDOS'),
@@ -46,6 +47,12 @@ END
 IF COL_LENGTH('PEDIDOS', 'ObservacionesInternas') IS NULL
 BEGIN
     RAISERROR('Falta la columna ObservacionesInternas en PEDIDOS.', 16, 1);
+    RETURN;
+END
+
+IF COL_LENGTH('DIRECCIONES', 'Activo') IS NULL
+BEGIN
+    RAISERROR('Falta la columna Activo en DIRECCIONES.', 16, 1);
     RETURN;
 END
 
