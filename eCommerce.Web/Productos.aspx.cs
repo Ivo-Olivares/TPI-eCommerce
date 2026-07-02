@@ -1,7 +1,10 @@
-using eCommerce.Dominio;
+﻿using eCommerce.Dominio;
 using eCommerce.Negocio;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace eCommerce.Web
@@ -144,7 +147,8 @@ namespace eCommerce.Web
             txtStock.Text = "";
             txtUrlImagen.Text = "";
             lblError.Text = "";
-            btnAgregarProducto.Text = "Agregar Producto";
+            lblTituloFormulario.Text = "Agregar producto";
+            btnAgregarProducto.Text = "Agregar producto";
             btnCancelar.Visible = false;
         }
 
@@ -180,6 +184,7 @@ namespace eCommerce.Web
                 ViewState["IdProducto"] = producto.Id;
 
                 btnAgregarProducto.Text = "Modificar Producto";
+                lblTituloFormulario.Text = "Modificar producto";
                 btnCancelar.Visible = true;
             }
 
