@@ -105,6 +105,12 @@ namespace eCommerce.Web
                 if (string.IsNullOrWhiteSpace(ddlDireccion.SelectedValue))
                     throw new Exception("Debe seleccionar una dirección.");
 
+                int idDireccion = int.Parse(ddlDireccion.SelectedValue);
+                DireccionNegocio direccionNegocio = new DireccionNegocio();
+
+                if (!direccionNegocio.PerteneceAlUsuario(idDireccion, usuario.Id))
+                    throw new Exception("La dirección seleccionada no pertenece al usuario logueado.");
+
                 if (string.IsNullOrWhiteSpace(ddlEntrega.SelectedValue))
                     throw new Exception("Debe seleccionar una forma de entrega.");
 
