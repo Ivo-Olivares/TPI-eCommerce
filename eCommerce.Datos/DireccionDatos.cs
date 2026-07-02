@@ -48,12 +48,12 @@ namespace eCommerce.Datos
             }
         }
 
-        public void AgregarDireccion(Direccion direccion, int idUsuario)
+        public int AgregarDireccion(Direccion direccion, int idUsuario)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("INSERT INTO DIRECCIONES (IdUsuario, Descripcion, Calle, Altura, Localidad, Provincia, Cp, Observaciones, Activo) VALUES (@IdUsuario, @Descripcion, @Calle, @Altura, @Localidad, @Provincia, @Cp, @Observaciones, 1)");
+                datos.setearConsulta("INSERT INTO DIRECCIONES (IdUsuario, Descripcion, Calle, Altura, Localidad, Provincia, Cp, Observaciones, Activo) OUTPUT INSERTED.IdDireccion VALUES (@IdUsuario, @Descripcion, @Calle, @Altura, @Localidad, @Provincia, @Cp, @Observaciones, 1)");
                 datos.setearParametros("@IdUsuario", idUsuario);
                 datos.setearParametros("@Descripcion", direccion.Descripcion);
                 datos.setearParametros("@Calle", direccion.Calle);
@@ -62,7 +62,13 @@ namespace eCommerce.Datos
                 datos.setearParametros("@Provincia", direccion.Provincia);
                 datos.setearParametros("@Cp", direccion.Cp);
                 datos.setearParametros("@Observaciones", direccion.Observaciones);
-                datos.ejecutarAccion();
+
+                object resultado = datos.ejecutarEscalar();
+
+                if (resultado == null || resultado is DBNull)
+                    throw new Exception("No se pudo obtener el Id de la direccion generada.");
+
+                return Convert.ToInt32(resultado);
             }
             catch (Exception ex)
             {

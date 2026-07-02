@@ -141,6 +141,7 @@ namespace eCommerce.Web
             }
             catch (Exception ex)
             {
+                lblError.CssClass = "app-alert app-alert-danger d-block mb-4";
                 lblError.Text = ex.Message;
                 lblError.Visible = true;
             }
@@ -150,6 +151,55 @@ namespace eCommerce.Web
         {
             lblError.Visible = false;
             ActualizarVisibilidadDireccion();
+        }
+
+        protected void btnMostrarNuevaDireccion_Click(object sender, EventArgs e)
+        {
+            lblError.Visible = false;
+            pnlNuevaDireccion.Visible = true;
+            btnMostrarNuevaDireccion.Visible = false;
+        }
+
+        protected void btnGuardarNuevaDireccion_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                lblError.Visible = false;
+
+                Usuario usuario = AutenticacionSesion.ObtenerUsuario(Session);
+
+                if (usuario == null || AutenticacionSesion.EsInvitado(Session))
+                {
+                    RedirigirALogin();
+                    return;
+                }
+
+                if (!EntregaSeleccionadaRequiereDireccion())
+                    throw new Exception("Debe seleccionar una forma de entrega con envio a domicilio.");
+
+                Direccion direccion = CrearDireccionDesdeFormulario();
+                DireccionNegocio negocio = new DireccionNegocio();
+                int idDireccion = negocio.AgregarDireccion(direccion, usuario.Id);
+
+                CargarDirecciones(usuario.Id);
+                SeleccionarDireccion(idDireccion);
+                OcultarFormularioNuevaDireccion();
+
+                MostrarMensaje("La dirección se agregó correctamente.", "text-success d-block mb-3");
+            }
+            catch (Exception ex)
+            {
+                lblError.CssClass = "app-alert app-alert-danger d-block mb-4";
+                lblError.Text = ex.Message;
+                lblError.Visible = true;
+                pnlNuevaDireccion.Visible = true;
+                btnMostrarNuevaDireccion.Visible = false;
+            }
+        }
+
+        protected void btnCancelarNuevaDireccion_Click(object sender, EventArgs e)
+        {
+            OcultarFormularioNuevaDireccion();
         }
 
         private void CargarResumenPedido()
@@ -223,15 +273,75 @@ namespace eCommerce.Web
 
             pnlDireccion.Visible = requiereDireccion;
             ddlDireccion.Enabled = requiereDireccion;
+            btnMostrarNuevaDireccion.Visible = requiereDireccion && !pnlNuevaDireccion.Visible;
 
             if (!requiereDireccion)
+            {
                 LimpiarDireccionSeleccionada();
+                OcultarFormularioNuevaDireccion();
+            }
         }
 
         private void LimpiarDireccionSeleccionada()
         {
             if (ddlDireccion.Items.Count > 0)
                 ddlDireccion.SelectedIndex = 0;
+        }
+
+        private void OcultarFormularioNuevaDireccion()
+        {
+            LimpiarFormularioNuevaDireccion();
+            pnlNuevaDireccion.Visible = false;
+            btnMostrarNuevaDireccion.Visible = EntregaSeleccionadaRequiereDireccion();
+        }
+
+        private void LimpiarFormularioNuevaDireccion()
+        {
+            txtNuevaDireccionDescripcion.Text = "";
+            txtNuevaDireccionCalle.Text = "";
+            txtNuevaDireccionAltura.Text = "";
+            txtNuevaDireccionLocalidad.Text = "";
+            txtNuevaDireccionProvincia.Text = "";
+            txtNuevaDireccionCp.Text = "";
+            txtNuevaDireccionObservaciones.Text = "";
+        }
+
+        private Direccion CrearDireccionDesdeFormulario()
+        {
+            Direccion direccion = new Direccion();
+
+            direccion.Descripcion = string.IsNullOrWhiteSpace(txtNuevaDireccionDescripcion.Text)
+                ? "Direccion de envio"
+                : txtNuevaDireccionDescripcion.Text.Trim();
+            direccion.Calle = txtNuevaDireccionCalle.Text;
+            direccion.Localidad = txtNuevaDireccionLocalidad.Text;
+            direccion.Provincia = txtNuevaDireccionProvincia.Text;
+            direccion.Cp = txtNuevaDireccionCp.Text;
+            direccion.Observaciones = txtNuevaDireccionObservaciones.Text;
+
+            if (!int.TryParse(txtNuevaDireccionAltura.Text, out int altura))
+                throw new Exception("La altura debe ser un numero valido.");
+
+            direccion.Altura = altura;
+
+            return direccion;
+        }
+
+        private void SeleccionarDireccion(int idDireccion)
+        {
+            ListItem item = ddlDireccion.Items.FindByValue(idDireccion.ToString());
+
+            if (item == null)
+                throw new Exception("La direccion se guardo, pero no se pudo seleccionar.");
+
+            ddlDireccion.SelectedValue = item.Value;
+        }
+
+        private void MostrarMensaje(string mensaje, string cssClass)
+        {
+            lblError.CssClass = cssClass;
+            lblError.Text = mensaje;
+            lblError.Visible = true;
         }
 
         private void RedirigirALogin()
