@@ -19,13 +19,12 @@ namespace eCommerce.Web
             if (!IsPostBack)
             {
                 CargarEstados();
+                CargarPedidos();
+
+                int idPedido;
+                if (int.TryParse(Request.QueryString["id"], out idPedido))
+                    CargarDetallePedido(idPedido);
             }
-
-            CargarPedidos();
-
-            int idPedido;
-            if (int.TryParse(Request.QueryString["id"], out idPedido))
-                CargarDetallePedido(idPedido);
         }
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
@@ -35,23 +34,16 @@ namespace eCommerce.Web
             CargarPedidos();
         }
 
-        protected void rptEstadosCambio_ItemCommand(object source, RepeaterCommandEventArgs e)
+        protected void btnCambiarEstado_Click(object sender, EventArgs e)
         {
             try
             {
-                if (e.CommandName != "CambiarEstado")
-                    return;
-
                 if (!AutorizacionPagina.RequerirGestionPedidos(Session, Response))
                     return;
 
-                if (ViewState["IdPedidoSeleccionado"] == null)
-                    throw new Exception("Debe seleccionar un pedido.");
-
-                int idPedido = (int)ViewState["IdPedidoSeleccionado"];
-
+                int idPedido = ObtenerIdPedidoSeleccionado();
                 int idEstadoPedido;
-                if (!int.TryParse(e.CommandArgument.ToString(), out idEstadoPedido))
+                if (!int.TryParse(ddlEstadoCambio.SelectedValue, out idEstadoPedido))
                     throw new Exception("Debe seleccionar un estado valido.");
 
                 PedidoNegocio negocio = new PedidoNegocio();
@@ -67,6 +59,18 @@ namespace eCommerce.Web
             }
         }
 
+        private int ObtenerIdPedidoSeleccionado()
+        {
+            int idPedido;
+            if (int.TryParse(Request.QueryString["id"], out idPedido) && idPedido > 0)
+                return idPedido;
+
+            if (ViewState["IdPedidoSeleccionado"] != null)
+                return (int)ViewState["IdPedidoSeleccionado"];
+
+            throw new Exception("Debe seleccionar un pedido.");
+        }
+
         private void CargarEstados()
         {
             EstadoPedidoNegocio negocio = new EstadoPedidoNegocio();
@@ -80,9 +84,6 @@ namespace eCommerce.Web
             ddlEstado.DataValueField = "Id";
             ddlEstado.DataBind();
             ddlEstado.Items.Insert(0, new ListItem("Todos", ""));
-
-            rptEstadosCambio.DataSource = estados;
-            rptEstadosCambio.DataBind();
         }
 
         private void CargarPedidos()
@@ -138,6 +139,9 @@ namespace eCommerce.Web
             ViewState["IdPedidoSeleccionado"] = idPedido;
             lblPedidoSeleccionado.Text = "Pedido #" + pedido.Id + " - " + pedido.Usuario.Email;
             CargarEstadosCambio();
+            ListItem estadoActual = ddlEstadoCambio.Items.FindByValue(pedido.EstadoPedido.Id.ToString());
+            if (estadoActual != null)
+                ddlEstadoCambio.SelectedValue = estadoActual.Value;
 
             DetallePedidoNegocio detalleNegocio = new DetallePedidoNegocio();
             List<DetallePedido> detalle = detalleNegocio.ListarPorPedido(idPedido);
@@ -156,8 +160,10 @@ namespace eCommerce.Web
                 .OrderBy(x => x.Descripcion)
                 .ToList();
 
-            rptEstadosCambio.DataSource = estados;
-            rptEstadosCambio.DataBind();
+            ddlEstadoCambio.DataSource = estados;
+            ddlEstadoCambio.DataTextField = "Descripcion";
+            ddlEstadoCambio.DataValueField = "Id";
+            ddlEstadoCambio.DataBind();
         }
 
         private void MostrarMensaje(string mensaje, string cssClass)

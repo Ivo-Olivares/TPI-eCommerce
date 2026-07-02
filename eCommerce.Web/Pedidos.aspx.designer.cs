@@ -87,13 +87,22 @@ namespace eCommerce.Web
         protected global::System.Web.UI.WebControls.Label lblPedidoSeleccionado;
 
         /// <summary>
-        /// Control rptEstadosCambio.
+        /// Control ddlEstadoCambio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptEstadosCambio;
+        protected global::System.Web.UI.WebControls.DropDownList ddlEstadoCambio;
+
+        /// <summary>
+        /// Control btnCambiarEstado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCambiarEstado;
 
         /// <summary>
         /// Control dgvDetalle.
