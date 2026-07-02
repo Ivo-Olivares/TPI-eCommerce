@@ -1,83 +1,178 @@
-<%@ Page Title="Carrito" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Carrito.aspx.cs" Inherits="eCommerce.Web.Carrito" %>
+﻿<%@ Page Title="Carrito" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Carrito.aspx.cs" Inherits="eCommerce.Web.Carrito" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <main class="py-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <div>
-                <h1 class="h3 mb-1">Carrito de compras</h1>
-                <p class="text-muted mb-0">Revisa los productos antes de continuar al checkout.</p>
-            </div>
-            <a runat="server" href="~/Catalogo" class="btn btn-outline-secondary">Seguir comprando</a>
-        </div>
 
-        <asp:Label runat="server" ID="lblError" CssClass="alert alert-danger d-block" Visible="false" />
-        <asp:Label runat="server" ID="lblExito" CssClass="alert alert-success d-block" Visible="false" />
+    <main class="app-container app-section">
 
-        <asp:Panel runat="server" ID="pnlVacio" CssClass="alert alert-info" Visible="false">
-            El carrito esta vacio.
-        </asp:Panel>
+        <!-- Encabezado -->
+        <section class="app-hero mb-4" aria-labelledby="tituloCarrito">
+            <div class="row align-items-center g-3">
+                <div class="col-md-8">
+                    <span class="app-badge app-badge-primary mb-2">Carrito</span>
 
-        <asp:Panel runat="server" ID="pnlCarrito" Visible="false" DefaultButton="btnActualizar">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped align-middle">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Precio unitario</th>
-                            <th style="width: 150px;">Cantidad</th>
-                            <th>Subtotal</th>
-                            <th style="width: 120px;">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <asp:Repeater runat="server" ID="rptCarrito" OnItemCommand="rptCarrito_ItemCommand">
-                            <ItemTemplate>
-                                <tr>
-                                    <td>
-                                        <asp:HiddenField runat="server" ID="hdfIdProducto" Value='<%# Eval("Producto.Id") %>' />
-                                        <strong><%#: Eval("Producto.Nombre") %></strong>
-                                        <span class="text-muted d-block small"><%#: Eval("Producto.Marca.Nombre") %> | <%#: Eval("Producto.Categoria.Nombre") %></span>
-                                    </td>
-                                    <td><%# FormatearPrecio(Eval("PrecioUnitario")) %></td>
-                                    <td>
-                                        <asp:TextBox runat="server" ID="txtCantidadItem" CssClass="form-control" TextMode="Number" Text='<%# Eval("Cantidad") %>' />
-                                    </td>
-                                    <td><%# FormatearPrecio(Eval("Subtotal")) %></td>
-                                    <td>
-                                        <asp:Button runat="server" ID="btnQuitar" CssClass="btn btn-outline-danger btn-sm" Text="Quitar" CommandName="Quitar" CommandArgument='<%# Eval("Producto.Id") %>' />
-                                    </td>
-                                </tr>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                    </tbody>
-                </table>
-            </div>
+                    <h1 id="tituloCarrito" class="app-title mb-2 fs-2">
+                        Carrito de compras
+                    </h1>
 
-            <div class="row justify-content-end">
-                <div class="col-md-4">
-                    <div class="border rounded p-3">
-                        <div class="d-flex justify-content-between">
-                            <span>Subtotal</span>
-                            <strong>
-                                <asp:Label runat="server" ID="lblSubtotal" /></strong>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <span>Envio</span>
-                            <span>A definir</span>
-                        </div>
-                        <hr />
-                        <div class="d-flex justify-content-between fs-5">
-                            <span>Total</span>
-                            <strong>
-                                <asp:Label runat="server" ID="lblTotal" /></strong>
-                        </div>
-                        <div class="d-grid gap-2 mt-3">
-                            <asp:Button runat="server" ID="btnCheckout" CssClass="btn btn-primary" Text="Continuar al checkout" OnClick="btnCheckout_Click" />
-                            <asp:Button runat="server" ID="btnActualizar" CssClass="btn btn-outline-secondary" Text="Actualizar cantidades" OnClick="btnActualizar_Click" />
-                        </div>
-                    </div>
+                    <p class="app-subtitle mb-0 fs-6">
+                        Revisá los productos antes de continuar al checkout.
+                    </p>
+                </div>
+
+                <div class="col-md-4 text-md-end text-start">
+                    <a runat="server" href="~/Catalogo.aspx" class="app-btn-secondary">
+                        Seguir comprando →
+                    </a>
                 </div>
             </div>
+        </section>
+
+        <!-- Mensajes -->
+        <asp:Label runat="server" ID="lblError" CssClass="app-alert app-alert-danger d-block mb-4" Visible="false" />
+        <asp:Label runat="server" ID="lblExito" CssClass="app-alert app-alert-success d-block mb-4" Visible="false" />
+
+        <!-- Carrito vacío -->
+        <asp:Panel runat="server" ID="pnlVacio" CssClass="app-empty-state mb-4" Visible="false">
+            <div class="app-empty-icon">🛒</div>
+
+            <h2 class="app-card-title mb-2">
+                El carrito está vacío
+            </h2>
+
+            <p class="app-text-muted mb-3">
+                Agregá productos desde el catálogo para continuar con tu compra.
+            </p>
+
+            <a runat="server" href="~/Catalogo.aspx" class="app-btn-primary">
+                Ver catálogo
+            </a>
         </asp:Panel>
+
+        <!-- Carrito con productos -->
+        <asp:Panel runat="server" ID="pnlCarrito" Visible="false" DefaultButton="btnActualizar">
+
+            <div class="row g-4 align-items-start">
+
+                <!-- Tabla de productos -->
+                <div class="col-lg-8">
+                    <section class="app-card p-0">
+                        <div class="table-responsive">
+                            <table class="app-table">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Precio unitario</th>
+                                        <th style="width: 150px;">Cantidad</th>
+                                        <th>Subtotal</th>
+                                        <th style="width: 120px;">Acciones</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <asp:Repeater runat="server" ID="rptCarrito" OnItemCommand="rptCarrito_ItemCommand">
+                                        <ItemTemplate>
+                                            <tr>
+                                                <td>
+                                                    <asp:HiddenField runat="server" ID="hdfIdProducto" Value='<%# Eval("Producto.Id") %>' />
+
+                                                    <strong style="color: var(--color-slate-900);">
+                                                        <%#: Eval("Producto.Nombre") %>
+                                                    </strong>
+
+                                                    <span class="app-text-muted d-block">
+                                                        <%#: Eval("Producto.Marca.Nombre") %> | <%#: Eval("Producto.Categoria.Nombre") %>
+                                                    </span>
+                                                </td>
+
+                                                <td>
+                                                    <%# FormatearPrecio(Eval("PrecioUnitario")) %>
+                                                </td>
+
+                                                <td>
+                                                    <asp:TextBox
+                                                        runat="server"
+                                                        ID="txtCantidadItem"
+                                                        CssClass="app-input"
+                                                        TextMode="Number"
+                                                        Text='<%# Eval("Cantidad") %>' />
+                                                </td>
+
+                                                <td>
+                                                    <strong style="color: var(--color-slate-900);">
+                                                        <%# FormatearPrecio(Eval("Subtotal")) %>
+                                                    </strong>
+                                                </td>
+
+                                                <td>
+                                                    <asp:Button
+                                                        runat="server"
+                                                        ID="btnQuitar"
+                                                        CssClass="app-btn-secondary py-1 px-3"
+                                                        Text="Quitar"
+                                                        CommandName="Quitar"
+                                                        CommandArgument='<%# Eval("Producto.Id") %>' />
+                                                </td>
+                                            </tr>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Resumen -->
+                <div class="col-lg-4">
+                    <section class="app-card">
+                        <span class="app-badge app-badge-primary mb-3">Resumen</span>
+
+                        <h2 class="app-card-title mb-3">
+                            Total de la compra
+                        </h2>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="app-text-muted">Subtotal</span>
+                            <strong style="color: var(--color-slate-900);">
+                                <asp:Label runat="server" ID="lblSubtotal" />
+                            </strong>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="app-text-muted">Envío</span>
+                            <span class="app-text-muted">A definir</span>
+                        </div>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="app-card-title mb-0">Total</span>
+                            <strong style="color: var(--color-slate-900); font-size: 1.25rem;">
+                                <asp:Label runat="server" ID="lblTotal" />
+                            </strong>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <asp:Button
+                                runat="server"
+                                ID="btnCheckout"
+                                CssClass="app-btn-primary w-100"
+                                Text="Continuar al checkout"
+                                OnClick="btnCheckout_Click" />
+
+                            <asp:Button
+                                runat="server"
+                                ID="btnActualizar"
+                                CssClass="app-btn-secondary w-100"
+                                Text="Actualizar cantidades"
+                                OnClick="btnActualizar_Click" />
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+
+        </asp:Panel>
+
     </main>
+
 </asp:Content>
