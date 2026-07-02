@@ -33,6 +33,15 @@ namespace eCommerce.Web
         protected global::System.Web.UI.WebControls.DropDownList ddlEntrega;
 
         /// <summary>
+        /// Control pnlDireccion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlDireccion;
+
+        /// <summary>
         /// Control ddlDireccion.
         /// </summary>
         /// <remarks>
