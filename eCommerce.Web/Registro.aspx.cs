@@ -27,7 +27,7 @@ namespace eCommerce.Web
 
                 AutenticacionSesion.IniciarSesion(Session, usuarioRegistrado);
 
-                Response.Redirect("~/Default.aspx", false);
+                Response.Redirect(RedireccionSegura.ObtenerDestino(Request, "~/Default.aspx"), false);
             }
             catch (Exception ex)
             {
