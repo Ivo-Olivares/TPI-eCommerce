@@ -95,6 +95,7 @@ namespace eCommerce.Datos
             try
             {
                 datos.setearConsulta(@"SELECT P.IdPedido, P.IdUsuario, U.Nombre, U.Apellido, U.Email, P.FechaCreacion, P.FechaEntrega, P.Total,
+                    P.ObservacionesInternas,
                     FP.IdFormaPago, FP.Descripcion FormaPago,
                     FE.IdFormaEntrega, FE.Descripcion FormaEntrega,
                     EP.IdEstadoPedido, EP.Descripcion EstadoPedido
@@ -114,6 +115,7 @@ namespace eCommerce.Datos
                     pedido.FechaCreacion = (DateTime)datos.Lector["FechaCreacion"];
                     pedido.FechaEntrega = datos.Lector["FechaEntrega"] is DBNull ? (DateTime?)null : (DateTime)datos.Lector["FechaEntrega"];
                     pedido.Total = (decimal)datos.Lector["Total"];
+                    pedido.ObservacionesInternas = datos.Lector["ObservacionesInternas"] is DBNull ? "" : (string)datos.Lector["ObservacionesInternas"];
 
                     pedido.Usuario = new Usuario();
                     pedido.Usuario.Id = (int)datos.Lector["IdUsuario"];
@@ -146,6 +148,23 @@ namespace eCommerce.Datos
             }
 
             return lista;
+        }
+
+        public int ActualizarObservacionesInternas(int idPedido, string observaciones)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE PEDIDOS SET ObservacionesInternas = @ObservacionesInternas WHERE IdPedido = @IdPedido");
+                datos.setearParametros("@ObservacionesInternas", string.IsNullOrWhiteSpace(observaciones) ? (object)DBNull.Value : observaciones);
+                datos.setearParametros("@IdPedido", idPedido);
+                return datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public int ActualizarEstado(int idPedido, int idEstadoPedido)

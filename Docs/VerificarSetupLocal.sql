@@ -43,6 +43,12 @@ BEGIN
     RETURN;
 END
 
+IF COL_LENGTH('PEDIDOS', 'ObservacionesInternas') IS NULL
+BEGIN
+    RAISERROR('Falta la columna ObservacionesInternas en PEDIDOS.', 16, 1);
+    RETURN;
+END
+
 PRINT 'Verificando roles base...';
 
 DECLARE @RolesRequeridos TABLE (Nombre VARCHAR(50) NOT NULL);
