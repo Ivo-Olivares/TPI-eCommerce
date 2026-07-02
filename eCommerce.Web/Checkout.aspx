@@ -69,6 +69,126 @@
                             runat="server"
                             CssClass="app-select">
                         </asp:DropDownList>
+
+                        <asp:LinkButton
+                            ID="btnMostrarNuevaDireccion"
+                            runat="server"
+                            CssClass="app-btn-secondary text-center mt-3"
+                            Style="display: block; width: 100%; box-sizing: border-box;"
+                            Text="Agregar nueva dirección"
+                            OnClick="btnMostrarNuevaDireccion_Click" />
+
+                        <asp:Panel
+                            ID="pnlNuevaDireccion"
+                            runat="server"
+                            Visible="false"
+                            CssClass="mt-3">
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    <asp:Label
+                                        runat="server"
+                                        AssociatedControlID="txtNuevaDireccionDescripcion"
+                                        CssClass="app-form-label"
+                                        Text="Descripción" />
+                                    <asp:TextBox
+                                        ID="txtNuevaDireccionDescripcion"
+                                        runat="server"
+                                        CssClass="app-input"
+                                        Placeholder="Casa, trabajo, etc." />
+                                </div>
+
+                                <div class="col-md-8">
+                                    <asp:Label
+                                        runat="server"
+                                        AssociatedControlID="txtNuevaDireccionCalle"
+                                        CssClass="app-form-label"
+                                        Text="Calle" />
+                                    <asp:TextBox
+                                        ID="txtNuevaDireccionCalle"
+                                        runat="server"
+                                        CssClass="app-input" />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <asp:Label
+                                        runat="server"
+                                        AssociatedControlID="txtNuevaDireccionAltura"
+                                        CssClass="app-form-label"
+                                        Text="Número" />
+                                    <asp:TextBox
+                                        ID="txtNuevaDireccionAltura"
+                                        runat="server"
+                                        CssClass="app-input"
+                                        TextMode="Number" />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <asp:Label
+                                        runat="server"
+                                        AssociatedControlID="txtNuevaDireccionLocalidad"
+                                        CssClass="app-form-label"
+                                        Text="Localidad" />
+                                    <asp:TextBox
+                                        ID="txtNuevaDireccionLocalidad"
+                                        runat="server"
+                                        CssClass="app-input" />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <asp:Label
+                                        runat="server"
+                                        AssociatedControlID="txtNuevaDireccionProvincia"
+                                        CssClass="app-form-label"
+                                        Text="Provincia" />
+                                    <asp:TextBox
+                                        ID="txtNuevaDireccionProvincia"
+                                        runat="server"
+                                        CssClass="app-input" />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <asp:Label
+                                        runat="server"
+                                        AssociatedControlID="txtNuevaDireccionCp"
+                                        CssClass="app-form-label"
+                                        Text="Código postal" />
+                                    <asp:TextBox
+                                        ID="txtNuevaDireccionCp"
+                                        runat="server"
+                                        CssClass="app-input" />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <asp:Label
+                                        runat="server"
+                                        AssociatedControlID="txtNuevaDireccionObservaciones"
+                                        CssClass="app-form-label"
+                                        Text="Observaciones" />
+                                    <asp:TextBox
+                                        ID="txtNuevaDireccionObservaciones"
+                                        runat="server"
+                                        CssClass="app-input"
+                                        TextMode="MultiLine"
+                                        Rows="3" />
+                                </div>
+
+                                <div class="col-md-12 d-flex flex-wrap gap-2">
+                                    <asp:Button
+                                        ID="btnGuardarNuevaDireccion"
+                                        runat="server"
+                                        CssClass="app-btn-primary"
+                                        Text="Guardar dirección"
+                                        OnClick="btnGuardarNuevaDireccion_Click" />
+
+                                    <asp:Button
+                                        ID="btnCancelarNuevaDireccion"
+                                        runat="server"
+                                        CssClass="app-btn-secondary"
+                                        Text="Cancelar"
+                                        OnClick="btnCancelarNuevaDireccion_Click" />
+                                </div>
+                            </div>
+                        </asp:Panel>
                     </asp:Panel>
 
                     <div class="app-form-group mb-0">

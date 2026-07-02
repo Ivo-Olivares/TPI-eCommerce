@@ -152,6 +152,22 @@ namespace eCommerce.Web
             ActualizarVisibilidadDireccion();
         }
 
+        protected void btnMostrarNuevaDireccion_Click(object sender, EventArgs e)
+        {
+            lblError.Visible = false;
+            pnlNuevaDireccion.Visible = true;
+            btnMostrarNuevaDireccion.Visible = false;
+        }
+
+        protected void btnGuardarNuevaDireccion_Click(object sender, EventArgs e)
+        {
+        }
+
+        protected void btnCancelarNuevaDireccion_Click(object sender, EventArgs e)
+        {
+            OcultarFormularioNuevaDireccion();
+        }
+
         private void CargarResumenPedido()
         {
             List<DetallePedido> carrito = CarritoSesion.Obtener(Session);
@@ -223,15 +239,37 @@ namespace eCommerce.Web
 
             pnlDireccion.Visible = requiereDireccion;
             ddlDireccion.Enabled = requiereDireccion;
+            btnMostrarNuevaDireccion.Visible = requiereDireccion && !pnlNuevaDireccion.Visible;
 
             if (!requiereDireccion)
+            {
                 LimpiarDireccionSeleccionada();
+                OcultarFormularioNuevaDireccion();
+            }
         }
 
         private void LimpiarDireccionSeleccionada()
         {
             if (ddlDireccion.Items.Count > 0)
                 ddlDireccion.SelectedIndex = 0;
+        }
+
+        private void OcultarFormularioNuevaDireccion()
+        {
+            LimpiarFormularioNuevaDireccion();
+            pnlNuevaDireccion.Visible = false;
+            btnMostrarNuevaDireccion.Visible = EntregaSeleccionadaRequiereDireccion();
+        }
+
+        private void LimpiarFormularioNuevaDireccion()
+        {
+            txtNuevaDireccionDescripcion.Text = "";
+            txtNuevaDireccionCalle.Text = "";
+            txtNuevaDireccionAltura.Text = "";
+            txtNuevaDireccionLocalidad.Text = "";
+            txtNuevaDireccionProvincia.Text = "";
+            txtNuevaDireccionCp.Text = "";
+            txtNuevaDireccionObservaciones.Text = "";
         }
 
         private void RedirigirALogin()
