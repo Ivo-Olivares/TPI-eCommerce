@@ -67,7 +67,9 @@
                         <asp:DropDownList
                             ID="ddlDireccion"
                             runat="server"
-                            CssClass="app-select">
+                            CssClass="app-select"
+                            AutoPostBack="true"
+                            OnSelectedIndexChanged="ddlDireccion_SelectedIndexChanged">
                         </asp:DropDownList>
 
                         <asp:LinkButton
@@ -201,7 +203,9 @@
                         <asp:DropDownList
                             ID="ddlFormaPago"
                             runat="server"
-                            CssClass="app-select">
+                            CssClass="app-select"
+                            AutoPostBack="true"
+                            OnSelectedIndexChanged="ddlFormaPago_SelectedIndexChanged">
                         </asp:DropDownList>
                     </div>
                 </section>
