@@ -369,6 +369,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="..\Docs\DatosIniciales.sql">
+      <Link>Docs\DatosIniciales.sql</Link>
+    </Content>
+    <Content Include="..\Docs\eCommerce_DB.sql">
+      <Link>Docs\eCommerce_DB.sql</Link>
+    </Content>
+    <Content Include="..\Docs\SetupLocal.md">
+      <Link>Docs\SetupLocal.md</Link>
+    </Content>
+    <Content Include="..\Docs\VerificarSetupLocal.sql">
+      <Link>Docs\VerificarSetupLocal.sql</Link>
+    </Content>
     <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.0.min.map" />
     <None Include="Web.Debug.config">
