@@ -13,6 +13,7 @@ namespace eCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            lnkLogin.HRef = RedireccionSegura.CrearUrlConRetorno("~/Login.aspx", Request);
         }
 
         protected void btnRegistrarse_Click(object sender, EventArgs e)

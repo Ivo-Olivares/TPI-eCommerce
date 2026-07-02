@@ -109,7 +109,7 @@
                             Text="Registrarse"
                             OnClick="btnRegistrarse_Click" />
 
-                        <a runat="server" href="~/Login.aspx" class="app-btn-secondary text-center" style="display: block; width: 100%; box-sizing: border-box;">Ya tengo cuenta
+                        <a runat="server" ID="lnkLogin" href="~/Login.aspx" class="app-btn-secondary text-center" style="display: block; width: 100%; box-sizing: border-box;">Ya tengo cuenta
                         </a>
                     </div>
                 </section>

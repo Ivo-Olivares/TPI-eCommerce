@@ -14,6 +14,7 @@ namespace eCommerce.Web
         protected void Page_Load(object sender, EventArgs e)
         {
             btnInvitado.Visible = !RedireccionSegura.EsRetornoCheckout(Request);
+            lnkRegistro.HRef = RedireccionSegura.CrearUrlConRetorno("~/Registro.aspx", Request);
         }
 
         protected void btnIngresar_Click(object sender, EventArgs e)
