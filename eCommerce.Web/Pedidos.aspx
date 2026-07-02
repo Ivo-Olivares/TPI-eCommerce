@@ -27,21 +27,26 @@
         <section class="app-card mb-4">
             <div class="row g-3 align-items-end">
                 <div class="col-md-3">
+                    <asp:Label runat="server" AssociatedControlID="txtCliente" CssClass="app-form-label" Text="Cliente" />
+                    <asp:TextBox runat="server" ID="txtCliente" CssClass="app-input" Placeholder="Nombre, apellido o email" />
+                </div>
+
+                <div class="col-md-3">
                     <asp:Label runat="server" AssociatedControlID="ddlEstado" CssClass="app-form-label" Text="Estado" />
                     <asp:DropDownList runat="server" ID="ddlEstado" CssClass="app-select" />
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <asp:Label runat="server" AssociatedControlID="txtFechaDesde" CssClass="app-form-label" Text="Desde" />
                     <asp:TextBox runat="server" ID="txtFechaDesde" CssClass="app-input" TextMode="Date" />
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <asp:Label runat="server" AssociatedControlID="txtFechaHasta" CssClass="app-form-label" Text="Hasta" />
                     <asp:TextBox runat="server" ID="txtFechaHasta" CssClass="app-input" TextMode="Date" />
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <asp:Button runat="server" ID="btnFiltrar" CssClass="app-btn-primary w-100" Text="Filtrar" OnClick="btnFiltrar_Click" />
                 </div>
             </div>

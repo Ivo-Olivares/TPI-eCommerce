@@ -115,6 +115,15 @@ namespace eCommerce.Web
                 PedidoNegocio negocio = new PedidoNegocio();
                 List<Pedido> pedidos = negocio.ListarTodos();
 
+                if (!string.IsNullOrWhiteSpace(txtCliente.Text))
+                {
+                    string cliente = txtCliente.Text.Trim().ToLowerInvariant();
+                    pedidos = pedidos.Where(x =>
+                        (x.Usuario.Email ?? "").ToLowerInvariant().Contains(cliente) ||
+                        (x.Usuario.Nombre ?? "").ToLowerInvariant().Contains(cliente) ||
+                        (x.Usuario.Apellido ?? "").ToLowerInvariant().Contains(cliente)).ToList();
+                }
+
                 if (!string.IsNullOrWhiteSpace(ddlEstado.SelectedValue))
                 {
                     int idEstado = int.Parse(ddlEstado.SelectedValue);
