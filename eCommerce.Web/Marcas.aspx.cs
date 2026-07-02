@@ -1,8 +1,5 @@
 ﻿using eCommerce.Negocio;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using eCommerce.Datos;
@@ -45,8 +42,9 @@ namespace eCommerce.Web
                     ViewState["IdMarca"] = null;
                     txtNombreMarca.Text = "";
                     lblError.Text = "";
-
-                    btnAgregarMarca.Text = "Agregar Marca";
+                    lblTituloFormulario.Text = "Agregar marca";
+                    btnAgregarMarca.Text = "Agregar marca";
+                    btnCancelar.Visible = false;
                 }
                 else
                 {
@@ -60,13 +58,15 @@ namespace eCommerce.Web
 
                     txtNombreMarca.Text = "";
                     lblError.Text = "";
+                    lblTituloFormulario.Text = "Agregar marca";
+                    btnAgregarMarca.Text = "Agregar marca";
+                    btnCancelar.Visible = false;
                 }
             }
             catch (Exception ex)
             {
                 lblError.Text = ex.Message;
             }
-
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -74,7 +74,8 @@ namespace eCommerce.Web
             ViewState["IdMarca"] = null;
             txtNombreMarca.Text = "";
             lblError.Text = "";
-            btnAgregarMarca.Text = "Agregar Marca";
+            lblTituloFormulario.Text = "Agregar marca";
+            btnAgregarMarca.Text = "Agregar marca";
             btnCancelar.Visible = false;
         }
 
@@ -89,10 +90,10 @@ namespace eCommerce.Web
                 Marca marca = negocio.ListarMarcas().Find(x => x.Id == id);
 
                 txtNombreMarca.Text = marca.Nombre;
-
                 ViewState["IdMarca"] = marca.Id;
 
-                btnAgregarMarca.Text = "Modificar Marca";
+                lblTituloFormulario.Text = "Modificar marca";
+                btnAgregarMarca.Text = "Modificar marca";
                 btnCancelar.Visible = true;
             }
 
@@ -108,7 +109,9 @@ namespace eCommerce.Web
 
                 ViewState["IdMarca"] = null;
                 txtNombreMarca.Text = "";
-                btnAgregarMarca.Text = "Agregar Marca";
+                lblError.Text = "";
+                lblTituloFormulario.Text = "Agregar marca";
+                btnAgregarMarca.Text = "Agregar marca";
                 btnCancelar.Visible = false;
             }
 
@@ -124,12 +127,12 @@ namespace eCommerce.Web
 
                 ViewState["IdMarca"] = null;
                 txtNombreMarca.Text = "";
-                btnAgregarMarca.Text = "Agregar Marca";
+                lblError.Text = "";
+                lblTituloFormulario.Text = "Agregar marca";
+                btnAgregarMarca.Text = "Agregar marca";
                 btnCancelar.Visible = false;
             }
-
         }
-
 
         private void AplicarFiltro()
         {
@@ -137,9 +140,7 @@ namespace eCommerce.Web
 
             dgvMarcas.DataSource = marca.FiltrarMarcas(txtFiltroNombre.Text, ddlFiltroEstado.SelectedValue);
             dgvMarcas.DataBind();
-
         }
-
 
         protected void ddlFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -150,7 +151,5 @@ namespace eCommerce.Web
         {
             AplicarFiltro();
         }
-
-
     }
 }
