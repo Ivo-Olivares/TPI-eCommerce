@@ -35,8 +35,18 @@
                     <ItemTemplate>
                         <div class="col-sm-6 col-lg-3">
                             <article class="app-card app-card-interactive h-100">
-                                <div class="app-icon-box app-icon-box-primary w-100 mb-3" style="height: 140px;">
-                                    <span>🛍️</span>
+                                <div class="app-icon-box app-icon-box-primary w-100 mb-3" style="height: 140px; overflow: hidden;">
+                                    <asp:Image
+                                        runat="server"
+                                        ImageUrl='<%# ObtenerImagen(Eval("ListaImagenes")) %>'
+                                        AlternateText='<%# Eval("Nombre") %>'
+                                        Visible='<%# TieneImagen(Eval("ListaImagenes")) %>'
+                                        Style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+
+                                    <asp:Label
+                                        runat="server"
+                                        Text="🛍️"
+                                        Visible='<%# !TieneImagen(Eval("ListaImagenes")) %>' />
                                 </div>
 
                                 <span class="app-badge app-badge-primary mb-2">
