@@ -19,7 +19,7 @@ namespace eCommerce.Web
 
                 if (usuario == null || AutenticacionSesion.EsInvitado(Session))
                 {
-                    Response.Redirect("~/Login.aspx", false);
+                    RedirigirALogin();
                     return;
                 }
 
@@ -90,7 +90,7 @@ namespace eCommerce.Web
 
                 if (usuario == null || AutenticacionSesion.EsInvitado(Session))
                 {
-                    Response.Redirect("~/Login.aspx", false);
+                    RedirigirALogin();
                     return;
                 }
 
@@ -194,6 +194,12 @@ namespace eCommerce.Web
             }
 
             return total;
+        }
+
+        private void RedirigirALogin()
+        {
+            string returnUrl = HttpUtility.UrlEncode("~/Checkout.aspx");
+            Response.Redirect("~/Login.aspx?ReturnUrl=" + returnUrl, false);
         }
     }
 }
