@@ -117,12 +117,12 @@
                                 <asp:BoundField
                                     DataField="PrecioUnitario"
                                     HeaderText="Precio unitario"
-                                    DataFormatString="{0:C}" />
+                                    DataFormatString="{0:$ #,##0.00}" />
 
                                 <asp:BoundField
                                     DataField="Subtotal"
                                     HeaderText="Subtotal"
-                                    DataFormatString="{0:C}" />
+                                    DataFormatString="{0:$ #,##0.00}" />
                             </Columns>
                         </asp:GridView>
                     </div>

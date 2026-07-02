@@ -52,7 +52,7 @@
                                 </p>
 
                                 <div class="mt-3">
-                                    <strong class="d-block mb-3"><%# Eval("Precio", "{0:C}") %></strong>
+                                    <strong class="d-block mb-3"><%# Eval("Precio", "{0:$ #,##0.00}") %></strong>
 
                                     <div class="d-grid gap-2">
                                         <a href='<%# "DetalleProducto.aspx?id=" + Eval("Id") %>' class="app-btn-secondary py-1 px-3 text-center">Ver detalle

@@ -137,7 +137,7 @@ namespace eCommerce.Web
             lblPedidoSeleccionado.Text = pedido.Id.ToString();
             lblFechaPedido.Text = pedido.FechaCreacion.ToString("dd/MM/yyyy HH:mm");
             lblEstadoPedido.Text = pedido.EstadoPedido.Descripcion;
-            lblTotalPedido.Text = pedido.Total.ToString("C");
+            lblTotalPedido.Text = pedido.Total.ToString("$ #,##0.00");
             lblFormaPago.Text = pedido.FormaPago.Descripcion;
             lblFormaEntrega.Text = pedido.FormaEntrega.Descripcion;
             lblFechaEntrega.Text = pedido.FechaEntrega.HasValue ? pedido.FechaEntrega.Value.ToString("dd/MM/yyyy") : "Pendiente";

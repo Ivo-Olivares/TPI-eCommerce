@@ -70,7 +70,7 @@
                         <asp:BoundField HeaderText="Estado" DataField="EstadoPedido.Descripcion" />
                         <asp:BoundField HeaderText="Forma de pago" DataField="FormaPago.Descripcion" />
                         <asp:BoundField HeaderText="Forma de entrega" DataField="FormaEntrega.Descripcion" />
-                        <asp:BoundField HeaderText="Total" DataField="Total" DataFormatString="{0:C}" />
+                        <asp:BoundField HeaderText="Total" DataField="Total" DataFormatString="{0:$ #,##0.00}" />
 
                         <asp:TemplateField HeaderText="Detalle">
                             <ItemTemplate>
@@ -125,8 +125,8 @@
                     <Columns>
                         <asp:BoundField HeaderText="Producto" DataField="Producto.Nombre" />
                         <asp:BoundField HeaderText="Cantidad" DataField="Cantidad" />
-                        <asp:BoundField HeaderText="Precio unitario" DataField="PrecioUnitario" DataFormatString="{0:C}" />
-                        <asp:BoundField HeaderText="Subtotal" DataField="Subtotal" DataFormatString="{0:C}" />
+                        <asp:BoundField HeaderText="Precio unitario" DataField="PrecioUnitario" DataFormatString="{0:$ #,##0.00}" />
+                        <asp:BoundField HeaderText="Subtotal" DataField="Subtotal" DataFormatString="{0:$ #,##0.00}" />
                     </Columns>
                 </asp:GridView>
             </div>

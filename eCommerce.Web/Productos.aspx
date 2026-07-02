@@ -72,7 +72,7 @@
                         <asp:BoundField HeaderText="Descripcion" DataField="Descripcion" />
                         <asp:BoundField HeaderText="Marca" DataField="Marca" />
                         <asp:BoundField HeaderText="Categoria" DataField="Categoria" />
-                        <asp:BoundField HeaderText="Precio" DataField="Precio" DataFormatString="{0:C}" />
+                        <asp:BoundField HeaderText="Precio" DataField="Precio" DataFormatString="{0:$ #,##0.00}" />
                         <asp:BoundField HeaderText="Stock" DataField="Stock" />
 
                         <asp:TemplateField HeaderText="Activo">

@@ -163,7 +163,7 @@ namespace eCommerce.Web
                 total += item.Subtotal;
             }
 
-            lblTotal.Text = total.ToString("C");
+            lblTotal.Text = total.ToString("$ #,##0.00");
         }
 
         private Pedido CrearPedidoDesdeCheckout(Usuario usuario, decimal total)
