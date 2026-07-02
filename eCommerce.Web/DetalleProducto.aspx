@@ -16,8 +16,9 @@
             <div class="row g-4 align-items-stretch">
 
                 <div class="col-md-5">
-                    <div class="app-icon-box app-icon-box-primary w-100 h-100" style="min-height: 300px;">
-                        <span style="font-size: 3rem;">🛍️</span>
+                    <div class="app-icon-box app-icon-box-primary w-100 h-100" style="min-height: 300px; overflow: hidden;">
+                        <asp:Image runat="server" ID="imgProducto" Style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+                        <asp:Label runat="server" ID="lblSinImagen" CssClass="app-text-muted" Text="Sin imagen" Visible="false" />
                     </div>
                 </div>
 

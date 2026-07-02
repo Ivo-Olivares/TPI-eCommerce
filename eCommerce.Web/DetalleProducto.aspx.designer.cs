@@ -42,6 +42,24 @@ namespace eCommerce.Web
         protected global::System.Web.UI.WebControls.Panel pnlDetalle;
 
         /// <summary>
+        /// Control imgProducto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgProducto;
+
+        /// <summary>
+        /// Control lblSinImagen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSinImagen;
+
+        /// <summary>
         /// Control lblNombre.
         /// </summary>
         /// <remarks>

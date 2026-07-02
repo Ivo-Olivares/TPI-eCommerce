@@ -76,6 +76,20 @@ namespace eCommerce.Web
             lblStock.Text = producto.Stock.ToString();
             lblEstado.Text = "Activo";
 
+
+            if (producto.ListaImagenes != null && producto.ListaImagenes.Count > 0 && !string.IsNullOrWhiteSpace(producto.ListaImagenes[0].UrlImagen))
+            {
+
+                imgProducto.ImageUrl = producto.ListaImagenes[0].UrlImagen;
+                imgProducto.Visible = true;
+                lblSinImagen.Visible = false;
+            }
+            else
+            {
+                imgProducto.Visible = false;
+                lblSinImagen.Visible = true;    
+            }
+
             txtCantidad.Text = "1";
             txtCantidad.Attributes["min"] = "1";
             txtCantidad.Attributes["max"] = producto.Stock.ToString();
