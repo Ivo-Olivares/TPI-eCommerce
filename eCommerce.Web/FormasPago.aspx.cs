@@ -1,10 +1,6 @@
 ﻿using eCommerce.Dominio;
 using eCommerce.Negocio;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace eCommerce.Web
@@ -43,8 +39,9 @@ namespace eCommerce.Web
                     ViewState["IdFormaPago"] = null;
                     txtNombreFormaPago.Text = "";
                     lblError.Text = "";
-
-                    btnAgregarFormaPago.Text = "Agregar Forma de pago";
+                    lblTituloFormulario.Text = "Agregar forma de pago";
+                    btnAgregarFormaPago.Text = "Agregar forma de pago";
+                    btnCancelar.Visible = false;
                 }
                 else
                 {
@@ -57,13 +54,15 @@ namespace eCommerce.Web
 
                     txtNombreFormaPago.Text = "";
                     lblError.Text = "";
+                    lblTituloFormulario.Text = "Agregar forma de pago";
+                    btnAgregarFormaPago.Text = "Agregar forma de pago";
+                    btnCancelar.Visible = false;
                 }
             }
             catch (Exception ex)
             {
                 lblError.Text = ex.Message;
             }
-
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -71,7 +70,8 @@ namespace eCommerce.Web
             ViewState["IdFormaPago"] = null;
             txtNombreFormaPago.Text = "";
             lblError.Text = "";
-            btnAgregarFormaPago.Text = "Agregar Forma de pago";
+            lblTituloFormulario.Text = "Agregar forma de pago";
+            btnAgregarFormaPago.Text = "Agregar forma de pago";
             btnCancelar.Visible = false;
         }
 
@@ -86,10 +86,10 @@ namespace eCommerce.Web
                 FormaPago formaPago = negocio.Listar().Find(x => x.Id == id);
 
                 txtNombreFormaPago.Text = formaPago.Descripcion;
-
                 ViewState["IdFormaPago"] = formaPago.Id;
 
-                btnAgregarFormaPago.Text = "Modificar Forma de pago";
+                lblTituloFormulario.Text = "Modificar forma de pago";
+                btnAgregarFormaPago.Text = "Modificar forma de pago";
                 btnCancelar.Visible = true;
             }
 
@@ -104,7 +104,9 @@ namespace eCommerce.Web
 
                 ViewState["IdFormaPago"] = null;
                 txtNombreFormaPago.Text = "";
-                btnAgregarFormaPago.Text = "Agregar Forma de pago";
+                lblError.Text = "";
+                lblTituloFormulario.Text = "Agregar forma de pago";
+                btnAgregarFormaPago.Text = "Agregar forma de pago";
                 btnCancelar.Visible = false;
             }
 
@@ -119,15 +121,12 @@ namespace eCommerce.Web
 
                 ViewState["IdFormaPago"] = null;
                 txtNombreFormaPago.Text = "";
-                btnAgregarFormaPago.Text = "Agregar Forma de pago";
+                lblError.Text = "";
+                lblTituloFormulario.Text = "Agregar forma de pago";
+                btnAgregarFormaPago.Text = "Agregar forma de pago";
                 btnCancelar.Visible = false;
             }
         }
-
-
-
-
-
 
         private void AplicarFiltro()
         {
@@ -135,24 +134,16 @@ namespace eCommerce.Web
 
             dgvFormasPago.DataSource = negocio.filtrarFormaPago(txtFiltroDescripcion.Text, ddlFiltroEstado.SelectedValue);
             dgvFormasPago.DataBind();
-
         }
 
-        
         protected void txtFiltroDescripcion_TextChanged(object sender, EventArgs e)
         {
             AplicarFiltro();
-
         }
 
         protected void ddlFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
             AplicarFiltro();
-
         }
-    
-    
-    
     }
-
 }
