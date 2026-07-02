@@ -42,6 +42,7 @@ namespace eCommerce.Web
                 CargarFormasPago();
                 ActualizarVisibilidadDireccion();
                 CargarResumenPedido();
+                ActualizarResumenCheckout();
             }
         }
 
@@ -151,6 +152,19 @@ namespace eCommerce.Web
         {
             lblError.Visible = false;
             ActualizarVisibilidadDireccion();
+            ActualizarResumenCheckout();
+        }
+
+        protected void ddlDireccion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblError.Visible = false;
+            ActualizarResumenCheckout();
+        }
+
+        protected void ddlFormaPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblError.Visible = false;
+            ActualizarResumenCheckout();
         }
 
         protected void btnMostrarNuevaDireccion_Click(object sender, EventArgs e)
@@ -184,6 +198,7 @@ namespace eCommerce.Web
                 CargarDirecciones(usuario.Id);
                 SeleccionarDireccion(idDireccion);
                 OcultarFormularioNuevaDireccion();
+                ActualizarResumenCheckout();
 
                 MostrarMensaje("La dirección se agregó correctamente.", "text-success d-block mb-3");
             }
@@ -226,6 +241,55 @@ namespace eCommerce.Web
             }
 
             lblTotal.Text = total.ToString("$ #,##0.00");
+        }
+
+        private void ActualizarResumenCheckout()
+        {
+            lblResumenEntrega.Text = ObtenerTextoSeleccionado(ddlEntrega, "Pendiente");
+            lblResumenPago.Text = ObtenerTextoSeleccionado(ddlFormaPago, "Pendiente");
+            lblResumenDireccion.Text = ObtenerTextoResumenDireccion();
+        }
+
+        private string ObtenerTextoSeleccionado(DropDownList lista, string textoPendiente)
+        {
+            if (lista == null || string.IsNullOrWhiteSpace(lista.SelectedValue) || lista.SelectedItem == null)
+                return textoPendiente;
+
+            return lista.SelectedItem.Text;
+        }
+
+        private string ObtenerTextoResumenDireccion()
+        {
+            if (string.IsNullOrWhiteSpace(ddlEntrega.SelectedValue))
+                return "Pendiente";
+
+            if (!EntregaSeleccionadaRequiereDireccion())
+                return "No corresponde";
+
+            if (string.IsNullOrWhiteSpace(ddlDireccion.SelectedValue))
+                return "Pendiente";
+
+            Usuario usuario = AutenticacionSesion.ObtenerUsuario(Session);
+            if (usuario == null || usuario.Id <= 0)
+                return "Pendiente";
+
+            DireccionNegocio negocio = new DireccionNegocio();
+            Direccion direccion = negocio.Listar(usuario.Id)
+                .Find(x => x.Id.ToString() == ddlDireccion.SelectedValue);
+
+            if (direccion == null)
+                return ddlDireccion.SelectedItem.Text;
+
+            return FormatearDireccion(direccion);
+        }
+
+        private string FormatearDireccion(Direccion direccion)
+        {
+            string descripcion = string.IsNullOrWhiteSpace(direccion.Descripcion)
+                ? ""
+                : direccion.Descripcion + ": ";
+
+            return descripcion + direccion.Calle + " " + direccion.Altura + ", " + direccion.Localidad + ", " + direccion.Provincia + " (" + direccion.Cp + ")";
         }
 
         private Pedido CrearPedidoDesdeCheckout(Usuario usuario, decimal total, int? idDireccion)
